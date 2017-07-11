@@ -9,7 +9,7 @@ public abstract class Neurona {
         setUmbral(umbral);
     }
         
-    public void entrenar(double[][] entradas, int[] salidas) {
+    public void entrenar(int[][] entradas, int[] salidas) {
         boolean error = false;
         do {
             for (int i = 0; i < entradas.length; i++) {
@@ -24,7 +24,7 @@ public abstract class Neurona {
         } while (error);
     }
     
-    protected double combinacion(double[] entradas) {
+    protected double propagacion(int[] entradas) {
         double suma = pesos[0] * umbral;
         for (int i = 0; i < entradas.length; i++) {
             suma += pesos[i+1] * entradas[i];
@@ -32,12 +32,22 @@ public abstract class Neurona {
         return suma;
     }
     
-    public abstract int calcularSalida(double[] entradas);
+    public int calcularSalida(int[] entradas) {
+        return funcionActivacion(propagacion(entradas));
+    }
     
-    public abstract int funcionActivacion(double salida);
+    public abstract int funcionActivacion(double x);
     
-    protected abstract void ajustarPesos(double[] entradas, int salidaDeseada);
+    protected abstract void ajustarPesos(int[] entradas, int salidaDeseada);
 
+    public String toString(int decimales) {
+        String cadena = "";
+        for (int i=0; i<pesos.length; i++) {
+            cadena += String.format("W%d= %."+decimales+"f ", i, pesos[i]);
+        }
+        return cadena;
+    }
+    
     public double[] getPesos() {
         return pesos;
     }

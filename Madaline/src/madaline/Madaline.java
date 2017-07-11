@@ -20,7 +20,7 @@ public class Madaline {
         }
     }
     
-    public void entrenar(double[][] entradas, int[] salidasDeseadas) {
+    public void entrenar(int[][] entradas, int[] salidasDeseadas) {
         boolean error = false;
         int iter = 1;
         do {
@@ -41,12 +41,12 @@ public class Madaline {
         } while (error);        
     }
     
-    protected void ajustarPesos(double[] entradas, int salidaDeseada) {
+    protected void ajustarPesos(int[] entradas, int salidaDeseada) {
         int c = adalineGanador(entradas, salidaDeseada);
         capaAdalines[c].ajustarPesos(entradas, salidaDeseada);
     }
     
-    protected int adalineGanador(double[] entradas, int salidaDeseada) {
+    protected int adalineGanador(int[] entradas, int salidaDeseada) {
         double[] salidas = salidasAdalines(entradas);
         int pos_ganador = 0;
         double cercanoACero = Integer.MAX_VALUE;
@@ -60,16 +60,16 @@ public class Madaline {
         return pos_ganador;
     }
     
-    public int calcularSalida(double[] entradas) {
+    public int calcularSalida(int[] entradas) {
         int[] salidas = new int[numAdalines];
         for (int i = 0; i < salidas.length; i++) {
             salidas[i] = capaAdalines[i].calcularSalida(entradas);
-            System.out.println(i + ": "+ capaAdalines[i].salidaOriginal(entradas));
+            //System.out.println(i + ": "+ capaAdalines[i].salidaOriginal(entradas));
         }
         return funcionMayoria(salidas);
     }
     
-    public double[] salidasAdalines(double[] entradas) {
+    public double[] salidasAdalines(int[] entradas) {
         double[] salidas = new double[numAdalines];
         for (int i = 0; i < salidas.length; i++) {
             salidas[i] = capaAdalines[i].salidaOriginal(entradas);
@@ -94,11 +94,11 @@ public class Madaline {
         return pesos;
     }
     
-    public String pesosToString(int decimales) {
+    public String toString(int decimales) {
         String cadena = "";
         for (int i = 0; i < numAdalines; i++) {
             cadena += String.format("Adaline %d: %s\n", 
-                    (i+1), capaAdalines[i].pesosString(decimales));
+                    (i+1), capaAdalines[i].toString(decimales));
         }
         return cadena;
     }

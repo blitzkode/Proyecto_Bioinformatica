@@ -8,23 +8,18 @@ public class NeuronaAdaline extends Neurona {
         this.e = 1.0/pesos.length;
     }
     
-    public double salidaOriginal(double[] entradas) {
-        return combinacion(entradas);
-    }
-    
-    @Override
-    public int calcularSalida(double[] entradas) {
-        return funcionActivacion(combinacion(entradas));
+    public double salidaOriginal(int[] entradas) {
+        return propagacion(entradas);
     }
 
     @Override
-    public int funcionActivacion(double salida) {
-        return (salida < 0 ? -1 : 1);
+    public int funcionActivacion(double x) {
+        return (x < 0 ? -1 : 1);
     }
 
     @Override
-    protected void ajustarPesos(double[] entradas, int salidaDeseada) {
-        double y = combinacion(entradas);
+    protected void ajustarPesos(int[] entradas, int salidaDeseada) {
+        double y = propagacion(entradas);
         pesos[0] += (e * (salidaDeseada - y) * umbral);
         
         for (int i = 0; i < entradas.length; i++) {
@@ -32,12 +27,4 @@ public class NeuronaAdaline extends Neurona {
         }
     }
     
-    public String pesosString(int decimales) {
-        String cadena = "";
-        for (int i=0; i<pesos.length; i++) {
-            cadena += String.format("W%d= %."+decimales+"f ", i, pesos[i]);
-        }
-        return cadena;
-    }
-
 }
