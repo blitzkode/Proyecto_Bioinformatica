@@ -5,6 +5,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Maneja una lista de redes Madaline que reconocen un caracter cada una
+ * @author fyetka
+ */
 @XmlRootElement(name="basededatos")
 public class Reconocedor {
     private ArrayList<Madaline> madalines = new ArrayList();
@@ -18,7 +22,7 @@ public class Reconocedor {
      * @param patron Patrón a reconocer
      * @return caracter (letra o número) reconocido
      */
-    public String reconocerLetra(int[] patron) {
+    public String reconocerCaracter(int[] patron) {
         String caracter = "";
         
         for (Madaline neurona : madalines) {
@@ -30,6 +34,24 @@ public class Reconocedor {
         }
         
         return caracter;
+    }
+    
+    /**
+     * Entrena al Madaline correspondiente a un caracter para que reconozca un
+     * patrón y a los demás para que lo reconozcan como inválido. Se diferencia
+     * entre mayúsculas y minúsculas.
+     * @param caracter Caracter a reconocer
+     * @param patron Patrón asociado al caracter
+     */
+    public void entrenar(String caracter, int [] patron) {
+        for (Madaline madaline : madalines) {
+            if ( madaline.getNombre().equals(caracter) ) {
+                madaline.entrenar(patron, 1);
+            }
+            else {
+                madaline.entrenar(patron, -1);
+            }
+        }
     }
 
     public void iniciarMadalinesDefault() {

@@ -52,6 +52,10 @@ public class Madaline {
         } while (error);        
     }
     
+    public void entrenar(int [] entrada, int salidaDeseada) {
+        entrenar(new int[][] {entrada}, new int[] {salidaDeseada});
+    }
+    
     protected void ajustarPesos(int[] entradas, int salidaDeseada) {
         int c = adalineGanador(entradas, salidaDeseada);
         adalines[c].ajustarPesos(entradas, salidaDeseada);
@@ -102,6 +106,11 @@ public class Madaline {
             pesos[i] = adalines[i].getPesos();
         }
         return pesos;
+    }
+    
+    @Override
+    public String toString() {
+        return toString(4);
     }
     
     public String toString(int decimales) {

@@ -3,7 +3,7 @@ package madaline;
 public class Main {
 
     public static void main(String[] args) {
-        Controlador aplicacion = new Controlador();
+        //Controlador aplicacion = new Controlador();
         prueba();
     }
 
