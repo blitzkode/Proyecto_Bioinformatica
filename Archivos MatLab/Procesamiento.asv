@@ -1,0 +1,10 @@
+function M=imagetoArray(A, n1, n2)
+
+X=imread(A);
+B = imresize (X, [n1 n2]);
+Y=rgb2gray(B);
+
+
+
+end
+
