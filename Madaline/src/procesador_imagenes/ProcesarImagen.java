@@ -67,7 +67,7 @@ public class ProcesarImagen {
         int k = 0;
         for (int i = 0; i < A.length; i++) {
 
-            A[i] = R[k]>128 ? (byte) 1:-1;
+            A[i] = (byte) (R[k]>128 ? -1:1);
             
             k += 3;
 
