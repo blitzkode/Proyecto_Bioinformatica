@@ -1,6 +1,8 @@
-package madaline;
+package Core;
 
+import java.awt.image.BufferedImage;
 import javax.xml.bind.JAXBException;
+import procesador_imagenes.ProcesarImagen;
 
 /**
  * Clase principal de la aplicación. Contiene los métodos a ser usados por
@@ -9,7 +11,6 @@ import javax.xml.bind.JAXBException;
  */
 public class Controlador {
     private Reconocedor reconocedor;
-    //TODO Procesador de imagen
     private String RUTA_BD = "xmlsrc/basededatos.xml"; // Ubicación de la BD
     
     /**
@@ -32,9 +33,9 @@ public class Controlador {
      * @return Caracter reconocido ([a-zA-Z0-9]). Devuelve una cadena vacía si
      *          la imagen no corresponde a un caracter
      */
-    public String reconocerImagen(int[][] imagen) {
-        //TODO procesar imagen
-        String caracter = reconocedor.reconocerCaracter(new int[] {});
+    public String reconocerImagen(BufferedImage imagen) {
+        byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
+        String caracter = reconocedor.reconocerCaracter(patron);
         return caracter;
     }
     
@@ -45,13 +46,13 @@ public class Controlador {
      * @param caracter Caracter correspondiente a la imagen (se distinguen
      *                  mayúsculas de minúsculas)
      */
-    public void guardarCaracter(int [][] imagen, String caracter) {
-        //TODO procesar imagen
-        reconocedor.entrenar(caracter, new int[] {});
+    public void guardarCaracter(BufferedImage imagen, String caracter) {
+        byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
+        reconocedor.entrenar(caracter, patron);
         try {
             ReconocedorDataAccess.escribirBD(reconocedor, this.RUTA_BD);
         } catch (JAXBException ex) {
-            
+            System.err.println("Error al guardar la BD");
         }
     }
 }

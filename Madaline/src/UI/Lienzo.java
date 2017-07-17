@@ -1,4 +1,4 @@
-package madaline;
+package UI;
 
 import java.awt.BasicStroke;
 import java.awt.Canvas;
@@ -26,7 +26,8 @@ public class Lienzo extends Canvas implements MouseListener, MouseMotionListener
     }
 
     public BufferedImage getImagen() {
-        BufferedImage imagen = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage imagen = new BufferedImage(this.getWidth(),
+                                this.getHeight(), BufferedImage.TYPE_INT_RGB);
         this.paint(imagen.getGraphics());
         return imagen;
     }

@@ -1,6 +1,8 @@
-package madaline;
+package UI;
 
+import Core.Controlador;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 public class MainWindow extends javax.swing.JFrame {
     private Lienzo lienzoDibujo;
@@ -53,7 +55,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlDibujo = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        tfResultado = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btDeshacer = new javax.swing.JButton();
@@ -62,7 +64,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         spGrosor = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnReconocer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +80,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGap(0, 294, Short.MAX_VALUE)
         );
 
-        jLabel2.setText("Caracter");
+        jLabel2.setText("Caracter reconocido");
 
         jToolBar1.setFloatable(false);
 
@@ -122,16 +125,23 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(spGrosor);
 
-        jButton1.setText("Imagen");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar patrón");
+        btnGuardar.setFocusable(false);
+        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(btnGuardar);
+
+        btnReconocer.setText("Reconocer");
+        btnReconocer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReconocerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,10 +154,12 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReconocer)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +170,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReconocer))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -185,9 +198,15 @@ public class MainWindow extends javax.swing.JFrame {
         spGrosorStateChanged(new javax.swing.event.ChangeEvent(this));
     }//GEN-LAST:event_spGrosorMouseWheelMoved
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        String letra = JOptionPane.showInputDialog(this, "Caracter asociado");
+        aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnReconocerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReconocerActionPerformed
+        String letra = aplicacion.reconocerImagen(lienzoDibujo.getImagen());
+        tfResultado.setText(letra);
+    }//GEN-LAST:event_btnReconocerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,15 +246,16 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDeshacer;
     private javax.swing.JButton btLimpiar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnReconocer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel pnlDibujo;
     private javax.swing.JSpinner spGrosor;
+    private javax.swing.JTextField tfResultado;
     // End of variables declaration//GEN-END:variables
 
 }

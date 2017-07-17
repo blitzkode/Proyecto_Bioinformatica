@@ -30,13 +30,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="tfResultado" min="-2" pref="37" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnReconocer" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="jToolBar1" alignment="0" min="-2" pref="435" max="-2" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" pref="459" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -48,7 +50,8 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfResultado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnReconocer" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -71,11 +74,11 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="tfResultado">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Caracter"/>
+        <Property name="text" type="java.lang.String" value="Caracter reconocido"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JToolBar" name="jToolBar1">
@@ -130,18 +133,26 @@
             <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="spGrosorMouseWheelMoved"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnGuardar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Imagen"/>
+            <Property name="text" type="java.lang.String" value="Guardar patr&#xf3;n"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnReconocer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reconocer"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReconocerActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
