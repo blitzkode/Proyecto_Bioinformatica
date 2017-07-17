@@ -57,7 +57,7 @@ public class Reconocedor {
     public void iniciarMadalinesDefault() {
         ArrayList<Madaline> madalines_default = new ArrayList<>();
         //TODO
-        double[][] pesos = new double[3][100*100];
+        double[][] pesos = new double[3][100*100+1];
         madalines_default.add(new Madaline("A", pesos));
         
         this.madalines = madalines_default;
