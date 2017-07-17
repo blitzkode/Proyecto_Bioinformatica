@@ -35,8 +35,8 @@ public class Lienzo extends Canvas implements MouseListener, MouseMotionListener
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D draw = (Graphics2D) g;
-//        draw.setColor(Color.white);
-//        draw.fillRect(0, 0, this.getWidth(), this.getHeight());
+        draw.setColor(Color.white);
+        draw.fillRect(0, 0, this.getWidth(), this.getHeight());
         for (Linea l : lineas) {
             draw.setStroke(new BasicStroke(l.grosor,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
             draw.setColor(l.color);

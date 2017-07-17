@@ -186,7 +186,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_spGrosorMouseWheelMoved
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new prueba(lienzoDibujo.getImagen()).setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
