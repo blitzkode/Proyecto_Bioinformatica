@@ -1,6 +1,9 @@
 package Core;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBException;
 import procesador_imagenes.ProcesarImagen;
 
@@ -12,6 +15,7 @@ import procesador_imagenes.ProcesarImagen;
 public class Controlador {
     private Reconocedor reconocedor;
     private String RUTA_BD = "xmlsrc/basededatos.xml"; // Ubicación de la BD
+    private String RUTA_IMG = "img"; // Ubicación de las imagenes de entrenamiento
     
     /**
      * Constructor por defecto. Si no se encuentra el archivo XML con los pesos
@@ -24,7 +28,6 @@ public class Controlador {
             this.reconocedor = new Reconocedor();
             this.reconocedor.iniciarMadalinesDefault();
         }
-        
     }
     
     /**
@@ -47,14 +50,46 @@ public class Controlador {
      *                  mayúsculas de minúsculas)
      */
     public void guardarCaracter(BufferedImage imagen, String caracter) {
+        entrenarCaracter(imagen, caracter);
+        commit();
+    }
+    
+    private void entrenarCaracter(BufferedImage imagen, String caracter) {
         byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
         new Thread(() -> {
             reconocedor.entrenar(caracter, patron);
         }).start();
+    }
+    
+    private void commit() {
         try {
             ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
         } catch (JAXBException ex) {
             System.err.println("Error al guardar la BD");
+        }
+    }
+    
+    public void entrenamientoPorLotes() {
+        for (String caracter : new String[] {"A", "B", "C"}) {
+            File directorio = new File(RUTA_IMG, caracter);
+            String[] contenido = directorio.list();
+            for (String archivoImagen : contenido) {
+                try {
+                    BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
+                    entrenarCaracter(imagen, caracter);
+                } catch (IOException ex) {
+                    System.err.println("Error al abrir la imagen");
+                }
+            }
+        }
+        //commit();
+    }
+    
+    public void guardarImagenParaEntrenamiento(BufferedImage imagen, String ubicacion) {
+        try {
+            ImageIO.write(imagen, "jpg", new File(ubicacion));
+        } catch (IOException ex) {
+            System.err.println("Error al guardar la imagen");
         }
     }
 }
