@@ -111,7 +111,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.add(jLabel1);
         jToolBar1.add(jSeparator2);
 
-        spGrosor.setModel(new javax.swing.SpinnerNumberModel(5, 1, null, 1));
+        spGrosor.setModel(new javax.swing.SpinnerNumberModel(10, 1, null, 1));
         spGrosor.setPreferredSize(new java.awt.Dimension(50, 23));
         spGrosor.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {

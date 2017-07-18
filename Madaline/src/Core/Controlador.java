@@ -48,9 +48,11 @@ public class Controlador {
      */
     public void guardarCaracter(BufferedImage imagen, String caracter) {
         byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
-        reconocedor.entrenar(caracter, patron);
+        new Thread(() -> {
+            reconocedor.entrenar(caracter, patron);
+        }).start();
         try {
-            ReconocedorDataAccess.escribirBD(reconocedor, this.RUTA_BD);
+            ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
         } catch (JAXBException ex) {
             System.err.println("Error al guardar la BD");
         }

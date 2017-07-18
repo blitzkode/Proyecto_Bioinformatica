@@ -54,7 +54,6 @@ public class Madaline {
     
     public void entrenar(byte [] entrada, byte salidaDeseada) {
         entrenar(new byte[][] {entrada}, new byte[] {salidaDeseada});
-        System.out.println("entrenando madaline");
     }
     
     protected void ajustarPesos(byte[] entradas, byte salidaDeseada) {

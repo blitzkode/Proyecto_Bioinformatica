@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class NeuronaAdaline {
     private double[] pesos;
     private static final double UMBRAL = 1;
-    private static final double e = 0.3; // tasa de aprendizaje
+    private static final double E = 0.0001; // tasa de aprendizaje
 
     public NeuronaAdaline() {
         
@@ -57,10 +57,10 @@ public class NeuronaAdaline {
 
     protected void ajustarPesos(byte[] entradas, byte salidaDeseada) {
         double y = propagacion(entradas);
-        pesos[0] += (e * (salidaDeseada - y) * UMBRAL);
+        pesos[0] += (E * (salidaDeseada - y) * UMBRAL);
         
         for (int i = 0; i < entradas.length; i++) {
-            pesos[i+1] += (e * (salidaDeseada - y) * entradas[i]);
+            pesos[i+1] += (E * (salidaDeseada - y) * entradas[i]);
         }
     }
     

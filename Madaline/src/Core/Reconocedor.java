@@ -45,7 +45,7 @@ public class Reconocedor {
      */
     public void entrenar(String caracter, byte [] patron) {
         for (Madaline madaline : madalines) {
-            if ( madaline.getNombre().equals(caracter) ) {System.out.println("entrenando " + madaline.getNombre());
+            if ( madaline.getNombre().equals(caracter) ) {
                 madaline.entrenar(patron, (byte) 1);
             }
             else {
@@ -60,6 +60,7 @@ public class Reconocedor {
         double[][] pesos = new double[5][100*100+1];
         madalines_default.add(new Madaline("A", pesos));
         madalines_default.add(new Madaline("B", pesos));
+        madalines_default.add(new Madaline("C", pesos));
         
         this.madalines = madalines_default;
     }
