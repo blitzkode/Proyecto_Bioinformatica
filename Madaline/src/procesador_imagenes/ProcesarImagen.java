@@ -17,6 +17,7 @@ public class ProcesarImagen {
 
     private final int IMG_WIDTH = 100; //ancho
     private final int IMG_HEIGHT = 100; //alto
+
     public byte[] ProcesoImagen(BufferedImage img) {
 
         img = Filtrar_Gris(img);
@@ -116,7 +117,7 @@ public class ProcesarImagen {
         boolean find = false;
         while (!find&&lim<IMG_WIDTH) {
             for (int i = IMG_WIDTH; i >= 0; i--) {
-                if (A[(i+1)*(IMG_WIDTH-lim)-1] == 1) {
+                if (A[(i+1)*(IMG_WIDTH*IMG_HEIGHT-lim)-1] == 1) {
                     find = true;
                     break;
                 }
