@@ -56,7 +56,7 @@ public class ProcesarImagen {
         while (!find && lim < IMG_WIDTH) {
 
             for (int i = 0; i < IMG_WIDTH; i++) {
-                if (A[(i * IMG_WIDTH) + lim] == -1) {
+                if (A[(i * IMG_WIDTH) + lim] == 1) {
                     find = true;
                     break;
                 }
@@ -76,7 +76,7 @@ public class ProcesarImagen {
         boolean find = false;
         while (!find && lim < IMG_HEIGHT) {
             for (int i = 0; i < IMG_WIDTH; i++) {
-                if (A[i + (IMG_HEIGHT * lim)] == -1) {
+                if (A[i + (IMG_HEIGHT * lim)] == 1) {
                     find = true;
                     break;
                 }
@@ -97,7 +97,7 @@ public class ProcesarImagen {
         for (int j = IMG_WIDTH - 1; j >= 0 && !find; j--) {
             for (int i = 0; i < IMG_HEIGHT; i++) {
 
-                if (A[i * IMG_WIDTH + j] == -1) {
+                if (A[i * IMG_WIDTH + j] == 1) {
                     find = true;
                     break;
                 }
@@ -120,7 +120,7 @@ public class ProcesarImagen {
 
         for (int i = IMG_HEIGHT - 1; i >= 0 && !find; i--) {
             for (int j = IMG_WIDTH - 1; j >= 0; j--) {
-                if (A[i * IMG_WIDTH + j] == -1) {
+                if (A[i * IMG_WIDTH + j] == 1) {
                     find = true;
                     break;
                 }
@@ -179,8 +179,7 @@ public class ProcesarImagen {
         int k = 0;
         for (int i = 0; i < A.length; i++) {
 
-            A[i] = R[k] > 128 ? (byte) 1 : -1;
-//            System.out.println(A[i]+" - "+R[k]);
+            A[i] = R[k] > 128 ? (byte) -1 : 1;
             k += 3;
 
         }

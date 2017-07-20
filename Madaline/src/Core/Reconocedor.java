@@ -45,12 +45,8 @@ public class Reconocedor {
      */
     public void entrenar(String caracter, byte [] patron) {
         for (Madaline madaline : madalines) {
-            if ( madaline.getNombre().equals(caracter) ) {
-                madaline.entrenar(patron, (byte) 1);
-            }
-            else {
-                madaline.entrenar(patron, (byte) -1);
-            }
+            madaline.entrenar(patron,
+                    (byte) (madaline.getNombre().equals(caracter) ? 1 : -1) );
         }
     }
 
