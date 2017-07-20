@@ -1,7 +1,6 @@
 package procesador_imagenes;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
@@ -19,11 +18,14 @@ public class ProcesarImagen {
 
     public static byte[] ProcesoImagen(BufferedImage img) {
         img = Filtrar_Gris(img);
+        
+        //adaptamos a 100x100 para obtener cantidad fija de pixeles
+        img = Cambiar_Tamaño(img);
 
         //obtenemos array imagen original
         int V[] = getArray(img);
 
-        //transformamos datos a adaline (se puede optimizar)
+        //transformamos datos a adaline 
         byte A[] = getAdaline(V);
 
         //obtenemos cordenadas para el corte
@@ -33,7 +35,7 @@ public class ProcesarImagen {
         int h = getLimHeight(A);
 
         //cortamos
-        img = getCorte(img, x, y, w, h);
+         img = getCorte(img, x, y, w - x, h - y);
 
         //escalamos corte a 100x100
         img = Cambiar_Tamaño(img);
@@ -51,10 +53,10 @@ public class ProcesarImagen {
         int lim = 0;
         boolean find = false;
 
-        while (!find&&lim<IMG_WIDTH) {
+        while (!find && lim < IMG_WIDTH) {
 
             for (int i = 0; i < IMG_WIDTH; i++) {
-                if (A[(i * IMG_WIDTH) + lim] == 1) {
+                if (A[(i * IMG_WIDTH) + lim] == -1) {
                     find = true;
                     break;
                 }
@@ -72,9 +74,9 @@ public class ProcesarImagen {
     private static int getY(byte A[]) {
         int lim = 0;
         boolean find = false;
-        while (!find&&lim<IMG_HEIGHT) {
+        while (!find && lim < IMG_HEIGHT) {
             for (int i = 0; i < IMG_WIDTH; i++) {
-                if (A[i + (IMG_HEIGHT * lim)] == 1) {
+                if (A[i + (IMG_HEIGHT * lim)] == -1) {
                     find = true;
                     break;
                 }
@@ -92,19 +94,21 @@ public class ProcesarImagen {
         int lim = 0;
         boolean find = false;
 
-        while (!find&&lim<IMG_HEIGHT) {
+        for (int j = IMG_WIDTH - 1; j >= 0 && !find; j--) {
             for (int i = 0; i < IMG_HEIGHT; i++) {
-                if (A[(IMG_WIDTH-1)*(i+1)-lim]==1) {
+
+                if (A[i * IMG_WIDTH + j] == -1) {
                     find = true;
                     break;
                 }
             }
             if (!find) {
                 lim++;
-            }
 
+            }
         }
-        lim=IMG_WIDTH-lim;
+
+        lim = IMG_WIDTH - lim;
         return lim;
 
     }
@@ -113,19 +117,23 @@ public class ProcesarImagen {
         int lim = 0;
 
         boolean find = false;
-        while (!find&&lim<IMG_WIDTH) {
-            for (int i = IMG_WIDTH; i >= 0; i--) {
-                if (A[(i+1)*(IMG_WIDTH*IMG_HEIGHT-lim)-1] == 1) {
+
+        for (int i = IMG_HEIGHT - 1; i >= 0 && !find; i--) {
+            for (int j = IMG_WIDTH - 1; j >= 0; j--) {
+                if (A[i * IMG_WIDTH + j] == -1) {
                     find = true;
                     break;
                 }
             }
             if (!find) {
-                lim--;
+                lim++;
+
             }
+
         }
-        
-        lim=IMG_WIDTH-lim;
+       
+
+        lim = IMG_HEIGHT - lim;
 
         return lim;
 
@@ -133,11 +141,12 @@ public class ProcesarImagen {
 
     private static BufferedImage getCorte(BufferedImage image, int x, int y, int w, int h) {
         BufferedImage out = image.getSubimage(x, y, w, h);
+
         return out;
     }
   
     private static BufferedImage Cambiar_Tamaño(BufferedImage originalImage) {
-        int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+        int type = originalImage.getType() == 0 ? BufferedImage.TYPE_3BYTE_BGR : originalImage.getType();
         BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
         Graphics2D g = resizedImage.createGraphics();
         g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
@@ -151,7 +160,7 @@ public class ProcesarImagen {
         DataBufferByte data = (DataBufferByte) img.getRaster().getDataBuffer();
 
         byte[] byteArray = data.getData();
-        
+
         int[] array = raster.getPixels(0, 0, img.getWidth(), img.getHeight(), new int[byteArray.length]);
 
         return array;
@@ -169,10 +178,9 @@ public class ProcesarImagen {
 
         int k = 0;
         for (int i = 0; i < A.length; i++) {
-          
+
             A[i] = R[k] > 128 ? (byte) 1 : -1;
-            //A[i] = (byte) (R[k]>128 ? -1:1);
-            
+//            System.out.println(A[i]+" - "+R[k]);
             k += 3;
 
         }
