@@ -1,4 +1,4 @@
-package madaline;
+package Core;
 
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,7 +22,7 @@ public class Reconocedor {
      * @param patron Patrón a reconocer
      * @return caracter (letra o número) reconocido
      */
-    public String reconocerCaracter(int[] patron) {
+    public String reconocerCaracter(byte[] patron) {
         String caracter = "";
         
         for (Madaline neurona : madalines) {
@@ -43,13 +43,13 @@ public class Reconocedor {
      * @param caracter Caracter a reconocer
      * @param patron Patrón asociado al caracter
      */
-    public void entrenar(String caracter, int [] patron) {
+    public void entrenar(String caracter, byte [] patron) {
         for (Madaline madaline : madalines) {
             if ( madaline.getNombre().equals(caracter) ) {
-                madaline.entrenar(patron, 1);
+                madaline.entrenar(patron, (byte) 1);
             }
             else {
-                madaline.entrenar(patron, -1);
+                madaline.entrenar(patron, (byte) -1);
             }
         }
     }
@@ -57,12 +57,10 @@ public class Reconocedor {
     public void iniciarMadalinesDefault() {
         ArrayList<Madaline> madalines_default = new ArrayList<>();
         //TODO
-        madalines_default.add(new Madaline("A", 
-                new double[][] {
-                    {0,0,0,0,0,0,0,0,0},
-                    {0,0,0,0,0,0,0,0,0}
-                }
-        ));
+        double[][] pesos = new double[5][100*100+1];
+        madalines_default.add(new Madaline("A", pesos));
+        madalines_default.add(new Madaline("B", pesos));
+        madalines_default.add(new Madaline("C", pesos));
         
         this.madalines = madalines_default;
     }

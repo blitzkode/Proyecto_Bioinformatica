@@ -1,4 +1,4 @@
-package madaline;
+package Core;
 
 import java.io.File;
 import javax.xml.bind.JAXBContext;
@@ -32,7 +32,7 @@ public class ReconocedorDataAccess {
         JAXBContext context = JAXBContext.newInstance(Reconocedor.class);
         Marshaller marshaller = context.createMarshaller();
         
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        //marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(reconocedor, new File(rutaFichero));
     }
 }

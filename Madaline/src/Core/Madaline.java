@@ -1,4 +1,4 @@
-package madaline;
+package Core;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -37,12 +37,12 @@ public class Madaline {
         }
     }
     
-    public void entrenar(int[][] entradas, int[] salidasDeseadas) {
+    public void entrenar(byte[][] entradas, byte[] salidasDeseadas) {
         boolean error = false;
         do {
             for (int i = 0; i < entradas.length; i++) {
-                int m = calcularSalida(entradas[i]); // salida del madaline
-                int d = salidasDeseadas[i]; // salida deseada
+                byte m = calcularSalida(entradas[i]); // salida del madaline
+                byte d = salidasDeseadas[i]; // salida deseada
                 error = (m != d);
                 if (error) {
                     ajustarPesos(entradas[i], d);
@@ -52,16 +52,16 @@ public class Madaline {
         } while (error);        
     }
     
-    public void entrenar(int [] entrada, int salidaDeseada) {
-        entrenar(new int[][] {entrada}, new int[] {salidaDeseada});
+    public void entrenar(byte [] entrada, byte salidaDeseada) {
+        entrenar(new byte[][] {entrada}, new byte[] {salidaDeseada});
     }
     
-    protected void ajustarPesos(int[] entradas, int salidaDeseada) {
+    protected void ajustarPesos(byte[] entradas, byte salidaDeseada) {
         int c = adalineGanador(entradas, salidaDeseada);
         adalines[c].ajustarPesos(entradas, salidaDeseada);
     }
     
-    protected int adalineGanador(int[] entradas, int salidaDeseada) {
+    protected int adalineGanador(byte[] entradas, byte salidaDeseada) {
         double[] salidas = salidasAdalines(entradas);
         int pos_ganador = 0;
         double cercanoACero = Integer.MAX_VALUE;
@@ -75,15 +75,15 @@ public class Madaline {
         return pos_ganador;
     }
     
-    public int calcularSalida(int[] entradas) {
-        int[] salidas = new int[adalines.length];
+    public byte calcularSalida(byte[] entradas) {
+        byte[] salidas = new byte[adalines.length];
         for (int i = 0; i < salidas.length; i++) {
             salidas[i] = adalines[i].calcularSalida(entradas);
         }
         return funcionMayoria(salidas);
     }
     
-    public double[] salidasAdalines(int[] entradas) {
+    public double[] salidasAdalines(byte[] entradas) {
         double[] salidas = new double[adalines.length];
         for (int i = 0; i < salidas.length; i++) {
             salidas[i] = adalines[i].salidaOriginal(entradas);
@@ -91,13 +91,13 @@ public class Madaline {
         return salidas;
     }
     
-    protected int funcionMayoria(int[] entradas) {
+    protected byte funcionMayoria(byte[] entradas) {
         int mas = 0, menos = 0;
         for (int entrada : entradas) {
             if (entrada == 1) mas++;
             else menos++;
         }
-        return (mas >= menos ? 1 : -1);
+        return (byte) (mas >= menos ? 1 : -1);
     }
     
     public double[][] getPesos() {

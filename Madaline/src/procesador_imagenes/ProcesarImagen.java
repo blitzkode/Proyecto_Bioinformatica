@@ -14,12 +14,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class ProcesarImagen {
+    private static final int IMG_WIDTH = 100; //ancho
+    private static final int IMG_HEIGHT = 100; //alto
 
-    private final int IMG_WIDTH = 100; //ancho
-    private final int IMG_HEIGHT = 100; //alto
-
-    public byte[] ProcesoImagen(BufferedImage img) {
-
+    public static byte[] ProcesoImagen(BufferedImage img) {
         img = Filtrar_Gris(img);
 
         //obtenemos array imagen original
@@ -49,7 +47,7 @@ public class ProcesarImagen {
         return A2;
     }
 
-    private int getX(byte A[]) {
+    private static int getX(byte A[]) {
         int lim = 0;
         boolean find = false;
 
@@ -71,7 +69,7 @@ public class ProcesarImagen {
 
     }
 
-    private int getY(byte A[]) {
+    private static int getY(byte A[]) {
         int lim = 0;
         boolean find = false;
         while (!find&&lim<IMG_HEIGHT) {
@@ -90,7 +88,7 @@ public class ProcesarImagen {
 
     }
 
-    private int getLimWidth(byte A[]) {
+    private static int getLimWidth(byte A[]) {
         int lim = 0;
         boolean find = false;
 
@@ -111,7 +109,7 @@ public class ProcesarImagen {
 
     }
 
-    private int getLimHeight(byte A[]) {
+    private static int getLimHeight(byte A[]) {
         int lim = 0;
 
         boolean find = false;
@@ -133,13 +131,12 @@ public class ProcesarImagen {
 
     }
 
-    private BufferedImage getCorte(BufferedImage image, int x, int y, int w, int h) {
+    private static BufferedImage getCorte(BufferedImage image, int x, int y, int w, int h) {
         BufferedImage out = image.getSubimage(x, y, w, h);
         return out;
     }
-
-    private BufferedImage Cambiar_Tamaño(BufferedImage originalImage) {
-
+  
+    private static BufferedImage Cambiar_Tamaño(BufferedImage originalImage) {
         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
         BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
         Graphics2D g = resizedImage.createGraphics();
@@ -149,32 +146,33 @@ public class ProcesarImagen {
         return resizedImage;
     }
 
-    private int[] getArray(BufferedImage img) {
+    private static int[] getArray(BufferedImage img) {
         Raster raster = img.getData();
         DataBufferByte data = (DataBufferByte) img.getRaster().getDataBuffer();
 
         byte[] byteArray = data.getData();
-
+        
         int[] array = raster.getPixels(0, 0, img.getWidth(), img.getHeight(), new int[byteArray.length]);
 
         return array;
     }
 
-    private BufferedImage Filtrar_Gris(BufferedImage img) {
+    private static BufferedImage Filtrar_Gris(BufferedImage img) {
         BufferedImage img2 = img;
         ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
         op.filter(img, img2);
         return img2;
     }
 
-    private byte[] getAdaline(int R[]) {
+    private static byte[] getAdaline(int R[]) {
         byte A[] = new byte[IMG_HEIGHT * IMG_WIDTH];
 
         int k = 0;
         for (int i = 0; i < A.length; i++) {
-
+          
             A[i] = R[k] > 128 ? (byte) 1 : -1;
-
+            //A[i] = (byte) (R[k]>128 ? -1:1);
+            
             k += 3;
 
         }
@@ -183,7 +181,7 @@ public class ProcesarImagen {
     }
     
     //obtener image de arreglo bytes
-    private BufferedImage getNewImage(byte bytes[]) {
+    private static BufferedImage getNewImage(byte bytes[]) {
 
         BufferedImage img = null;
         try {

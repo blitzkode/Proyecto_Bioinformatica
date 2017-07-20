@@ -1,4 +1,4 @@
-package madaline;
+package Core;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class NeuronaAdaline {
     private double[] pesos;
     private static final double UMBRAL = 1;
-    private double e; // tasa de aprendizaje
+    private static final double E = 0.0001; // tasa de aprendizaje
 
     public NeuronaAdaline() {
         
@@ -16,20 +16,20 @@ public class NeuronaAdaline {
     
     public NeuronaAdaline(double[] pesos) {
         this.pesos = pesos;
-        this.calcularE();
+        //this.calcularE();
     }
     
-    public double salidaOriginal(int[] entradas) {
+    public double salidaOriginal(byte[] entradas) {
         return propagacion(entradas);
     }
 
-    public void entrenar(int[][] entradas, int[] salidas) {
-        calcularE();
+    public void entrenar(byte[][] entradas, byte[] salidas) {
+//        calcularE();
         boolean error = false;
         do {
             for (int i = 0; i < entradas.length; i++) {
-                int y = calcularSalida(entradas[i]); // salida de la neurona
-                int d = salidas[i]; // salida deseada
+                byte y = calcularSalida(entradas[i]); // salida de la neurona
+                byte d = salidas[i]; // salida deseada
                 error = (y != d);
                 if (error) {
                     ajustarPesos(entradas[i], d);
@@ -39,7 +39,7 @@ public class NeuronaAdaline {
         } while (error);
     }
     
-    protected double propagacion(int[] entradas) {
+    protected double propagacion(byte[] entradas) {
         double suma = pesos[0] * UMBRAL;
         for (int i = 0; i < entradas.length; i++) {
             suma += pesos[i+1] * entradas[i];
@@ -47,20 +47,20 @@ public class NeuronaAdaline {
         return suma;
     }
     
-    public int calcularSalida(int[] entradas) {
+    public byte calcularSalida(byte[] entradas) {
         return funcionActivacion(propagacion(entradas));
     }
     
-    public int funcionActivacion(double x) {
-        return (x < 0 ? -1 : 1);
+    public byte funcionActivacion(double x) {
+        return (byte) (x < 0 ? -1 : 1);
     }
 
-    protected void ajustarPesos(int[] entradas, int salidaDeseada) {
+    protected void ajustarPesos(byte[] entradas, byte salidaDeseada) {
         double y = propagacion(entradas);
-        pesos[0] += (e * (salidaDeseada - y) * UMBRAL);
+        pesos[0] += (E * (salidaDeseada - y) * UMBRAL);
         
         for (int i = 0; i < entradas.length; i++) {
-            pesos[i+1] += (e * (salidaDeseada - y) * entradas[i]);
+            pesos[i+1] += (E * (salidaDeseada - y) * entradas[i]);
         }
     }
     
@@ -82,7 +82,7 @@ public class NeuronaAdaline {
         this.pesos = pesos;
     }
     
-    private void calcularE() {
-        this.e = 1.0/pesos.length;
-    }
+//    private void calcularE() {
+//        this.e = 1.0/pesos.length;
+//    }
 }
