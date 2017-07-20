@@ -58,14 +58,22 @@ public class MainWindow extends javax.swing.JFrame {
         tfResultado = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
-        btDeshacer = new javax.swing.JButton();
-        btLimpiar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         spGrosor = new javax.swing.JSpinner();
-        btnGuardar = new javax.swing.JButton();
-        btnReconocer = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        mitSalir = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        mitDeshacer = new javax.swing.JMenuItem();
+        mitLimpiar = new javax.swing.JMenuItem();
+        mitReconocer = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        mitGuardarPatron = new javax.swing.JMenuItem();
+        mitEntrenamientoFast = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,35 +91,13 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel2.setText("Caracter reconocido");
 
         jToolBar1.setFloatable(false);
-
-        btDeshacer.setText("Deshacer");
-        btDeshacer.setFocusable(false);
-        btDeshacer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btDeshacer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btDeshacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDeshacerActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btDeshacer);
-
-        btLimpiar.setText("Limpiar");
-        btLimpiar.setFocusable(false);
-        btLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btLimpiarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btLimpiar);
         jToolBar1.add(jSeparator1);
 
         jLabel1.setText("Ancho de línea");
         jToolBar1.add(jLabel1);
         jToolBar1.add(jSeparator2);
 
-        spGrosor.setModel(new javax.swing.SpinnerNumberModel(10, 1, null, 1));
+        spGrosor.setModel(new javax.swing.SpinnerNumberModel(14, 1, null, 1));
         spGrosor.setPreferredSize(new java.awt.Dimension(50, 23));
         spGrosor.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -125,23 +111,73 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(spGrosor);
 
-        btnGuardar.setText("Guardar patrón");
-        btnGuardar.setFocusable(false);
-        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnGuardar);
+        jMenu1.setText("Archivo");
 
-        btnReconocer.setText("Reconocer");
-        btnReconocer.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setText("Abrir");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Guardar como");
+        jMenu1.add(jMenuItem2);
+
+        mitSalir.setText("Salir");
+        mitSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReconocerActionPerformed(evt);
+                mitSalirActionPerformed(evt);
             }
         });
+        jMenu1.add(mitSalir);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edición");
+
+        mitDeshacer.setText("Deshacer trazo");
+        mitDeshacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitDeshacerActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mitDeshacer);
+
+        mitLimpiar.setText("Limpiar lienzo");
+        mitLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitLimpiarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mitLimpiar);
+
+        jMenuBar1.add(jMenu2);
+
+        mitReconocer.setText("Reconocimiento");
+
+        jMenuItem3.setText("Reconocer");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        mitReconocer.add(jMenuItem3);
+
+        mitGuardarPatron.setText("Guardar patrón");
+        mitGuardarPatron.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitGuardarPatronActionPerformed(evt);
+            }
+        });
+        mitReconocer.add(mitGuardarPatron);
+
+        mitEntrenamientoFast.setText("Entrenamiento por lotes");
+        mitEntrenamientoFast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitEntrenamientoFastActionPerformed(evt);
+            }
+        });
+        mitReconocer.add(mitEntrenamientoFast);
+
+        jMenuBar1.add(mitReconocer);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,8 +191,6 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReconocer)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
@@ -170,26 +204,17 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReconocer))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimpiarActionPerformed
-        lienzoDibujo.limpiarContenido();
-    }//GEN-LAST:event_btLimpiarActionPerformed
-
     private void spGrosorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spGrosorStateChanged
         int grosor = Integer.parseInt(spGrosor.getValue().toString());
         lienzoDibujo.setGrosor(grosor);
     }//GEN-LAST:event_spGrosorStateChanged
-
-    private void btDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeshacerActionPerformed
-        lienzoDibujo.deshacerTrazo();
-    }//GEN-LAST:event_btDeshacerActionPerformed
 
     private void spGrosorMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_spGrosorMouseWheelMoved
         int movimientos = evt.getWheelRotation();
@@ -198,15 +223,31 @@ public class MainWindow extends javax.swing.JFrame {
         spGrosorStateChanged(new javax.swing.event.ChangeEvent(this));
     }//GEN-LAST:event_spGrosorMouseWheelMoved
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String letra = JOptionPane.showInputDialog(this, "Caracter asociado");
-        aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    private void mitDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitDeshacerActionPerformed
+        lienzoDibujo.deshacerTrazo();
+    }//GEN-LAST:event_mitDeshacerActionPerformed
 
-    private void btnReconocerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReconocerActionPerformed
+    private void mitLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitLimpiarActionPerformed
+        lienzoDibujo.limpiarContenido();
+    }//GEN-LAST:event_mitLimpiarActionPerformed
+
+    private void mitSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_mitSalirActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         String letra = aplicacion.reconocerImagen(lienzoDibujo.getImagen());
         tfResultado.setText(letra);
-    }//GEN-LAST:event_btnReconocerActionPerformed
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void mitGuardarPatronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarPatronActionPerformed
+        String letra = JOptionPane.showInputDialog(this, "Caracter asociado");
+        aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
+    }//GEN-LAST:event_mitGuardarPatronActionPerformed
+
+    private void mitEntrenamientoFastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrenamientoFastActionPerformed
+        
+    }//GEN-LAST:event_mitEntrenamientoFastActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,15 +285,23 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btDeshacer;
-    private javax.swing.JButton btLimpiar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnReconocer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem mitDeshacer;
+    private javax.swing.JMenuItem mitEntrenamientoFast;
+    private javax.swing.JMenuItem mitGuardarPatron;
+    private javax.swing.JMenuItem mitLimpiar;
+    private javax.swing.JMenu mitReconocer;
+    private javax.swing.JMenuItem mitSalir;
     private javax.swing.JPanel pnlDibujo;
     private javax.swing.JSpinner spGrosor;
     private javax.swing.JTextField tfResultado;
