@@ -1,7 +1,6 @@
 package UI;
 
 import java.awt.BasicStroke;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,10 +9,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Path2D;
+import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Lienzo extends Canvas implements MouseListener, MouseMotionListener {
+public class Lienzo extends JPanel implements MouseListener, MouseMotionListener {
     private ArrayList<Linea> lineas = new ArrayList<>();
     private Color color;
     private int grosor;
@@ -33,8 +33,8 @@ public class Lienzo extends Canvas implements MouseListener, MouseMotionListener
     }
     
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D draw = (Graphics2D) g;
         draw.setColor(Color.white);
         draw.fillRect(0, 0, this.getWidth(), this.getHeight());
