@@ -49,7 +49,7 @@ public class Controlador {
      * @param caracter Caracter correspondiente a la imagen (se distinguen
      *                  mayúsculas de minúsculas)
      */
-    public void guardarCaracter(BufferedImage imagen, String caracter) {
+    public void guardarCaracter(BufferedImage imagen, String caracter) throws JAXBException {
         entrenarCaracter(imagen, caracter);
         commit();
     }
@@ -61,15 +61,12 @@ public class Controlador {
         }).start();
     }
     
-    private void commit() {
-        try {
-            ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
-        } catch (JAXBException ex) {
-            System.err.println("Error al guardar la BD");
-        }
+    private void commit() throws JAXBException {
+        ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
     }
     
-    public void entrenamientoPorLotes() {
+    public int entrenamientoPorLotes() throws JAXBException {
+        int imagenes_entrenadas = 0;
         for (String caracter : new String[] {"A", "B", "C"}) {
             File directorio = new File(RUTA_IMG, caracter);
             String[] contenido = directorio.list();
@@ -77,19 +74,16 @@ public class Controlador {
                 try {
                     BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
                     entrenarCaracter(imagen, caracter);
+                    imagenes_entrenadas++;
                 } catch (IOException ex) {
-                    System.err.println("Error al abrir la imagen");
                 }
             }
         }
-        //commit();
+        commit();
+        return imagenes_entrenadas;
     }
     
-    public void guardarImagenParaEntrenamiento(BufferedImage imagen, String ubicacion) {
-        try {
-            ImageIO.write(imagen, "jpg", new File(ubicacion));
-        } catch (IOException ex) {
-            System.err.println("Error al guardar la imagen");
-        }
+    public void guardarImagen(BufferedImage imagen, File archivo) throws IOException {
+        ImageIO.write(imagen, "jpg", archivo);
     }
 }

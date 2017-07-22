@@ -2,7 +2,12 @@ package UI;
 
 import Core.Controlador;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.xml.bind.JAXBException;
 
 public class MainWindow extends javax.swing.JFrame {
     private Lienzo lienzoDibujo;
@@ -65,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mitGuardar = new javax.swing.JMenuItem();
         mitSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mitDeshacer = new javax.swing.JMenuItem();
@@ -87,6 +92,9 @@ public class MainWindow extends javax.swing.JFrame {
             pnlDibujoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 294, Short.MAX_VALUE)
         );
+
+        tfResultado.setEditable(false);
+        tfResultado.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("Caracter reconocido");
 
@@ -113,12 +121,20 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Abrir");
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Guardar como");
-        jMenu1.add(jMenuItem2);
+        mitGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mitGuardar.setText("Guardar como");
+        mitGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitGuardarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitGuardar);
 
+        mitSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         mitSalir.setText("Salir");
         mitSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +147,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenu2.setText("Edición");
 
+        mitDeshacer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         mitDeshacer.setText("Deshacer trazo");
         mitDeshacer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +156,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu2.add(mitDeshacer);
 
+        mitLimpiar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         mitLimpiar.setText("Limpiar lienzo");
         mitLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +169,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         mitReconocer.setText("Reconocimiento");
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setText("Reconocer");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +178,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         mitReconocer.add(jMenuItem3);
 
+        mitGuardarPatron.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         mitGuardarPatron.setText("Guardar patrón");
         mitGuardarPatron.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,6 +187,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         mitReconocer.add(mitGuardarPatron);
 
+        mitEntrenamientoFast.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         mitEntrenamientoFast.setText("Entrenamiento por lotes");
         mitEntrenamientoFast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,6 +250,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void mitLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitLimpiarActionPerformed
         lienzoDibujo.limpiarContenido();
+        tfResultado.setText("");
     }//GEN-LAST:event_mitLimpiarActionPerformed
 
     private void mitSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSalirActionPerformed
@@ -242,12 +264,50 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void mitGuardarPatronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarPatronActionPerformed
         String letra = JOptionPane.showInputDialog(this, "Caracter asociado");
-        aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
+        if ( !letra.isEmpty() ) {
+            try {
+                aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
+            } catch (JAXBException ex) {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar");
+            }
+        }
     }//GEN-LAST:event_mitGuardarPatronActionPerformed
 
     private void mitEntrenamientoFastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrenamientoFastActionPerformed
-        
+        try {
+            int imagenes_entrenadas = aplicacion.entrenamientoPorLotes();
+            JOptionPane.showMessageDialog(this,
+                    String.format("Se %s %d %s en total.",
+                            imagenes_entrenadas==1 ? "procesó":"procesaron",
+                            imagenes_entrenadas,
+                            imagenes_entrenadas==1 ? "imagen":"imágenes")
+            );
+        } catch (JAXBException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al entrenar");
+        }
     }//GEN-LAST:event_mitEntrenamientoFastActionPerformed
+
+    private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
+        JFileChooser selector = new JFileChooser("img");
+        selector.showSaveDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        if ( !archivo.getName().matches("[a-zA-Z0-9]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        
+        BufferedImage imagen = lienzoDibujo.getImagen();
+        
+        try {
+            aplicacion.guardarImagen(imagen, archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
+        }
+    }//GEN-LAST:event_mitGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,13 +351,13 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem mitDeshacer;
     private javax.swing.JMenuItem mitEntrenamientoFast;
+    private javax.swing.JMenuItem mitGuardar;
     private javax.swing.JMenuItem mitGuardarPatron;
     private javax.swing.JMenuItem mitLimpiar;
     private javax.swing.JMenu mitReconocer;
