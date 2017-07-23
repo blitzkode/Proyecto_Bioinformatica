@@ -24,6 +24,7 @@ public class Start extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setOpaque();
         aplicacion = new Controlador();
+        
     }
 
     private void setOpaque(){

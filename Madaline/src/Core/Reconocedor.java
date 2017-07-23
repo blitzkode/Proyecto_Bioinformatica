@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Maneja una lista de redes Madaline que reconocen un caracter cada una
  * @author fyetka
  */
-@XmlRootElement(name="basededatos")
+@XmlRootElement(name="bd")
 public class Reconocedor {
-    private ArrayList<Madaline> madalines = new ArrayList();
+    private ArrayList<Madaline> mads = new ArrayList();
     
     public Reconocedor() {
         
@@ -25,10 +25,10 @@ public class Reconocedor {
     public String reconocerCaracter(byte[] patron) {
         String caracter = "";
         
-        for (Madaline neurona : madalines) {
+        for (Madaline neurona : mads) {
             int salida = neurona.calcularSalida(patron);
             if (salida == 1) {
-                caracter = neurona.getNombre();
+                caracter = neurona.getNom();
                 break;
             }
         }
@@ -44,9 +44,9 @@ public class Reconocedor {
      * @param patron Patrón asociado al caracter
      */
     public void entrenar(String caracter, byte [] patron) {
-        for (Madaline madaline : madalines) {
+        for (Madaline madaline : mads) {
             madaline.entrenar(patron,
-                    (byte) (madaline.getNombre().equals(caracter) ? 1 : -1) );
+                    (byte) (madaline.getNom().equals(caracter) ? 1 : -1) );
         }
     }
 
@@ -58,17 +58,17 @@ public class Reconocedor {
             madalines_default.add(new Madaline(caracter, pesos));
         }
         
-        this.madalines = madalines_default;
+        this.mads = madalines_default;
     }
     
-    @XmlElementWrapper(name="madalines")
-    @XmlElement(name="madaline")
+    @XmlElementWrapper(name="mads")
+    @XmlElement(name="mad")
     public ArrayList<Madaline> getMadalines() {
-        return madalines;
+        return mads;
     }
 
     public void setMadalines(ArrayList<Madaline> madalines) {
-        this.madalines = madalines;
+        this.mads = madalines;
     }
     
     

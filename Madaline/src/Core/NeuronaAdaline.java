@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="adaline")
+@XmlRootElement(name="ad")
 public class NeuronaAdaline {
     private double[] pesos;
     private static final double UMBRAL = 1;
@@ -72,8 +72,8 @@ public class NeuronaAdaline {
         return cadena;
     }
     
-    @XmlElementWrapper(name = "pesos")
-    @XmlElement(name="peso")
+    @XmlElementWrapper(name = "ps")
+    @XmlElement(name="p")
     public double[] getPesos() {
         return pesos;
     }

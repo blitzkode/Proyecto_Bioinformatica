@@ -6,34 +6,34 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="madaline")
-@XmlType(propOrder = {"nombre", "adalines"})
+@XmlRootElement(name="mad")
+@XmlType(propOrder = {"nom", "ads"})
 public class Madaline {
-    private String nombre;
-    private NeuronaAdaline[] adalines;
+    private String nom;
+    private NeuronaAdaline[] ads;
     
     public Madaline() {
         
     }
     
     public Madaline(int adalines) {
-        this.adalines = new NeuronaAdaline[adalines];
+        this.ads = new NeuronaAdaline[adalines];
     }
     
     public Madaline(double[][] pesosAdalines) {
         this(pesosAdalines.length);
         inicializarAdalines(pesosAdalines);
-        this.nombre = "";
+        this.nom = "";
     }
     
     public Madaline(String nombre, double [][] pesosAdalines) {
         this(pesosAdalines);
-        this.nombre = nombre;
+        this.nom = nombre;
     }
     
     private void inicializarAdalines(double[][] pesosAdalines) {
-        for (int i=0; i<adalines.length; i++) {
-            adalines[i] = new NeuronaAdaline(pesosAdalines[i]);
+        for (int i=0; i<ads.length; i++) {
+            ads[i] = new NeuronaAdaline(pesosAdalines[i]);
         }
     }
     
@@ -58,7 +58,7 @@ public class Madaline {
     
     protected void ajustarPesos(byte[] entradas, byte salidaDeseada) {
         int c = adalineGanador(entradas, salidaDeseada);
-        adalines[c].ajustarPesos(entradas, salidaDeseada);
+        ads[c].ajustarPesos(entradas, salidaDeseada);
     }
     
     protected int adalineGanador(byte[] entradas, byte salidaDeseada) {
@@ -66,7 +66,7 @@ public class Madaline {
         int pos_ganador = 0;
         double cercanoACero = Integer.MAX_VALUE;
         for (int i = 0; i < salidas.length; i++) {
-            if ( adalines[i].calcularSalida(entradas) != salidaDeseada && // adaline con salida erronea
+            if ( ads[i].calcularSalida(entradas) != salidaDeseada && // adaline con salida erronea
                     Math.abs(salidas[i]) < cercanoACero) {
                 cercanoACero = Math.abs(salidas[i]);
                 pos_ganador = i;
@@ -76,17 +76,17 @@ public class Madaline {
     }
     
     public byte calcularSalida(byte[] entradas) {
-        byte[] salidas = new byte[adalines.length];
+        byte[] salidas = new byte[ads.length];
         for (int i = 0; i < salidas.length; i++) {
-            salidas[i] = adalines[i].calcularSalida(entradas);
+            salidas[i] = ads[i].calcularSalida(entradas);
         }
         return funcionMayoria(salidas);
     }
     
     public double[] salidasAdalines(byte[] entradas) {
-        double[] salidas = new double[adalines.length];
+        double[] salidas = new double[ads.length];
         for (int i = 0; i < salidas.length; i++) {
-            salidas[i] = adalines[i].salidaOriginal(entradas);
+            salidas[i] = ads[i].salidaOriginal(entradas);
         }
         return salidas;
     }
@@ -101,9 +101,9 @@ public class Madaline {
     }
     
     public double[][] getPesos() {
-        double[][] pesos = new double[adalines.length][];
-        for (int i=0; i<adalines.length; i++) {
-            pesos[i] = adalines[i].getPesos();
+        double[][] pesos = new double[ads.length][];
+        for (int i=0; i<ads.length; i++) {
+            pesos[i] = ads[i].getPesos();
         }
         return pesos;
     }
@@ -115,30 +115,30 @@ public class Madaline {
     
     public String toString(int decimales) {
         String cadena = "";
-        for (int i = 0; i < adalines.length; i++) {
+        for (int i = 0; i < ads.length; i++) {
             cadena += String.format("Adaline %d: %s\n", 
-                    (i+1), adalines[i].toString(decimales));
+                    (i+1), ads[i].toString(decimales));
         }
         return cadena;
     }
 
-    @XmlElementWrapper(name = "adalines")
-    @XmlElement(name="adaline")
-    public NeuronaAdaline[] getAdalines() {
-        return adalines;
+    @XmlElementWrapper(name = "ads")
+    @XmlElement(name="ad")
+    public NeuronaAdaline[] getAds() {
+        return ads;
     }
 
     public void setAdalines(NeuronaAdaline[] adalines) {
-        this.adalines = adalines;
+        this.ads = adalines;
     }
     
-    @XmlAttribute(name = "nombre")
-    public String getNombre() {
-        return nombre;
+    @XmlAttribute(name = "nom")
+    public String getNom() {
+        return nom;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nom = nombre;
     }
     
 }

@@ -71,7 +71,15 @@ public class Lienzo extends JPanel {
     }
 
     public void setGrosor(int grosor) {
-        this.grosor = (grosor > 0 ? grosor : 1);
+        this.grosor = grosor;
+    }
+    
+    public void aumentarGrosor() {
+        this.grosor += (this.grosor == 30 ? 0 : 4);
+    }
+    
+    public void disminuirGrosor() {
+        this.grosor -= (this.grosor == 14 ? 0 : 4);
     }
 
     public int getGrosor() {

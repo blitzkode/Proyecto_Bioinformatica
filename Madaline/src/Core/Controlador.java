@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBException;
 import procesador_imagenes.ProcesarImagen;
@@ -22,13 +24,11 @@ public class Controlador {
     private int puntos;
     private int intentos;
     private ArrayList<String> letras_partida;
-//    private static final String[] alfabeto = {
-//        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q",
-//        "R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i",
-//        "j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"
-//    };
     private static final String[] alfabeto = {
-        "A","B","C"};
+        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q",
+        "R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i",
+        "j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"
+    };
     
     /**
      * Constructor por defecto. Si no se encuentra el archivo XML con los pesos
@@ -98,26 +98,32 @@ public class Controlador {
     
     private void entrenarCaracter(BufferedImage imagen, String caracter) {
         byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
-        new Thread(() -> {
-            reconocedor.entrenar(caracter, patron);
-        }).start();
+        reconocedor.entrenar(caracter, patron);        
     }
     
-    private void commit() throws JAXBException {
-        ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
+    private void commit() {
+        new Thread(() -> {
+            try {
+                ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
+            } catch (JAXBException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
     }
     
     public int entrenamientoPorLotes() throws JAXBException {
         int imagenes_entrenadas = 0;
         for (String caracter : alfabeto) {
             File directorio = new File(RUTA_IMG, caracter);
-            String[] contenido = directorio.list();
-            for (String archivoImagen : contenido) {
-                try {
-                    BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
-                    entrenarCaracter(imagen, caracter);
-                    imagenes_entrenadas++;
-                } catch (IOException ex) {
+            if (directorio.exists()) {
+                String[] contenido = directorio.list();
+                for (String archivoImagen : contenido) {
+                    try {
+                        BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
+                        entrenarCaracter(imagen, caracter);
+                        imagenes_entrenadas++;
+                    } catch (IOException ex) {
+                    }
                 }
             }
         }
