@@ -161,9 +161,8 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_retoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        Mantenimiento mnt = new Mantenimiento();
-        mnt.setVisible(true);
+       setVisible(false);
+       new Mantenimiento(aplicacion, this).setVisible(true);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

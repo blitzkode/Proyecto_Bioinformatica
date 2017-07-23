@@ -103,7 +103,7 @@ public class Madaline {
     public double[][] getPesos() {
         double[][] pesos = new double[ads.length][];
         for (int i=0; i<ads.length; i++) {
-            pesos[i] = ads[i].getPesos();
+            pesos[i] = ads[i].getPs();
         }
         return pesos;
     }
@@ -128,7 +128,7 @@ public class Madaline {
         return ads;
     }
 
-    public void setAdalines(NeuronaAdaline[] adalines) {
+    public void setAds(NeuronaAdaline[] adalines) {
         this.ads = adalines;
     }
     
@@ -137,7 +137,7 @@ public class Madaline {
         return nom;
     }
 
-    public void setNombre(String nombre) {
+    public void setNom(String nombre) {
         this.nom = nombre;
     }
     

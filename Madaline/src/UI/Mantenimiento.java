@@ -11,12 +11,14 @@ import javax.xml.bind.JAXBException;
 public class Mantenimiento extends javax.swing.JFrame {
     private Lienzo lienzoDibujo;
     private Controlador aplicacion;
+    private javax.swing.JFrame padre;
     
-    /** Creates new form MainWindow */
-    public Mantenimiento() {
+    
+    public Mantenimiento(Controlador aplicacion, javax.swing.JFrame padre) {
         initComponents();
         setLocationRelativeTo(null);
-        aplicacion = new Controlador();
+        this.aplicacion = aplicacion;
+        this.padre = padre;
         
         lienzoDibujo = new Lienzo();
         lienzoDibujo.setSize(pnlDibujo.getSize());
@@ -37,6 +39,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         spGrosor = new javax.swing.JSpinner();
+        pbProgreso = new javax.swing.JProgressBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -174,6 +177,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,9 +186,9 @@ public class Mantenimiento extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pbProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +200,9 @@ public class Mantenimiento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(tfResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pbProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -224,6 +230,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_mitLimpiarActionPerformed
 
     private void mitSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSalirActionPerformed
+        padre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_mitSalirActionPerformed
 
@@ -235,26 +242,34 @@ public class Mantenimiento extends javax.swing.JFrame {
     private void mitGuardarPatronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarPatronActionPerformed
         String letra = JOptionPane.showInputDialog(this, "Caracter asociado");
         if ( !letra.isEmpty() ) {
-            try {
-                aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
-            } catch (JAXBException ex) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar");
-            }
+            new Thread(() -> {
+                try {
+                    pbProgreso.setIndeterminate(true);
+                    aplicacion.guardarCaracter(lienzoDibujo.getImagen(), letra);
+                    pbProgreso.setIndeterminate(false);
+                } catch (JAXBException ex) {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar");
+                }
+            }).start();
         }
     }//GEN-LAST:event_mitGuardarPatronActionPerformed
 
     private void mitEntrenamientoFastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrenamientoFastActionPerformed
-        try {
-            int imagenes_entrenadas = aplicacion.entrenamientoPorLotes();
-            JOptionPane.showMessageDialog(this,
-                    String.format("Se %s %d %s en total.",
-                            imagenes_entrenadas==1 ? "procesó":"procesaron",
-                            imagenes_entrenadas,
-                            imagenes_entrenadas==1 ? "imagen":"imágenes")
-            );
-        } catch (JAXBException ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al entrenar");
-        }
+            new Thread(() -> {
+                try {
+                    pbProgreso.setIndeterminate(true);
+                    int imagenes_entrenadas = aplicacion.entrenamientoPorLotes();
+                    pbProgreso.setIndeterminate(false);
+                    JOptionPane.showMessageDialog(null,
+                            String.format("Se %s %d %s en total.",
+                                    imagenes_entrenadas==1 ? "procesó":"procesaron",
+                                    imagenes_entrenadas,
+                                    imagenes_entrenadas==1 ? "imagen":"imágenes")
+                    );
+                } catch (JAXBException ex) {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al entrenar");
+                }
+            }).start();
     }//GEN-LAST:event_mitEntrenamientoFastActionPerformed
 
     private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
@@ -278,10 +293,6 @@ public class Mantenimiento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
         }
     }//GEN-LAST:event_mitGuardarActionPerformed
-
-    public static void main(String[] args) {
-        new Mantenimiento().setVisible(true);
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -301,6 +312,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitLimpiar;
     private javax.swing.JMenu mitReconocer;
     private javax.swing.JMenuItem mitSalir;
+    private javax.swing.JProgressBar pbProgreso;
     private javax.swing.JPanel pnlDibujo;
     private javax.swing.JSpinner spGrosor;
     private javax.swing.JTextField tfResultado;

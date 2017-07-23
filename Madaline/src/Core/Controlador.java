@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBException;
 import procesador_imagenes.ProcesarImagen;
@@ -102,13 +100,11 @@ public class Controlador {
     }
     
     private void commit() {
-        new Thread(() -> {
-            try {
-                ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
-            } catch (JAXBException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }).start();
+        try {
+            ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
+        } catch (JAXBException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public int entrenamientoPorLotes() throws JAXBException {

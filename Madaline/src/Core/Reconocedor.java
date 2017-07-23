@@ -63,11 +63,11 @@ public class Reconocedor {
     
     @XmlElementWrapper(name="mads")
     @XmlElement(name="mad")
-    public ArrayList<Madaline> getMadalines() {
+    public ArrayList<Madaline> getMads() {
         return mads;
     }
 
-    public void setMadalines(ArrayList<Madaline> madalines) {
+    public void setMads(ArrayList<Madaline> madalines) {
         this.mads = madalines;
     }
     

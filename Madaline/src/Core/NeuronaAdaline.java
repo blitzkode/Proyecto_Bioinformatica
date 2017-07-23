@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="ad")
 public class NeuronaAdaline {
-    private double[] pesos;
+    private double[] ps;
     private static final double UMBRAL = 1;
     private static final double E = 0.0001; // tasa de aprendizaje
 
@@ -15,7 +15,7 @@ public class NeuronaAdaline {
     }
     
     public NeuronaAdaline(double[] pesos) {
-        this.pesos = pesos;
+        this.ps = pesos;
         //this.calcularE();
     }
     
@@ -40,9 +40,9 @@ public class NeuronaAdaline {
     }
     
     protected double propagacion(byte[] entradas) {
-        double suma = pesos[0] * UMBRAL;
+        double suma = ps[0] * UMBRAL;
         for (int i = 0; i < entradas.length; i++) {
-            suma += pesos[i+1] * entradas[i];
+            suma += ps[i+1] * entradas[i];
         }
         return suma;
     }
@@ -57,29 +57,29 @@ public class NeuronaAdaline {
 
     protected void ajustarPesos(byte[] entradas, byte salidaDeseada) {
         double y = propagacion(entradas);
-        pesos[0] += (E * (salidaDeseada - y) * UMBRAL);
+        ps[0] += (E * (salidaDeseada - y) * UMBRAL);
         
         for (int i = 0; i < entradas.length; i++) {
-            pesos[i+1] += (E * (salidaDeseada - y) * entradas[i]);
+            ps[i+1] += (E * (salidaDeseada - y) * entradas[i]);
         }
     }
     
     public String toString(int decimales) {
         String cadena = "";
-        for (int i=0; i<pesos.length; i++) {
-            cadena += String.format("W%d= %."+decimales+"f ", i, pesos[i]);
+        for (int i=0; i<ps.length; i++) {
+            cadena += String.format("W%d= %."+decimales+"f ", i, ps[i]);
         }
         return cadena;
     }
     
     @XmlElementWrapper(name = "ps")
     @XmlElement(name="p")
-    public double[] getPesos() {
-        return pesos;
+    public double[] getPs() {
+        return ps;
     }
 
-    public void setPesos(double[] pesos) {
-        this.pesos = pesos;
+    public void setPs(double[] ps) {
+        this.ps = ps;
     }
     
 //    private void calcularE() {
