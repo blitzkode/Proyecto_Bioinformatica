@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Lienzo extends JPanel implements MouseListener, MouseMotionListener {
+public class Lienzo extends JPanel {
     private ArrayList<Linea> lineas = new ArrayList<>();
     private Color color;
     private int grosor;
@@ -22,7 +22,11 @@ public class Lienzo extends JPanel implements MouseListener, MouseMotionListener
     public Lienzo() {
         this.color = Color.BLACK;
         this.setBackground(Color.white);
-        this.grosor = 5;
+        this.grosor = 14;
+        
+        EventHandler manejador = new EventHandler();
+        this.addMouseListener(manejador);
+        this.addMouseMotionListener(manejador);
     }
 
     public BufferedImage getImagen() {
@@ -50,33 +54,6 @@ public class Lienzo extends JPanel implements MouseListener, MouseMotionListener
         }
     }
     
-    @Override
-    public void mousePressed(MouseEvent e) {
-        Path2D linea = new Path2D.Float();
-        linea.moveTo(e.getX(), e.getY());
-        linea.lineTo(e.getX(), e.getY());
-        this.lineas.add(new Linea(linea, this.color, this.grosor));
-        repaint();
-    }
-    
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        lineas.get(lineas.size()-1).shape.lineTo(e.getX(), e.getY());
-        repaint();
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        pincel = new Point(e.getX(), e.getY());
-        repaint();
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        pincel = null;
-        repaint();
-    }
-
     public void limpiarContenido() {
         this.lineas = new ArrayList<>();
         repaint();
@@ -97,16 +74,59 @@ public class Lienzo extends JPanel implements MouseListener, MouseMotionListener
         this.grosor = grosor;
     }
     
-    //<editor-fold defaultstate="collapsed" desc="Eventos no usados">
-    @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void aumentarGrosor() {
+        this.grosor += (this.grosor == 30 ? 0 : 4);
+    }
+    
+    public void disminuirGrosor() {
+        this.grosor -= (this.grosor == 14 ? 0 : 4);
+    }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {}
+    public int getGrosor() {
+        return this.grosor;
+    }
+    
+    
+    class EventHandler implements MouseListener, MouseMotionListener {
 
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-    //</editor-fold>
+        @Override
+        public void mousePressed(MouseEvent e) {
+            Path2D linea = new Path2D.Float();
+            linea.moveTo(e.getX(), e.getY());
+            linea.lineTo(e.getX(), e.getY());
+            lineas.add(new Linea(linea, color, grosor));
+            repaint();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            pincel = null;
+            repaint();
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            lineas.get(lineas.size()-1).shape.lineTo(e.getX(), e.getY());
+            repaint();
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            pincel = new Point(e.getX(), e.getY());
+            repaint();
+        }
+        
+        //<editor-fold defaultstate="collapsed" desc="Eventos no usados">
+        @Override
+        public void mouseClicked(MouseEvent e) {}
+        
+        @Override
+        public void mouseReleased(MouseEvent e) {}
+
+        @Override
+        public void mouseEntered(MouseEvent e) {}
+        //</editor-fold>
+    }
 }
 
 class Linea {

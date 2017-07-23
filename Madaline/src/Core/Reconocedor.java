@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Maneja una lista de redes Madaline que reconocen un caracter cada una
  * @author fyetka
  */
-@XmlRootElement(name="basededatos")
+@XmlRootElement(name="bd")
 public class Reconocedor {
-    private ArrayList<Madaline> madalines = new ArrayList();
+    private ArrayList<Madaline> mads = new ArrayList();
     
     public Reconocedor() {
         
@@ -25,10 +25,10 @@ public class Reconocedor {
     public String reconocerCaracter(byte[] patron) {
         String caracter = "";
         
-        for (Madaline neurona : madalines) {
+        for (Madaline neurona : mads) {
             int salida = neurona.calcularSalida(patron);
             if (salida == 1) {
-                caracter = neurona.getNombre();
+                caracter = neurona.getNom();
                 break;
             }
         }
@@ -44,31 +44,31 @@ public class Reconocedor {
      * @param patron Patrón asociado al caracter
      */
     public void entrenar(String caracter, byte [] patron) {
-        for (Madaline madaline : madalines) {
+        for (Madaline madaline : mads) {
             madaline.entrenar(patron,
-                    (byte) (madaline.getNombre().equals(caracter) ? 1 : -1) );
+                    (byte) (madaline.getNom().equals(caracter) ? 1 : -1) );
         }
     }
 
-    public void iniciarMadalinesDefault() {
+    public void iniciarMadalinesDefault(String[] caracteres) {
         ArrayList<Madaline> madalines_default = new ArrayList<>();
-        //TODO
-        double[][] pesos = new double[5][100*100+1];
-        madalines_default.add(new Madaline("A", pesos));
-        madalines_default.add(new Madaline("B", pesos));
-        madalines_default.add(new Madaline("C", pesos));
         
-        this.madalines = madalines_default;
+        double[][] pesos = new double[5][100*100+1];
+        for (String caracter : caracteres) {
+            madalines_default.add(new Madaline(caracter, pesos));
+        }
+        
+        this.mads = madalines_default;
     }
     
-    @XmlElementWrapper(name="madalines")
-    @XmlElement(name="madaline")
-    public ArrayList<Madaline> getMadalines() {
-        return madalines;
+    @XmlElementWrapper(name="mads")
+    @XmlElement(name="mad")
+    public ArrayList<Madaline> getMads() {
+        return mads;
     }
 
-    public void setMadalines(ArrayList<Madaline> madalines) {
-        this.madalines = madalines;
+    public void setMads(ArrayList<Madaline> madalines) {
+        this.mads = madalines;
     }
     
     
