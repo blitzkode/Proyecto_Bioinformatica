@@ -1,30 +1,45 @@
 package UI;
 
+import Core.Controlador;
+import java.awt.Color;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Principal extends javax.swing.JFrame {
-
-    JLabel[] stars;
+    Controlador aplicacion;
+    Lienzo lienzo;
+    PanelLetra panelLetra;
+    javax.swing.JFrame padre;
+    JLabel[] stars = new JLabel[5];
 
     ImageIcon starY, starG;
     Icon s_on, s_off;
 
-    public Principal() {
+    public Principal(Controlador aplicacion, javax.swing.JFrame padre) {
+        initComponents();
 
         setExtendedState(MAXIMIZED_BOTH);
-
-        stars = new JLabel[5];
-
-        initComponents();
+        this.aplicacion = aplicacion;
+        this.padre = padre;
+        
+        lienzo = new Lienzo();
+        pnlContenedorLienzo.add(lienzo);
+        panelLetra = new PanelLetra();
+        pnl_ayuda.add(panelLetra);
+        
         getStars();
         setOpaque();
         setstars(0);
+        
+        aplicacion.nuevoJuego(5);
+        siguienteLetra();
     }
-
+    
     private void getStars() {
         starY = new ImageIcon(getClass().getResource("/Iconos/star1.png"));
         s_on = new ImageIcon(starY.getImage().getScaledInstance(stars[0].getWidth(), stars[0].getHeight(), Image.SCALE_DEFAULT));
@@ -45,52 +60,21 @@ public class Principal extends javax.swing.JFrame {
 
     private void setOpaque() {
 
-        btn_pulsa.setOpaque(false);
-        btn_pulsa.setContentAreaFilled(false);
-        btn_pulsa.setBorderPainted(false);
-
-        btn_salir.setOpaque(false);
-        btn_salir.setContentAreaFilled(false);
-        btn_salir.setBorderPainted(false);
-
-        btn_clean.setOpaque(false);
-        btn_clean.setContentAreaFilled(false);
-        btn_clean.setBorderPainted(false);
-
-        btn_rojo.setOpaque(false);
-        btn_rojo.setContentAreaFilled(false);
-        btn_rojo.setBorderPainted(false);
-
-        btn_verde.setOpaque(false);
-        btn_verde.setContentAreaFilled(false);
-        btn_verde.setBorderPainted(false);
-
-        btn_lila.setOpaque(false);
-        btn_lila.setContentAreaFilled(false);
-        btn_lila.setBorderPainted(false);
-
-        btn_marron.setOpaque(false);
-        btn_marron.setContentAreaFilled(false);
-        btn_marron.setBorderPainted(false);
-
-        btn_mas.setOpaque(false);
-        btn_mas.setContentAreaFilled(false);
-        btn_mas.setBorderPainted(false);
-
-        btn_menos.setOpaque(false);
-        btn_menos.setContentAreaFilled(false);
-        btn_menos.setBorderPainted(false);
-
-        btn_naranja.setOpaque(false);
-        btn_naranja.setContentAreaFilled(false);
-        btn_naranja.setBorderPainted(false);
-
-        btn_siguiente.setOpaque(false);
-        btn_siguiente.setContentAreaFilled(false);
-        btn_siguiente.setBorderPainted(false);
+        for (JButton boton : new JButton[] {btn_pulsa,btn_salir,btn_clean,btn_rojo,
+            btn_verde,btn_lila,btn_marron,btn_mas,btn_menos,btn_naranja,btn_siguiente}) {
+            
+            boton.setOpaque(false);
+            boton.setContentAreaFilled(false);
+            boton.setBorderPainted(false);
+        }
 
     }
 
+    private void siguienteLetra() {
+        panelLetra.dibujarLetra(aplicacion.getLetraActual());
+        lienzo.limpiarContenido();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -108,7 +92,7 @@ public class Principal extends javax.swing.JFrame {
         btn_menos = new javax.swing.JButton();
         btn_mas = new javax.swing.JButton();
         pnl_ayuda = new javax.swing.JPanel();
-        lienzo = new javax.swing.JPanel();
+        pnlContenedorLienzo = new javax.swing.JPanel();
         pnl_botones = new javax.swing.JPanel();
         btn_siguiente = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
@@ -143,22 +127,47 @@ public class Principal extends javax.swing.JFrame {
         btn_lila.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_2.png"))); // NOI18N
         btn_lila.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_1.png"))); // NOI18N
         btn_lila.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_3.png"))); // NOI18N
+        btn_lila.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lilaActionPerformed(evt);
+            }
+        });
 
         btn_marron.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3d2601_2.png"))); // NOI18N
         btn_marron.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3d2601_1.png"))); // NOI18N
         btn_marron.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3d2601_3.png"))); // NOI18N
+        btn_marron.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_marronActionPerformed(evt);
+            }
+        });
 
         btn_naranja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/e79e00_2.png"))); // NOI18N
         btn_naranja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/e79e00_1.png"))); // NOI18N
         btn_naranja.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/e79e00_3.png"))); // NOI18N
+        btn_naranja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_naranjaActionPerformed(evt);
+            }
+        });
 
         btn_verde.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_2.png"))); // NOI18N
         btn_verde.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_1.png"))); // NOI18N
         btn_verde.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_3.png"))); // NOI18N
+        btn_verde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_verdeActionPerformed(evt);
+            }
+        });
 
         btn_rojo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_2.png"))); // NOI18N
         btn_rojo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800.png"))); // NOI18N
         btn_rojo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_3.png"))); // NOI18N
+        btn_rojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_rojoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_coloresLayout = new javax.swing.GroupLayout(pnl_colores);
         pnl_colores.setLayout(pnl_coloresLayout);
@@ -266,6 +275,11 @@ public class Principal extends javax.swing.JFrame {
         );
 
         pnl_ayuda.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_ayuda.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnl_ayudaComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_ayudaLayout = new javax.swing.GroupLayout(pnl_ayuda);
         pnl_ayuda.setLayout(pnl_ayudaLayout);
@@ -278,24 +292,35 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        lienzo.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContenedorLienzo.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContenedorLienzo.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlContenedorLienzoComponentResized(evt);
+            }
+        });
 
-        javax.swing.GroupLayout lienzoLayout = new javax.swing.GroupLayout(lienzo);
-        lienzo.setLayout(lienzoLayout);
-        lienzoLayout.setHorizontalGroup(
-            lienzoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlContenedorLienzoLayout = new javax.swing.GroupLayout(pnlContenedorLienzo);
+        pnlContenedorLienzo.setLayout(pnlContenedorLienzoLayout);
+        pnlContenedorLienzoLayout.setHorizontalGroup(
+            pnlContenedorLienzoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        lienzoLayout.setVerticalGroup(
-            lienzoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlContenedorLienzoLayout.setVerticalGroup(
+            pnlContenedorLienzoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
         pnl_botones.setBackground(new java.awt.Color(132, 236, 159));
 
         btn_siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/siguiente_2.png"))); // NOI18N
+        btn_siguiente.setEnabled(false);
         btn_siguiente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/siguiente_1.png"))); // NOI18N
         btn_siguiente.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/siguiente_3.png"))); // NOI18N
+        btn_siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_siguienteActionPerformed(evt);
+            }
+        });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
         btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
@@ -310,6 +335,11 @@ public class Principal extends javax.swing.JFrame {
         btn_pulsa.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btn_pulsa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_1.png"))); // NOI18N
         btn_pulsa.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_3.png"))); // NOI18N
+        btn_pulsa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pulsaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
@@ -453,7 +483,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_mainLayout.createSequentialGroup()
-                        .addComponent(lienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlContenedorLienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_mainLayout.createSequentialGroup()
@@ -474,7 +504,7 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(pnl_botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(pnlContenedorLienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(pnl_opciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -502,24 +532,69 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-
-        Start start = new Start();
-        start.setVisible(true);
+        padre.setVisible(true);
         dispose();
 
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_cleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cleanActionPerformed
-        // TODO add your handling code here:
+        lienzo.limpiarContenido();
     }//GEN-LAST:event_btn_cleanActionPerformed
 
     private void btn_masActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_masActionPerformed
-       
+        lienzo.setGrosor(lienzo.getGrosor() + 1);
     }//GEN-LAST:event_btn_masActionPerformed
 
     private void btn_menosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menosActionPerformed
-     
+        lienzo.setGrosor(lienzo.getGrosor() - 1);
     }//GEN-LAST:event_btn_menosActionPerformed
+
+    private void pnlContenedorLienzoComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlContenedorLienzoComponentResized
+        lienzo.setSize(pnlContenedorLienzo.getSize());
+    }//GEN-LAST:event_pnlContenedorLienzoComponentResized
+
+    private void btn_rojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rojoActionPerformed
+        lienzo.setColor(new Color(255, 24, 0));
+    }//GEN-LAST:event_btn_rojoActionPerformed
+
+    private void btn_verdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verdeActionPerformed
+        lienzo.setColor(new Color(99, 184, 42));
+    }//GEN-LAST:event_btn_verdeActionPerformed
+
+    private void btn_naranjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_naranjaActionPerformed
+        lienzo.setColor(new Color(231, 158, 5));
+    }//GEN-LAST:event_btn_naranjaActionPerformed
+
+    private void btn_marronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_marronActionPerformed
+        lienzo.setColor(new Color(61, 38, 1));
+    }//GEN-LAST:event_btn_marronActionPerformed
+
+    private void btn_lilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lilaActionPerformed
+        lienzo.setColor(new Color(125, 2, 140));
+    }//GEN-LAST:event_btn_lilaActionPerformed
+
+    private void btn_pulsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pulsaActionPerformed
+        BufferedImage imagen = lienzo.getImagen();
+        boolean acierto = aplicacion.jugar(imagen);
+        txt_puntos.setText("PUNTOS: " + aplicacion.getPuntos());
+        txt_intentosf.setText("INTENTOS FALLIDOS: " + (aplicacion.getIntentos() - aplicacion.getPuntos()));
+        if (acierto) {
+            btn_siguiente.setEnabled(true);
+            btn_pulsa.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_pulsaActionPerformed
+
+    private void pnl_ayudaComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_ayudaComponentResized
+        panelLetra.setSize(pnl_ayuda.getSize());
+    }//GEN-LAST:event_pnl_ayudaComponentResized
+
+    private void btn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siguienteActionPerformed
+        if (!aplicacion.getLetras_partida().isEmpty()) {
+            siguienteLetra();
+            btn_pulsa.setEnabled(true);
+        }
+        btn_siguiente.setEnabled(false);
+    }//GEN-LAST:event_btn_siguienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -552,7 +627,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                //new Principal(new Controlador()).setVisible(true);
             }
         });
     }
@@ -573,7 +648,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel lienzo;
+    private javax.swing.JPanel pnlContenedorLienzo;
     private javax.swing.JPanel pnl_ayuda;
     private javax.swing.JPanel pnl_botones;
     private javax.swing.JPanel pnl_colores;

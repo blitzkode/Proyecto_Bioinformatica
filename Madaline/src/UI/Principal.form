@@ -74,7 +74,7 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="lienzo" max="32767" attributes="0"/>
+                          <Component id="pnlContenedorLienzo" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="pnl_botones" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -101,7 +101,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="pnl_botones" max="32767" attributes="0"/>
-                              <Component id="lienzo" max="32767" attributes="0"/>
+                              <Component id="pnlContenedorLienzo" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="pnl_opciones" max="32767" attributes="0"/>
@@ -201,6 +201,9 @@
                       <Image iconType="3" name="/Iconos/7d028c_3.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_lilaActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_marron">
                   <Properties>
@@ -214,6 +217,9 @@
                       <Image iconType="3" name="/Iconos/3d2601_3.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_marronActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_naranja">
                   <Properties>
@@ -227,6 +233,9 @@
                       <Image iconType="3" name="/Iconos/e79e00_3.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_naranjaActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_verde">
                   <Properties>
@@ -240,6 +249,9 @@
                       <Image iconType="3" name="/Iconos/63b82a_3.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_verdeActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_rojo">
                   <Properties>
@@ -253,6 +265,9 @@
                       <Image iconType="3" name="/Iconos/ff1800_3.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_rojoActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -350,6 +365,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnl_ayudaComponentResized"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -364,12 +382,15 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Container class="javax.swing.JPanel" name="lienzo">
+        <Container class="javax.swing.JPanel" name="pnlContenedorLienzo">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnlContenedorLienzoComponentResized"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -426,6 +447,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/siguiente_2.png"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/siguiente_1.png"/>
                 </Property>
@@ -433,6 +455,9 @@
                   <Image iconType="3" name="/Iconos/siguiente_3.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_siguienteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_salir">
               <Properties>
@@ -465,6 +490,9 @@
                   <Image iconType="3" name="/Iconos/pulsa_3.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pulsaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

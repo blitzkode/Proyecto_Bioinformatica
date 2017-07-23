@@ -50,13 +50,13 @@ public class Reconocedor {
         }
     }
 
-    public void iniciarMadalinesDefault() {
+    public void iniciarMadalinesDefault(String[] caracteres) {
         ArrayList<Madaline> madalines_default = new ArrayList<>();
-        //TODO
+        
         double[][] pesos = new double[5][100*100+1];
-        madalines_default.add(new Madaline("A", pesos));
-        madalines_default.add(new Madaline("B", pesos));
-        madalines_default.add(new Madaline("C", pesos));
+        for (String caracter : caracteres) {
+            madalines_default.add(new Madaline(caracter, pesos));
+        }
         
         this.madalines = madalines_default;
     }

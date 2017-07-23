@@ -5,20 +5,24 @@
  */
 package UI;
 
+import Core.Controlador;
+
 /**
  *
  * @author Diego Baes
  */
 public class Start extends javax.swing.JFrame {
 
+    Controlador aplicacion;
+    
     /**
      * Creates new form Start
      */
     public Start() {
-        
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
+        aplicacion = new Controlador();
     }
 
     /**
@@ -123,10 +127,9 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_retoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retoActionPerformed
-       
-        Principal principal=new Principal();
-        principal.setVisible(true);
-        dispose();
+        setVisible(false);
+        new Principal(aplicacion, this).setVisible(true);
+        
     }//GEN-LAST:event_btn_retoActionPerformed
 
     /**
