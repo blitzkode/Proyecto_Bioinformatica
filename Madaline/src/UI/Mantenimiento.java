@@ -4,6 +4,7 @@ import Core.Controlador;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
@@ -42,7 +43,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         pbProgreso = new javax.swing.JProgressBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mitAbrir = new javax.swing.JMenuItem();
         mitGuardar = new javax.swing.JMenuItem();
         mitSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -52,6 +53,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         mitGuardarPatron = new javax.swing.JMenuItem();
         mitEntrenamientoFast = new javax.swing.JMenuItem();
+        mitEntrManual = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,9 +96,14 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Abrir");
-        jMenu1.add(jMenuItem1);
+        mitAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        mitAbrir.setText("Abrir");
+        mitAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitAbrirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitAbrir);
 
         mitGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         mitGuardar.setText("Guardar como");
@@ -168,6 +175,14 @@ public class Mantenimiento extends javax.swing.JFrame {
             }
         });
         mitReconocer.add(mitEntrenamientoFast);
+
+        mitEntrManual.setText("Entrenamiento manual");
+        mitEntrManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitEntrManualActionPerformed(evt);
+            }
+        });
+        mitReconocer.add(mitEntrManual);
 
         jMenuBar1.add(mitReconocer);
 
@@ -293,6 +308,36 @@ public class Mantenimiento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
         }
     }//GEN-LAST:event_mitGuardarActionPerformed
+
+    private void mitAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitAbrirActionPerformed
+        JFileChooser selector = new JFileChooser("img");
+        selector.showOpenDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        if ( !archivo.getName().matches("[a-zA-Z0-9]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        try {
+            BufferedImage imagen = ImageIO.read(archivo);
+            lienzoDibujo.setImagen(imagen);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al abrir la imagen");
+        }
+    }//GEN-LAST:event_mitAbrirActionPerformed
+
+    private void mitEntrManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrManualActionPerformed
+        String letra = JOptionPane.showInputDialog(this, "Letra a entrenar");
+        byte validez = Byte.parseByte(JOptionPane.showInputDialog(this,
+                "Validez del patrón.\nVálido (1), Inválido (-1)"));
+        BufferedImage imagen = lienzoDibujo.getImagen();
+        new Thread(() -> {
+            aplicacion.entrenamientoManual(imagen, letra, validez);
+        }).start();
+    }//GEN-LAST:event_mitEntrManualActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -300,12 +345,13 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem mitAbrir;
     private javax.swing.JMenuItem mitDeshacer;
+    private javax.swing.JMenuItem mitEntrManual;
     private javax.swing.JMenuItem mitEntrenamientoFast;
     private javax.swing.JMenuItem mitGuardar;
     private javax.swing.JMenuItem mitGuardarPatron;

@@ -101,6 +101,13 @@ public class Controlador {
         reconocedor.entrenar(caracter, patron);        
     }
     
+    public void entrenamientoManual(BufferedImage imagen, String caracter, byte validez) {
+        validez = (byte) (validez < 0 ? -1 : 1);
+        byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
+        reconocedor.entrenar(caracter, patron, validez);
+        commit();
+    }
+    
     private void commit() {
         try {
             ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);

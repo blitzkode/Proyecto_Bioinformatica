@@ -18,6 +18,7 @@ public class Lienzo extends JPanel {
     private Color color;
     private int grosor;
     private Point pincel;
+    private BufferedImage imagen;
     
     public Lienzo() {
         this.color = Color.BLACK;
@@ -36,12 +37,21 @@ public class Lienzo extends JPanel {
         return imagen;
     }
     
+    public void setImagen(BufferedImage imagen) {
+        limpiarContenido();
+        this.imagen = imagen;
+        repaint();
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D draw = (Graphics2D) g;
         draw.setColor(Color.white);
         draw.fillRect(0, 0, this.getWidth(), this.getHeight());
+        if (imagen != null) {
+            draw.drawImage(imagen, 0, 0, this);
+        }
         for (Linea l : lineas) {
             draw.setStroke(new BasicStroke(l.grosor,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
             draw.setColor(l.color);
@@ -56,6 +66,7 @@ public class Lienzo extends JPanel {
     
     public void limpiarContenido() {
         this.lineas = new ArrayList<>();
+        this.imagen = null;
         repaint();
     }
 
