@@ -1,5 +1,6 @@
 package Core;
 
+import UI.Splash;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class Controlador {
      * de los Madalines se crea un nuevo Reconocedor con los pesos por defecto.
      */
     public Controlador() {
+         
         try {
             this.reconocedor = ReconocedorDataAccess.leerBD(this.RUTA_BD);
         } catch (JAXBException ex) {

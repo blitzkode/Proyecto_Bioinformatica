@@ -11,14 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class Principal extends javax.swing.JFrame {
+
     Controlador aplicacion;
     Lienzo lienzo;
     PanelLetra panelLetra;
     javax.swing.JFrame padre;
-    JLabel[] stars = new JLabel[5];
-
-    ImageIcon starY, starG;
-    Icon s_on, s_off;
 
     public Principal(Controlador aplicacion, javax.swing.JFrame padre) {
         initComponents();
@@ -26,43 +23,27 @@ public class Principal extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         this.aplicacion = aplicacion;
         this.padre = padre;
-        
+
         lienzo = new Lienzo();
         pnlContenedorLienzo.add(lienzo);
         panelLetra = new PanelLetra();
         pnl_ayuda.add(panelLetra);
-        
-        getStars();
+
         setOpaque();
-        setstars(0);
-        
+
+        setVisible(true);
+        new Dificultad(this, true).setVisible(true);
+
         aplicacion.nuevoJuego(5);
         siguienteLetra();
-    }
-    
-    private void getStars() {
-        starY = new ImageIcon(getClass().getResource("/Iconos/star1.png"));
-        s_on = new ImageIcon(starY.getImage().getScaledInstance(stars[0].getWidth(), stars[0].getHeight(), Image.SCALE_DEFAULT));
 
-        starG = new ImageIcon(getClass().getResource("/Iconos/star2.png"));
-        s_off = new ImageIcon(starG.getImage().getScaledInstance(stars[1].getWidth(), stars[1].getHeight(), Image.SCALE_DEFAULT));
-    }
-
-    private void setstars(int ptr) {
-        for (int i = 0; i < 5; i++) {
-            if (i < ptr) {
-                stars[i].setIcon(s_on);
-            } else {
-                stars[i].setIcon(s_off);
-            }
-        }
     }
 
     private void setOpaque() {
 
-        for (JButton boton : new JButton[] {btn_pulsa,btn_salir,btn_clean,btn_rojo,
-            btn_verde,btn_lila,btn_marron,btn_mas,btn_menos,btn_naranja,btn_siguiente}) {
-            
+        for (JButton boton : new JButton[]{btn_pulsa, btn_salir, btn_clean, btn_rojo,
+            btn_verde, btn_lila, btn_marron, btn_mas, btn_menos, btn_naranja, btn_siguiente}) {
+
             boton.setOpaque(false);
             boton.setContentAreaFilled(false);
             boton.setBorderPainted(false);
@@ -74,7 +55,7 @@ public class Principal extends javax.swing.JFrame {
         panelLetra.dibujarLetra(aplicacion.getLetraActual());
         lienzo.limpiarContenido();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -103,13 +84,6 @@ public class Principal extends javax.swing.JFrame {
         txt_intentosf = new javax.swing.JLabel();
         txt_nivel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        pnl_stars = new javax.swing.JPanel();
-        star1 = stars[0]= new JLabel();
- ;
-        star2 = stars[1]= new JLabel();
-        star3 = stars[2]= new JLabel();
-        star4 = stars[3]= new JLabel();
-        star5 = stars[4]= new JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -365,7 +339,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_salir))
         );
 
@@ -392,54 +366,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 96, 5));
         jLabel4.setText("NIVEL");
 
-        pnl_stars.setBackground(new java.awt.Color(132, 236, 159));
-
-        star1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        star2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        star3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        star4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        star5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout pnl_starsLayout = new javax.swing.GroupLayout(pnl_stars);
-        pnl_stars.setLayout(pnl_starsLayout);
-        pnl_starsLayout.setHorizontalGroup(
-            pnl_starsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_starsLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(star1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(star2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(star3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(star4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(star5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnl_starsLayout.setVerticalGroup(
-            pnl_starsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_starsLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(pnl_starsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(star5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(star4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(star3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(star2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(star1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(5, 5, 5))
-        );
-
         javax.swing.GroupLayout pnl_resultadosLayout = new javax.swing.GroupLayout(pnl_resultados);
         pnl_resultados.setLayout(pnl_resultadosLayout);
         pnl_resultadosLayout.setHorizontalGroup(
             pnl_resultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_resultadosLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txt_dificultad, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,16 +385,11 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addComponent(txt_puntos)))
                 .addGap(52, 52, 52))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_resultadosLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(pnl_stars, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(42, 42, 42))
         );
         pnl_resultadosLayout.setVerticalGroup(
             pnl_resultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_resultadosLayout.createSequentialGroup()
-                .addComponent(pnl_stars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(pnl_resultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_dificultad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -660,12 +587,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_main;
     private javax.swing.JPanel pnl_opciones;
     private javax.swing.JPanel pnl_resultados;
-    private javax.swing.JPanel pnl_stars;
-    private javax.swing.JLabel star1;
-    private javax.swing.JLabel star2;
-    private javax.swing.JLabel star3;
-    private javax.swing.JLabel star4;
-    private javax.swing.JLabel star5;
     private javax.swing.JLabel txt_dificultad;
     private javax.swing.JLabel txt_intentosf;
     private javax.swing.JLabel txt_nivel;
