@@ -23,7 +23,9 @@ public class Resultados extends javax.swing.JDialog {
     public Resultados(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        getStars();
+        setResizable(false);
+        setLocationRelativeTo(null);
+         getStars();
         
     }
 
@@ -36,6 +38,9 @@ public class Resultados extends javax.swing.JDialog {
     }
 
     public void setstars(int ptr) {
+        
+       
+        
         for (int i = 0; i < 5; i++) {
             if (i < ptr) {
                 stars[i].setIcon(s_on);
@@ -61,6 +66,10 @@ public class Resultados extends javax.swing.JDialog {
         star3 = stars[2]= new JLabel();
         star4 = stars[3]= new JLabel();
         star5 = stars[4]= new JLabel();
+        txt_dificultad = new javax.swing.JLabel();
+        txt_puntos = new javax.swing.JLabel();
+        txt_intentosf = new javax.swing.JLabel();
+        txt_nivel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,7 +100,7 @@ public class Resultados extends javax.swing.JDialog {
                 .addComponent(star4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(star5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         pnl_starsLayout.setVerticalGroup(
             pnl_starsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,21 +115,60 @@ public class Resultados extends javax.swing.JDialog {
                 .addGap(5, 5, 5))
         );
 
+        txt_dificultad.setFont(new java.awt.Font("Dizzy Edge DEMO", 0, 18)); // NOI18N
+        txt_dificultad.setForeground(new java.awt.Color(255, 96, 5));
+        txt_dificultad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_dificultad.setText("HAZ CONSEGUIDO:");
+
+        txt_puntos.setFont(new java.awt.Font("Dizzy Edge DEMO", 0, 36)); // NOI18N
+        txt_puntos.setForeground(new java.awt.Color(255, 96, 5));
+        txt_puntos.setText("PUNTOS");
+
+        txt_intentosf.setFont(new java.awt.Font("Dizzy Edge DEMO", 0, 18)); // NOI18N
+        txt_intentosf.setForeground(new java.awt.Color(255, 96, 5));
+        txt_intentosf.setText("INTENTOS FALLIDOS: 00");
+
+        txt_nivel.setFont(new java.awt.Font("Dizzy Edge DEMO", 1, 58)); // NOI18N
+        txt_nivel.setForeground(new java.awt.Color(255, 96, 5));
+        txt_nivel.setText("27");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addComponent(pnl_stars, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(146, 146, 146))
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txt_puntos)
+                        .addGap(124, 124, 124))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txt_nivel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(151, 151, 151))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txt_intentosf)
+                        .addGap(100, 100, 100))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txt_dificultad, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(pnl_stars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(34, 34, 34)
+                .addComponent(txt_puntos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_nivel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_intentosf)
+                .addGap(18, 18, 18)
+                .addComponent(txt_dificultad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnl_stars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -175,5 +223,9 @@ public class Resultados extends javax.swing.JDialog {
     private javax.swing.JLabel star3;
     private javax.swing.JLabel star4;
     private javax.swing.JLabel star5;
+    private javax.swing.JLabel txt_dificultad;
+    private javax.swing.JLabel txt_intentosf;
+    private javax.swing.JLabel txt_nivel;
+    private javax.swing.JLabel txt_puntos;
     // End of variables declaration//GEN-END:variables
 }
