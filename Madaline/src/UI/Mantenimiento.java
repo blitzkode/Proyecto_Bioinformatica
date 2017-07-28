@@ -303,7 +303,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         BufferedImage imagen = lienzoDibujo.getImagen();
         
         try {
-            aplicacion.guardarImagen(imagen, archivo);
+            ImageIO.write(imagen, "jpg", archivo);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
         }

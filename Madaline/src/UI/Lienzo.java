@@ -1,7 +1,10 @@
 package UI;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -19,11 +22,17 @@ public class Lienzo extends JPanel {
     private int grosor;
     private Point pincel;
     private BufferedImage imagen;
+    private String letra_fondo;
+    private int tamFuente;
+    private boolean dibujaLetra;
     
     public Lienzo() {
         this.color = Color.BLACK;
         this.setBackground(Color.white);
         this.grosor = 14;
+        this.letra_fondo = "";
+        this.tamFuente = 100;
+        this.dibujaLetra = false;
         
         EventHandler manejador = new EventHandler();
         this.addMouseListener(manejador);
@@ -43,12 +52,33 @@ public class Lienzo extends JPanel {
         repaint();
     }
     
+    public void setLetra(String letra) {
+        this.letra_fondo = letra;
+        repaint();
+    }
+    
+    public void dibujarLetra(boolean dibujar) {
+        this.dibujaLetra = dibujar;
+        repaint();
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D draw = (Graphics2D) g;
         draw.setColor(Color.white);
         draw.fillRect(0, 0, this.getWidth(), this.getHeight());
+        if (dibujaLetra) {
+            Composite anterior = draw.getComposite();
+            Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f);
+            draw.setComposite(c);
+            draw.setColor(Color.BLACK);
+            draw.setFont(new Font("Arial", Font.BOLD, tamFuente));
+            int x = (getWidth() - tamFuente) / 2;
+            int y = (getHeight() + tamFuente) / 2;
+            draw.drawString(letra_fondo, x, y);
+            draw.setComposite(anterior);
+        }
         if (imagen != null) {
             draw.drawImage(imagen, 0, 0, this);
         }

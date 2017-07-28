@@ -1,6 +1,5 @@
 package Core;
 
-import UI.Splash;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -108,6 +107,17 @@ public class Controlador {
         commit();
     }
     
+    private boolean esAmbiguo(String letra) {
+        return (
+            letra.equalsIgnoreCase("C") || letra.equalsIgnoreCase("K") ||
+            letra.equalsIgnoreCase("O") || letra.equalsIgnoreCase("P") ||
+            letra.equalsIgnoreCase("S") || letra.equalsIgnoreCase("K") ||
+            letra.equalsIgnoreCase("U") || letra.equalsIgnoreCase("V") ||
+            letra.equalsIgnoreCase("W") || letra.equalsIgnoreCase("X") ||
+            letra.equalsIgnoreCase("Y") || letra.equalsIgnoreCase("Z")
+        );
+    }
+    
     private void commit() {
         try {
             ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
@@ -134,10 +144,6 @@ public class Controlador {
         }
         commit();
         return imagenes_entrenadas;
-    }
-    
-    public void guardarImagen(BufferedImage imagen, File archivo) throws IOException {
-        ImageIO.write(imagen, "jpg", archivo);
     }
 
     public int getPuntos() {
