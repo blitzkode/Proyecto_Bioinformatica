@@ -52,6 +52,7 @@ public class Principal extends javax.swing.JFrame {
     private void siguienteLetra() {
         panelLetra.dibujarLetra(aplicacion.getLetraActual());
         lienzo.limpiarContenido();
+        lienzo.setLetra(aplicacion.getLetraActual());
     }
 
     @SuppressWarnings("unchecked")
@@ -76,6 +77,7 @@ public class Principal extends javax.swing.JFrame {
         btn_siguiente = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         btn_pulsa = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         pnl_resultados = new javax.swing.JPanel();
         txt_dificultad = new javax.swing.JLabel();
         txt_puntos = new javax.swing.JLabel();
@@ -313,6 +315,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
         pnl_botonesLayout.setHorizontalGroup(
@@ -327,7 +336,11 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnl_botonesLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(10, 10, 10)))
                         .addGap(93, 93, 93))))
         );
         pnl_botonesLayout.setVerticalGroup(
@@ -337,6 +350,8 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_salir))
         );
@@ -525,6 +540,15 @@ public class Principal extends javax.swing.JFrame {
         btn_siguiente.setEnabled(false);
     }//GEN-LAST:event_btn_siguienteActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        Resultados rst=new Resultados(this,true);
+        rst.setVisible(true);
+        rst.setstars(4);
+       
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -573,6 +597,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_siguiente;
     private javax.swing.JButton btn_verde;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
