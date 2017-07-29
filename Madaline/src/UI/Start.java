@@ -30,8 +30,6 @@ public class Start extends javax.swing.JFrame {
             @Override
             public void run() {
                 Splash s = new Splash();
-                s.setLocationRelativeTo(null);
-                s.setVisible(true);
                 aplicacion = new Controlador();
                 s.dispose();
                 setVisible(true);
