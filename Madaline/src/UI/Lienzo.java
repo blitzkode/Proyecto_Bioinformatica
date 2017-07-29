@@ -40,10 +40,13 @@ public class Lienzo extends JPanel {
     }
 
     public BufferedImage getImagen() {
-        BufferedImage imagen = new BufferedImage(this.getWidth(),
+        BufferedImage imagen_dibujo = new BufferedImage(this.getWidth(),
                                 this.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-        this.paint(imagen.getGraphics());
-        return imagen;
+        boolean ante = dibujaLetra;
+        dibujaLetra = false;
+        this.paint(imagen_dibujo.getGraphics());
+        dibujaLetra = ante;
+        return imagen_dibujo;
     }
     
     public void setImagen(BufferedImage imagen) {
