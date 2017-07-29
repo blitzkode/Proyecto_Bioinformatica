@@ -55,6 +55,15 @@ public class Reconocedor {
         }
     }
     
+    public void entrenar(ArrayList<String> letras, ArrayList entradas, ArrayList<Byte> salidas) {
+        int i;
+        for (Madaline madaline : mads) {
+            i = letras.indexOf(madaline.getNom());
+            if (i >= 0)
+                madaline.entrenar((byte[]) entradas.get(i), salidas.get(i));
+        }
+    }
+    
     public void entrenar(String caracter, byte [] patron, byte salida) {
         for (Madaline madaline : mads) {
             if (madaline.getNom().equals(caracter)) {

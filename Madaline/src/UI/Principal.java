@@ -3,10 +3,15 @@ package UI;
 import Core.Controlador;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -86,6 +91,8 @@ public class Principal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mitGuardar = new javax.swing.JMenuItem();
+        mitMantenimiento = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -454,6 +461,25 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jMenu1.setText("File");
+
+        mitGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mitGuardar.setText("Guardar imagen");
+        mitGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitGuardarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitGuardar);
+
+        mitMantenimiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        mitMantenimiento.setText("Mantenimiento");
+        mitMantenimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitMantenimientoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitMantenimiento);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -549,6 +575,32 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
+        JFileChooser selector = new JFileChooser("img");
+        selector.showSaveDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        if ( !archivo.getName().matches("[a-zA-Z0-9]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        
+        BufferedImage imagen = lienzo.getImagen();
+        
+        try {
+            ImageIO.write(imagen, "jpg", archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
+        }
+    }//GEN-LAST:event_mitGuardarActionPerformed
+
+    private void mitMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitMantenimientoActionPerformed
+        new Mantenimiento(aplicacion, null).setVisible(true);
+    }//GEN-LAST:event_mitMantenimientoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -602,6 +654,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mitGuardar;
+    private javax.swing.JMenuItem mitMantenimiento;
     private javax.swing.JPanel pnlContenedorLienzo;
     private javax.swing.JPanel pnl_ayuda;
     private javax.swing.JPanel pnl_botones;

@@ -55,7 +55,7 @@ public class Controlador {
         boolean acierto;
         
         String letra = letras_partida.get(0);
-        acierto = reconocerImagen(imagen).equals(letra);
+        acierto = comparar(imagen, letra);
         intentos++;
         if (acierto) {
             letras_partida.remove(0);
@@ -68,6 +68,14 @@ public class Controlador {
         Random r = new Random();
         String letra = alfabeto[ r.nextInt(alfabeto.length) ];
         return letra;
+    }
+    
+    public boolean comparar(BufferedImage imagen, String letra) {
+        String letra_reconocida = reconocerImagen(imagen);
+        if (esAmbiguo(letra) && letra.equalsIgnoreCase(letra_reconocida)) {
+            return true;
+        }
+        return letra.equals(letra_reconocida);
     }
     
     /**
@@ -144,6 +152,31 @@ public class Controlador {
         }
         commit();
         return imagenes_entrenadas;
+    }
+    
+    public int entrenamiento() {
+        int imagenes = 0;
+        ArrayList<String> letras = new ArrayList<>();
+        ArrayList patrones = new ArrayList();
+        ArrayList<Byte> salidas = new ArrayList<>();
+        
+        for (String caracter : alfabeto) {
+            letras.add(caracter);
+            
+            File directorio = new File(RUTA_IMG, caracter);
+            if (directorio.exists()) {
+                String[] contenido = directorio.list();
+                for (String archivoImagen : contenido) {
+                    try {
+                        BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
+                        imagenes++;
+                    } catch (IOException ex) {
+                    }
+                }
+            }
+        }
+        commit();
+        return imagenes;
     }
 
     public int getPuntos() {
