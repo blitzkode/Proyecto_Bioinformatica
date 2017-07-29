@@ -83,6 +83,7 @@ public class Principal extends javax.swing.JFrame {
         btn_salir = new javax.swing.JButton();
         btn_pulsa = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         pnl_resultados = new javax.swing.JPanel();
         txt_dificultad = new javax.swing.JLabel();
         txt_puntos = new javax.swing.JLabel();
@@ -329,6 +330,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
         pnl_botonesLayout.setHorizontalGroup(
@@ -346,7 +354,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnl_botonesLayout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton2)
+                                    .addComponent(jButton1))
                                 .addGap(10, 10, 10)))
                         .addGap(93, 93, 93))))
         );
@@ -359,6 +369,8 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_salir))
         );
@@ -575,6 +587,9 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       lienzo.dibujarLetra(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
     private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
         JFileChooser selector = new JFileChooser("img");
         selector.showSaveDialog(this);
@@ -650,6 +665,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_siguiente;
     private javax.swing.JButton btn_verde;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
