@@ -70,6 +70,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         tfResultado.setEditable(false);
         tfResultado.setBackground(new java.awt.Color(255, 255, 255));
+        tfResultado.setFocusable(false);
 
         jLabel2.setText("Caracter reconocido");
 
@@ -81,6 +82,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jToolBar1.add(jSeparator2);
 
         spGrosor.setModel(new javax.swing.SpinnerNumberModel(14, 1, null, 1));
+        spGrosor.setFocusable(false);
         spGrosor.setPreferredSize(new java.awt.Dimension(50, 23));
         spGrosor.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -96,7 +98,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        mitAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        mitAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         mitAbrir.setText("Abrir");
         mitAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,7 +198,6 @@ public class Mantenimiento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDibujo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -204,6 +205,7 @@ public class Mantenimiento extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(pbProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(pnlDibujo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +247,8 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_mitLimpiarActionPerformed
 
     private void mitSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitSalirActionPerformed
-        padre.setVisible(true);
+        if (padre != null)
+            padre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_mitSalirActionPerformed
 
