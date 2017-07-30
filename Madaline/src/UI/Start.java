@@ -22,8 +22,10 @@ public class Start extends javax.swing.JFrame {
     public Start() {
         initComponents();
         setLocationRelativeTo(null);
-        btn_entrenar.setVisible(false);
+        
+        
         setOpaque();
+        setWallpaper();
         cargarLogo();
         
         new Thread(new Runnable() {
@@ -57,19 +59,23 @@ public class Start extends javax.swing.JFrame {
         icon = new ImageIcon(img1.getImage().getScaledInstance(txt_logo.getWidth(), txt_logo.getHeight(), Image.SCALE_DEFAULT));
         txt_logo.setIcon(icon);
         
-        img1 = new ImageIcon(getClass().getResource("/Iconos/wall_start.jpg"));
-        icon = new ImageIcon(img1.getImage().getScaledInstance(txt_wallpaper.getWidth(), txt_wallpaper.getHeight(), Image.SCALE_DEFAULT));
-        txt_wallpaper.setIcon(icon);
+        
+    }
+    
+    
+    private void setWallpaper(){
+        Wallpaper wall = new Wallpaper("/Iconos/wall_start.jpg");
+        wall.setSize(pnl_fondo.getSize());
+        pnl_fondo.add(wall);
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnl_fondo = new javax.swing.JPanel();
         btn_salir = new javax.swing.JButton();
-        btn_entrenar = new javax.swing.JButton();
         txt_logo = new javax.swing.JLabel();
-        txt_wallpaper = new javax.swing.JLabel();
         btn_reto = new javax.swing.JButton();
         btn_practicar = new javax.swing.JButton();
 
@@ -77,19 +83,14 @@ public class Start extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
+        pnl_fondo.setBackground(new java.awt.Color(24, 234, 63));
+
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
         btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
         btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salirActionPerformed(evt);
-            }
-        });
-
-        btn_entrenar.setText("entrenamiento");
-        btn_entrenar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_entrenarActionPerformed(evt);
             }
         });
 
@@ -108,45 +109,50 @@ public class Start extends javax.swing.JFrame {
         btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
         btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
 
+        javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
+        pnl_fondo.setLayout(pnl_fondoLayout);
+        pnl_fondoLayout.setHorizontalGroup(
+            pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_fondoLayout.createSequentialGroup()
+                .addContainerGap(83, Short.MAX_VALUE)
+                .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                        .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                        .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135)
+                                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(114, 114, 114)))
+                        .addGap(256, 256, 256))))
+        );
+        pnl_fondoLayout.setVerticalGroup(
+            pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_salir)
+                .addGap(28, 28, 28))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(420, 420, 420)
-                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(340, 340, 340)
-                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(btn_entrenar))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(250, 250, 250)
-                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(txt_wallpaper, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnl_fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(350, 350, 350)
-                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(460, 460, 460)
-                .addComponent(btn_salir))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(480, 480, 480)
-                .addComponent(btn_entrenar))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(350, 350, 350)
-                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(txt_wallpaper, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnl_fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -158,15 +164,10 @@ public class Start extends javax.swing.JFrame {
 
     private void btn_retoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retoActionPerformed
         setVisible(false);
+        
         new Principal(aplicacion, this);
-        
+       
     }//GEN-LAST:event_btn_retoActionPerformed
-
-    private void btn_entrenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrenarActionPerformed
-       setVisible(false);
-       new Mantenimiento(aplicacion, this).setVisible(true);
-        
-    }//GEN-LAST:event_btn_entrenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,11 +205,10 @@ public class Start extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_entrenar;
     private javax.swing.JButton btn_practicar;
     private javax.swing.JButton btn_reto;
     private javax.swing.JButton btn_salir;
+    private javax.swing.JPanel pnl_fondo;
     private javax.swing.JLabel txt_logo;
-    private javax.swing.JLabel txt_wallpaper;
     // End of variables declaration//GEN-END:variables
 }
