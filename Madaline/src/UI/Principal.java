@@ -4,6 +4,7 @@ import Core.Controlador;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -614,6 +615,16 @@ public class Principal extends javax.swing.JFrame {
     private void mitAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitAbrirActionPerformed
         lienzo.abrirImagen();
     }//GEN-LAST:event_mitAbrirActionPerformed
+
+    private void pnl_mainComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_mainComponentResized
+        wall.setSize(pnl_main.getSize());
+    }//GEN-LAST:event_pnl_mainComponentResized
+
+    private void btnresultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresultadosActionPerformed
+        Resultados rst = new Resultados(this, true);
+        rst.setVisible(true);
+        rst.setstars(4);
+    }//GEN-LAST:event_btnresultadosActionPerformed
 
     /**
      * @param args the command line arguments
