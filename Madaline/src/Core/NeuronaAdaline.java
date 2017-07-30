@@ -16,7 +16,6 @@ public class NeuronaAdaline {
     
     public NeuronaAdaline(double[] pesos) {
         this.ps = pesos;
-        //this.calcularE();
     }
     
     public double salidaOriginal(byte[] entradas) {
@@ -24,7 +23,6 @@ public class NeuronaAdaline {
     }
 
     public void entrenar(byte[][] entradas, byte[] salidas) {
-//        calcularE();
         boolean error = false;
         do {
             for (int i = 0; i < entradas.length; i++) {
@@ -81,8 +79,4 @@ public class NeuronaAdaline {
     public void setPs(double[] ps) {
         this.ps = ps;
     }
-    
-//    private void calcularE() {
-//        this.e = 1.0/pesos.length;
-//    }
 }

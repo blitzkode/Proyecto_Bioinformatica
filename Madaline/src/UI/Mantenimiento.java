@@ -2,10 +2,6 @@ package UI;
 
 import Core.Controlador;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
@@ -274,62 +270,24 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void mitEntrenamientoFastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrenamientoFastActionPerformed
             new Thread(() -> {
-                try {
-                    pbProgreso.setIndeterminate(true);
-                    int imagenes_entrenadas = aplicacion.entrenamientoPorLotes();
-                    pbProgreso.setIndeterminate(false);
-                    JOptionPane.showMessageDialog(null,
-                            String.format("Se %s %d %s en total.",
-                                    imagenes_entrenadas==1 ? "procesó":"procesaron",
-                                    imagenes_entrenadas,
-                                    imagenes_entrenadas==1 ? "imagen":"imágenes")
-                    );
-                } catch (JAXBException ex) {
-                    JOptionPane.showMessageDialog(this, "Ocurrió un error al entrenar");
-                }
+                pbProgreso.setIndeterminate(true);
+                int imagenes_entrenadas = aplicacion.entrenamiento();
+                pbProgreso.setIndeterminate(false);
+                JOptionPane.showMessageDialog(null,
+                        String.format("Se %s %d %s en total.",
+                                imagenes_entrenadas==1 ? "procesó":"procesaron",
+                                imagenes_entrenadas,
+                                imagenes_entrenadas==1 ? "imagen":"imágenes")
+                );
             }).start();
     }//GEN-LAST:event_mitEntrenamientoFastActionPerformed
 
     private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
-        JFileChooser selector = new JFileChooser("img");
-        selector.showSaveDialog(this);
-        File archivo = selector.getSelectedFile();
-        
-        if (archivo == null) {
-            return;
-        }
-        if ( !archivo.getName().matches("[a-zA-Z0-9]*.jpg") ) {
-            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
-            return;
-        }
-        
-        BufferedImage imagen = lienzoDibujo.getImagen();
-        
-        try {
-            ImageIO.write(imagen, "jpg", archivo);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
-        }
+        lienzoDibujo.guardarImagen();
     }//GEN-LAST:event_mitGuardarActionPerformed
 
     private void mitAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitAbrirActionPerformed
-        JFileChooser selector = new JFileChooser("img");
-        selector.showOpenDialog(this);
-        File archivo = selector.getSelectedFile();
-        
-        if (archivo == null) {
-            return;
-        }
-        if ( !archivo.getName().matches("[a-zA-Z0-9]*.jpg") ) {
-            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
-            return;
-        }
-        try {
-            BufferedImage imagen = ImageIO.read(archivo);
-            lienzoDibujo.setImagen(imagen);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al abrir la imagen");
-        }
+        lienzoDibujo.abrirImagen();
     }//GEN-LAST:event_mitAbrirActionPerformed
 
     private void mitEntrManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrManualActionPerformed

@@ -24,8 +24,8 @@ public class Controlador {
     private ArrayList<String> letras_partida;
     private static final String[] alfabeto = {
         "A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q",
-        "R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i",
-        "j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"
+        "R","S","T","U","V","W","X","Y","Z","a","b","d","e","f","g","h","i",
+        "j","l","m","n","ñ","q","r","t"
     };
     
     /**
@@ -134,7 +134,7 @@ public class Controlador {
         }
     }
     
-    public int entrenamientoPorLotes() throws JAXBException {
+    public int entrenamientoPorLotes() {
         int imagenes_entrenadas = 0;
         for (String caracter : alfabeto) {
             File directorio = new File(RUTA_IMG, caracter);
@@ -156,12 +156,10 @@ public class Controlador {
     
     public int entrenamiento() {
         int imagenes = 0;
-        ArrayList<String> letras = new ArrayList<>();
-        ArrayList patrones = new ArrayList();
-        ArrayList<Byte> salidas = new ArrayList<>();
+        ArrayList<LetraEntrenamiento> letras_entrenar = new ArrayList<>();
         
         for (String caracter : alfabeto) {
-            letras.add(caracter);
+            letras_entrenar.add(new LetraEntrenamiento(caracter));
             
             File directorio = new File(RUTA_IMG, caracter);
             if (directorio.exists()) {
@@ -169,12 +167,30 @@ public class Controlador {
                 for (String archivoImagen : contenido) {
                     try {
                         BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
+                        
+                        letras_entrenar.get(letras_entrenar.size()-1).addImagenPositiva(imagen);
+                        for (int i = 0; i < letras_entrenar.size()-1; i++) {
+                            letras_entrenar.get(i).addImagenNegativa(imagen);
+                        }
+                        
                         imagenes++;
                     } catch (IOException ex) {
                     }
                 }
             }
         }
+        
+        ArrayList<String> letras = new ArrayList<>();
+        byte[][][] entradas = new byte[letras_entrenar.size()][][];
+        byte[][] salidas = new byte[letras_entrenar.size()][];
+        int i=0;
+        for (LetraEntrenamiento letra : letras_entrenar) {
+            letras.add(letra.getLetra());
+            entradas[i] = letra.getPatrones();
+            salidas[i] = letra.getSalidas();
+            i++;
+        }
+        reconocedor.entrenar(letras, entradas, salidas);
         commit();
         return imagenes;
     }
@@ -197,6 +213,58 @@ public class Controlador {
 
     public int getIntentos() {
         return intentos;
+    }
+    
+    class LetraEntrenamiento {
+        private String letra;
+        private ArrayList<BufferedImage> imagenes_positivas = new ArrayList<>();
+        private ArrayList<BufferedImage> imagenes_negativas = new ArrayList<>();
+        private byte[][] patrones;
+        private byte[] salidas;
+        
+        public LetraEntrenamiento(String letra) {
+            this.letra = letra;
+        }
+        
+        public void addImagenNegativa(BufferedImage imagen) {
+            this.imagenes_negativas.add(imagen);
+        }
+        
+        public void addImagenPositiva(BufferedImage imagen) {
+            this.imagenes_positivas.add(imagen);
+        }
+        
+        private void calcular() {
+            int cant_patrones = imagenes_negativas.size() + imagenes_positivas.size();
+            this.patrones = new byte[cant_patrones][];
+            this.salidas = new byte[cant_patrones];
+            
+            int i = 0;
+            for (BufferedImage imagen : imagenes_positivas) {
+                patrones[i] = ProcesarImagen.ProcesoImagen(imagen);
+                salidas[i] = (byte) 1;
+                i++;
+            }
+            for (BufferedImage imagen : imagenes_negativas) {
+                patrones[i] = ProcesarImagen.ProcesoImagen(imagen);
+                salidas[i] = (byte) -1;
+                i++;
+            }
+            
+        }
+        
+        public byte[][] getPatrones() {
+            calcular();
+            return patrones;
+        }
+        
+        public byte[] getSalidas() {
+            return salidas;
+        }
+
+        public String getLetra() {
+            return letra;
+        }
     }
     
 }

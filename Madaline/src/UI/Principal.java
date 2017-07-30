@@ -3,15 +3,7 @@ package UI;
 import Core.Controlador;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -92,6 +84,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mitAbrir = new javax.swing.JMenuItem();
         mitGuardar = new javax.swing.JMenuItem();
         mitMantenimiento = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -474,6 +467,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
+        mitAbrir.setText("Abrir imagen");
+        mitAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitAbrirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitAbrir);
+
         mitGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         mitGuardar.setText("Guardar imagen");
         mitGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -591,30 +592,16 @@ public class Principal extends javax.swing.JFrame {
        lienzo.dibujarLetra(true);
     }//GEN-LAST:event_jButton2ActionPerformed
     private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
-        JFileChooser selector = new JFileChooser("img");
-        selector.showSaveDialog(this);
-        File archivo = selector.getSelectedFile();
-        
-        if (archivo == null) {
-            return;
-        }
-        if ( !archivo.getName().matches("[a-zA-Z0-9]*.jpg") ) {
-            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
-            return;
-        }
-        
-        BufferedImage imagen = lienzo.getImagen();
-        
-        try {
-            ImageIO.write(imagen, "jpg", archivo);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
-        }
+        lienzo.guardarImagen();
     }//GEN-LAST:event_mitGuardarActionPerformed
 
     private void mitMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitMantenimientoActionPerformed
         new Mantenimiento(aplicacion, null).setVisible(true);
     }//GEN-LAST:event_mitMantenimientoActionPerformed
+
+    private void mitAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitAbrirActionPerformed
+        lienzo.abrirImagen();
+    }//GEN-LAST:event_mitAbrirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -670,6 +657,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mitAbrir;
     private javax.swing.JMenuItem mitGuardar;
     private javax.swing.JMenuItem mitMantenimiento;
     private javax.swing.JPanel pnlContenedorLienzo;
@@ -686,11 +674,4 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel txt_puntos;
     // End of variables declaration//GEN-END:variables
 
-    private Icon ImageIcon() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private JLabel ImageIcon(URL resource) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

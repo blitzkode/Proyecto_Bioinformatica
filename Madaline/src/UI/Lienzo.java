@@ -14,7 +14,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Path2D;
 import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class Lienzo extends JPanel {
     private ArrayList<Linea> lineas = new ArrayList<>();
@@ -25,6 +30,7 @@ public class Lienzo extends JPanel {
     private String letra_fondo;
     private int tamFuente;
     private boolean dibujaLetra;
+    private String ultima_ubicacion = "img";
     
     public Lienzo() {
         this.color = Color.BLACK;
@@ -53,6 +59,50 @@ public class Lienzo extends JPanel {
         limpiarContenido();
         this.imagen = imagen;
         repaint();
+    }
+    
+    public void abrirImagen() {
+        JFileChooser selector = new JFileChooser(ultima_ubicacion);
+        selector.showOpenDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        ultima_ubicacion = archivo.getPath();
+        if ( !archivo.getName().matches("[a-zñA-ZÑ0-9_]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        try {
+            BufferedImage imagen_archivo = ImageIO.read(archivo);
+            setImagen(imagen_archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al abrir la imagen");
+        }
+    }
+    
+    public void guardarImagen() {
+        JFileChooser selector = new JFileChooser(ultima_ubicacion);
+        selector.showSaveDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        ultima_ubicacion = archivo.getPath();
+        if ( !archivo.getName().matches("[a-zñA-ZÑ0-9_]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        
+        BufferedImage imagen_archivo = getImagen();
+        
+        try {
+            ImageIO.write(imagen_archivo, "jpg", archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
+        }
     }
     
     public void setLetra(String letra) {
