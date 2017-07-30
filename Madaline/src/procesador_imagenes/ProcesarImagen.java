@@ -7,6 +7,7 @@ import java.awt.image.ColorConvertOp;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,11 +36,17 @@ public class ProcesarImagen {
         int h = getLimHeight(A);
 
         //cortamos
-         img = getCorte(img, x, y, w - x, h - y);
-
+        img = getCorte(img, x, y, w - x, h - y);
+        
         //escalamos corte a 100x100
         img = Cambiar_Tamaño(img);
-
+        
+//        try {
+//            ImageIO.write(img, "jpg", new File("C:\\Users\\Diego Baes\\Desktop\\test22.jpg"));
+//        } catch (IOException ex) {
+//            Logger.getLogger(ProcesarImagen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
         //obtenemos array imagen nueva
         int V2[] = getArray(img);
 
