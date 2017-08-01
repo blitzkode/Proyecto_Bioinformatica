@@ -136,6 +136,9 @@
               <Image iconType="3" name="/Iconos/practicar_3.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_practicarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
