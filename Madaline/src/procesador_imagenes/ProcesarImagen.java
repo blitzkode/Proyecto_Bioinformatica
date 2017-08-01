@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -14,46 +15,57 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class ProcesarImagen {
+
     private static final int IMG_WIDTH = 100; //ancho
     private static final int IMG_HEIGHT = 100; //alto
 
     public static byte[] ProcesoImagen(BufferedImage img) {
+
         img = Filtrar_Gris(img);
-        
+
         //adaptamos a 100x100 para obtener cantidad fija de pixeles
-        img = Cambiar_Tamaño(img);
+        img = Cambiar_Tamaño(img, IMG_WIDTH, IMG_HEIGHT);
 
         //obtenemos array imagen original
         int V[] = getArray(img);
 
         //transformamos datos a adaline 
-        byte A[] = getAdaline(V);
+        byte A[] = getAdaline(V,IMG_WIDTH);
 
         //obtenemos cordenadas para el corte
         int x = getX(A);
         int y = getY(A);
-        int w = getLimWidth(A);
-        int h = getLimHeight(A);
+        int w = getLimWidth(A) - x;
+        int h = getLimHeight(A) - y;
 
-        //cortamos
-        img = getCorte(img, x, y, w - x, h - y);
+//        saveimg(img, "incial");
+
+        img = getCorte(img, x, y, w, h);
+
+//        saveimg(img, "media");
+
+        //escalamos corte a 100 altura, manteniendo proporcion ancho
+        img = Cambiar_Tamaño(img, (int) (IMG_HEIGHT * w) / h > IMG_WIDTH ? IMG_WIDTH : (int) (IMG_HEIGHT * w) / h, IMG_HEIGHT);
         
-        //escalamos corte a 100x100
-        img = Cambiar_Tamaño(img);
         
-//        try {
-//            ImageIO.write(img, "jpg", new File("C:\\Users\\Diego Baes\\Desktop\\test22.jpg"));
-//        } catch (IOException ex) {
-//            Logger.getLogger(ProcesarImagen.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
+//        saveimg(img, "final");
+
         //obtenemos array imagen nueva
         int V2[] = getArray(img);
 
         //transformamos datos nuevos a adaline
-        byte A2[] = getAdaline(V2);
-
+        byte A2[] = getAdaline(V2,img.getWidth());
+                
         return A2;
+    }
+    
+
+    private static void saveimg(BufferedImage img, String name) {
+        try {
+            ImageIO.write(img, "jpg", new File("C:\\Users\\Diego Baes\\Desktop\\" + name + ".jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(ProcesarImagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private static int getX(byte A[]) {
@@ -138,7 +150,6 @@ public class ProcesarImagen {
             }
 
         }
-       
 
         lim = IMG_HEIGHT - lim;
 
@@ -151,12 +162,12 @@ public class ProcesarImagen {
 
         return out;
     }
-  
-    private static BufferedImage Cambiar_Tamaño(BufferedImage originalImage) {
+
+    private static BufferedImage Cambiar_Tamaño(BufferedImage originalImage, int width, int height) {
         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_3BYTE_BGR : originalImage.getType();
-        BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
+        BufferedImage resizedImage = new BufferedImage(width, height, type);
         Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
+        g.drawImage(originalImage, 0, 0, width, height, null);
         g.dispose();
 
         return resizedImage;
@@ -180,20 +191,38 @@ public class ProcesarImagen {
         return img2;
     }
 
-    private static byte[] getAdaline(int R[]) {
+    private static byte[] getAdaline(int R[], int w) {
         byte A[] = new byte[IMG_HEIGHT * IMG_WIDTH];
 
+        
+        int pta = (IMG_WIDTH - w) % 2 == 0 ? (IMG_WIDTH - w) / 2 : (IMG_WIDTH - w + 1) / 2;
+        
+        
+        for (int i = 0; i < IMG_HEIGHT; i++) {
+            for (int j = 0; j < pta; j++) {
+                A[i*IMG_WIDTH+j]=-1;
+            }
+        }
+        
         int k = 0;
-        for (int i = 0; i < A.length; i++) {
-
-            A[i] = R[k] > 180 ? (byte) -1 : 1;
-            k += 3;
+        for (int i = 0; i < IMG_HEIGHT; i++) {
+            for (int j = pta; j < pta+w; j++) {
+                A[i*IMG_WIDTH+j] = R[k] > 180 ? (byte) -1 : 1;
+                k += 3;
+            }
 
         }
+        
+        for (int i = 0; i < IMG_HEIGHT; i++) {
+            for (int j = pta+w; j < IMG_WIDTH; j++) {
+                A[i*IMG_WIDTH+j]=-1;
+            }
+        }
+        
         return A;
 
     }
-    
+
     //obtener image de arreglo bytes
     private static BufferedImage getNewImage(byte bytes[]) {
 
@@ -206,7 +235,27 @@ public class ProcesarImagen {
         return img;
 
     }
-    
-    
+
+    private static byte[] extractBytes(BufferedImage bufferedImage) throws IOException {
+        // open image
+//        File imgPath = new File(ImageName);
+//        BufferedImage bufferedImage = ImageIO.read(imgPath);
+
+        // get DataBufferBytes from Raster
+        WritableRaster raster = bufferedImage.getRaster();
+        DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
+
+        return (data.getData());
+    }
+
+    private static void mostrar(byte[] A) {
+        System.out.println(" ****************MUESTRA**************** ");
+        for (int i = 0; i < IMG_HEIGHT; i++) {
+            System.out.println("");
+            for (int j = 0; j < IMG_WIDTH; j++) {
+                System.out.print(A[i*IMG_WIDTH+j]== -1 ? 0 : 1);
+            }
+        }
+    }
 
 }
