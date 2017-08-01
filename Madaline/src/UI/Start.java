@@ -108,6 +108,11 @@ public class Start extends javax.swing.JFrame {
         btn_practicar.setToolTipText("Practicar");
         btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
         btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
+        btn_practicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_practicarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
         pnl_fondo.setLayout(pnl_fondoLayout);
@@ -168,6 +173,12 @@ public class Start extends javax.swing.JFrame {
         new Principal(aplicacion, this);
        
     }//GEN-LAST:event_btn_retoActionPerformed
+
+    private void btn_practicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_practicarActionPerformed
+       setVisible(false);
+        
+        new Principal1(aplicacion, this);
+    }//GEN-LAST:event_btn_practicarActionPerformed
 
     /**
      * @param args the command line arguments

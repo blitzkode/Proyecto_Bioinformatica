@@ -38,17 +38,17 @@ public class ProcesarImagen {
         int w = getLimWidth(A) - x;
         int h = getLimHeight(A) - y;
 
-//        saveimg(img, "incial");
+        saveimg(img, "incial");
 
         img = getCorte(img, x, y, w, h);
 
-//        saveimg(img, "media");
+        saveimg(img, "media");
 
         //escalamos corte a 100 altura, manteniendo proporcion ancho
-        img = Cambiar_Tamaño(img, (int) (IMG_HEIGHT * w) / h > IMG_WIDTH ? IMG_WIDTH : (int) (IMG_HEIGHT * w) / h, IMG_HEIGHT);
+        img = Cambiar_Tamaño(img, (int) (IMG_HEIGHT * w) / h> IMG_WIDTH ? IMG_WIDTH : (int) (IMG_HEIGHT * w) / h, IMG_HEIGHT);
         
         
-//        saveimg(img, "final");
+        saveimg(img, "final");
 
         //obtenemos array imagen nueva
         int V2[] = getArray(img);
