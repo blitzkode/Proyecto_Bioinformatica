@@ -29,7 +29,7 @@ public class Lienzo extends JPanel {
     private BufferedImage imagen;
     private String letra_fondo;
     private int tamFuente;
-    private boolean dibujaLetra;
+    private boolean dibujaLetra, captura;
     private String ultima_ubicacion = "img";
     
     public Lienzo() {
@@ -39,6 +39,7 @@ public class Lienzo extends JPanel {
         this.letra_fondo = "";
         this.tamFuente = 100;
         this.dibujaLetra = false;
+        this.captura = false;
         
         EventHandler manejador = new EventHandler();
         this.addMouseListener(manejador);
@@ -48,10 +49,9 @@ public class Lienzo extends JPanel {
     public BufferedImage getImagen() {
         BufferedImage imagen_dibujo = new BufferedImage(this.getWidth(),
                                 this.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-        boolean ante = dibujaLetra;
-        dibujaLetra = false;
+        captura = true;
         this.paint(imagen_dibujo.getGraphics());
-        dibujaLetra = ante;
+        captura = false;
         return imagen_dibujo;
     }
     
@@ -121,7 +121,7 @@ public class Lienzo extends JPanel {
         Graphics2D draw = (Graphics2D) g;
         draw.setColor(Color.white);
         draw.fillRect(0, 0, this.getWidth(), this.getHeight());
-        if (dibujaLetra) {
+        if (dibujaLetra && !captura) {
             Composite anterior = draw.getComposite();
             Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f);
             draw.setComposite(c);
@@ -140,7 +140,7 @@ public class Lienzo extends JPanel {
             draw.setColor(l.color);
             draw.draw(l.shape);
         }
-        if (pincel != null) {
+        if (pincel != null && !captura) {
             draw.setStroke(new BasicStroke());
             draw.setColor(color);
             draw.fillOval(pincel.x - grosor/2, pincel.y - grosor/2, grosor, grosor);

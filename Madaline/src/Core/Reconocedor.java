@@ -43,7 +43,7 @@ public class Reconocedor {
      * @param caracter Caracter a reconocer
      * @param patron Patrón asociado al caracter
      */
-    public void entrenar(String caracter, byte [] patron) {
+    public void entrenar(String caracter, byte[] patron) {
         for (Madaline madaline : mads) {
             if (madaline.getNom().equals(caracter)) {
                 madaline.entrenar(patron, (byte)1 );

@@ -255,7 +255,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void mitGuardarPatronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarPatronActionPerformed
         String letra = JOptionPane.showInputDialog(this, "Caracter asociado");
-        if ( !letra.isEmpty() ) {
+        if ( letra!=null && !letra.isEmpty()) {
             new Thread(() -> {
                 try {
                     pbProgreso.setIndeterminate(true);
