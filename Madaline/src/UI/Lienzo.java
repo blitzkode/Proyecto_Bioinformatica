@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import procesador_imagenes.ProcesarImagen;
 
 public class Lienzo extends JPanel {
     private ArrayList<Linea> lineas = new ArrayList<>();
@@ -36,7 +37,7 @@ public class Lienzo extends JPanel {
     public Lienzo() {
         this.color = Color.BLACK;
         this.setBackground(Color.white);
-        this.grosor = 14;
+        this.grosor = 22;
         this.letra_fondo = "";
         this.tamFuente = 250;
         this.dibujaLetra = false;
@@ -54,6 +55,10 @@ public class Lienzo extends JPanel {
         this.paint(imagen_dibujo.getGraphics());
         captura = false;
         return imagen_dibujo;
+    }
+    
+    public BufferedImage getImagenRecortada() {
+        return ProcesarImagen.getRecorteIMG(getImagen());
     }
     
     public void setImagen(BufferedImage imagen) {
@@ -106,7 +111,7 @@ public class Lienzo extends JPanel {
             return;
         }
         
-        BufferedImage imagen_archivo = getImagen();
+        BufferedImage imagen_archivo = getImagenRecortada();
         
         try {
             ImageIO.write(imagen_archivo, "jpg", archivo);
@@ -146,7 +151,13 @@ public class Lienzo extends JPanel {
             draw.setComposite(anterior);
         }
         if (imagen != null) {
-            draw.drawImage(imagen, 0, 0, this);
+            if (imagen.getHeight() < getHeight() && imagen.getWidth() < getWidth()) {
+                int x_centrado = (getWidth() - imagen.getWidth()) / 2;
+                int y_centrado = (getHeight()- imagen.getHeight()) / 2;
+                draw.drawImage(imagen, x_centrado, y_centrado, this);
+            }
+            else
+                draw.drawImage(imagen, 0, 0, this);
         }
         for (Linea l : lineas) {
             draw.setStroke(new BasicStroke(l.grosor,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));

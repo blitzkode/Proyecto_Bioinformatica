@@ -28,6 +28,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pnlDibujo = new javax.swing.JPanel();
         tfResultado = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -45,11 +46,18 @@ public class Mantenimiento extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         mitDeshacer = new javax.swing.JMenuItem();
         mitLimpiar = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        mitGuia = new javax.swing.JCheckBoxMenuItem();
+        mitCaracterGuia = new javax.swing.JMenuItem();
         mitReconocer = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         mitGuardarPatron = new javax.swing.JMenuItem();
         mitEntrenamientoFast = new javax.swing.JMenuItem();
         mitEntrManual = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        mitVocales = new javax.swing.JRadioButtonMenuItem();
+        mitNumeros = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +85,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jToolBar1.add(jLabel1);
         jToolBar1.add(jSeparator2);
 
-        spGrosor.setModel(new javax.swing.SpinnerNumberModel(14, 1, null, 1));
+        spGrosor.setModel(new javax.swing.SpinnerNumberModel(22, 1, null, 4));
         spGrosor.setFocusable(false);
         spGrosor.setPreferredSize(new java.awt.Dimension(50, 23));
         spGrosor.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -103,7 +111,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jMenu1.add(mitAbrir);
 
-        mitGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mitGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         mitGuardar.setText("Guardar como");
         mitGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +153,32 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Ver");
+
+        jMenu4.setText("Guía");
+
+        mitGuia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mitGuia.setText("Mostrar");
+        mitGuia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitGuiaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(mitGuia);
+
+        mitCaracterGuia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        mitCaracterGuia.setText("Fijar caracter");
+        mitCaracterGuia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitCaracterGuiaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(mitCaracterGuia);
+
+        jMenu3.add(jMenu4);
+
+        jMenuBar1.add(jMenu3);
+
         mitReconocer.setText("Reconocimiento");
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
@@ -181,6 +215,29 @@ public class Mantenimiento extends javax.swing.JFrame {
             }
         });
         mitReconocer.add(mitEntrManual);
+
+        jMenu5.setText("Modo");
+
+        buttonGroup1.add(mitVocales);
+        mitVocales.setSelected(true);
+        mitVocales.setText("Vocales");
+        mitVocales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitVocalesActionPerformed(evt);
+            }
+        });
+        jMenu5.add(mitVocales);
+
+        buttonGroup1.add(mitNumeros);
+        mitNumeros.setText("Números");
+        mitNumeros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitNumerosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(mitNumeros);
+
+        mitReconocer.add(jMenu5);
 
         jMenuBar1.add(mitReconocer);
 
@@ -299,26 +356,51 @@ public class Mantenimiento extends javax.swing.JFrame {
             aplicacion.entrenamientoManual(imagen, letra, validez);
         }).start();
     }//GEN-LAST:event_mitEntrManualActionPerformed
+
+    private void mitGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuiaActionPerformed
+        lienzoDibujo.dibujarLetra(mitGuia.isSelected());
+    }//GEN-LAST:event_mitGuiaActionPerformed
+
+    private void mitCaracterGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitCaracterGuiaActionPerformed
+        String caracter = JOptionPane.showInputDialog(this, "Caracter a mostrar");
+        lienzoDibujo.setLetra(caracter);
+    }//GEN-LAST:event_mitCaracterGuiaActionPerformed
+
+    private void mitVocalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitVocalesActionPerformed
+        aplicacion.setModoReconocimiento(mitVocales.isSelected() ? 0 : 1);
+    }//GEN-LAST:event_mitVocalesActionPerformed
+
+    private void mitNumerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitNumerosActionPerformed
+        aplicacion.setModoReconocimiento(mitNumeros.isSelected() ? 1 : 0);
+    }//GEN-LAST:event_mitNumerosActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem mitAbrir;
+    private javax.swing.JMenuItem mitCaracterGuia;
     private javax.swing.JMenuItem mitDeshacer;
     private javax.swing.JMenuItem mitEntrManual;
     private javax.swing.JMenuItem mitEntrenamientoFast;
     private javax.swing.JMenuItem mitGuardar;
     private javax.swing.JMenuItem mitGuardarPatron;
+    private javax.swing.JCheckBoxMenuItem mitGuia;
     private javax.swing.JMenuItem mitLimpiar;
+    private javax.swing.JRadioButtonMenuItem mitNumeros;
     private javax.swing.JMenu mitReconocer;
     private javax.swing.JMenuItem mitSalir;
+    private javax.swing.JRadioButtonMenuItem mitVocales;
     private javax.swing.JProgressBar pbProgreso;
     private javax.swing.JPanel pnlDibujo;
     private javax.swing.JSpinner spGrosor;

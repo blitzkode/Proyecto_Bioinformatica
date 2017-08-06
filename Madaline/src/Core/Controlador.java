@@ -23,7 +23,8 @@ public class Controlador {
     private String BD_ACTUAL;
     private String RUTA_IMG = "img"; // Ubicación de las imagenes de entrenamiento
     
-    private int puntos;
+    private int puntaje_total;
+    private int puntos_acumulados;
     private int intentos;
     private ArrayList<String> caracteres_partida;
     private String[] caracteres_actual;
@@ -33,6 +34,7 @@ public class Controlador {
     private static final String[] digitos = {
         "0","1","2","3","4","5","6","7","8","9"
     };
+    private static final int PUNTAJE_MAXIMO = 10;
     
     /**
      * Constructor por defecto. Si no se encuentra el archivo XML con los pesos
@@ -75,7 +77,7 @@ public class Controlador {
     }
     
     public void nuevoJuego() {
-        puntos = 0; intentos = 0;
+        puntaje_total = 0; puntos_acumulados = PUNTAJE_MAXIMO; intentos = 0;
         caracteres_partida = new ArrayList<>();
         
         for (String caracter : caracteres_actual) {
@@ -88,10 +90,17 @@ public class Controlador {
         
         String caracter = caracteres_partida.get(0);
         acierto = comparar(imagen, caracter);
-        intentos++;
+        
         if (acierto) {
             caracteres_partida.remove(0);
-            puntos++;
+            puntaje_total += puntos_acumulados;
+            
+            puntos_acumulados = PUNTAJE_MAXIMO;
+        }
+        else {
+            intentos++;
+            puntos_acumulados -= 2;
+            if (puntos_acumulados < 1) puntos_acumulados = 1;
         }
         return acierto;
     }
@@ -235,7 +244,7 @@ public class Controlador {
     }
 
     public int getPuntos() {
-        return puntos;
+        return puntaje_total;
     }
 
     public ArrayList<String> getCaracteres_partida() {
