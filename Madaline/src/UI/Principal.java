@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import static UI.Start.puntero;
+import java.applet.AudioClip;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -12,6 +14,8 @@ public class Principal extends javax.swing.JFrame {
     Lienzo lienzo;
     PanelLetra panelLetra;
     javax.swing.JFrame padre;
+    
+    AudioClip correct, fail, succes,apoyo[], exito[];
 
     public Principal(Controlador aplicacion, javax.swing.JFrame padre) {
         initComponents();
@@ -26,10 +30,11 @@ public class Principal extends javax.swing.JFrame {
         pnl_ayuda.add(panelLetra);
 
         setVisible(true);
-
+        
         setwhitepanel();
         setwallpaper();
         setOpaque();
+        CargarSonidos();
 
         new Dificultad(this, true).setVisible(true);
 
@@ -37,6 +42,31 @@ public class Principal extends javax.swing.JFrame {
         siguienteLetra();
 
     }
+    
+    private void CargarSonidos(){
+        correct = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Correct.wav"));
+        fail = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Fail.wav"));
+        succes = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Succes.wav"));
+        
+        
+        apoyo = new AudioClip[4];
+        exito = new AudioClip[4];
+        
+        apoyo[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_1.wav"));
+        exito[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_1.wav"));
+        
+        apoyo[1]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_2.wav"));
+        exito[1]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_2.wav"));
+        
+        apoyo[2]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_3.wav"));
+        exito[2]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_3.wav"));
+        
+        apoyo[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_4.wav"));
+        exito[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_4.wav"));
+            
+        
+    }
+    
 
     private void setOpaque() {
 
@@ -93,7 +123,6 @@ public class Principal extends javax.swing.JFrame {
         btn_siguiente = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         btn_pulsa = new javax.swing.JButton();
-        btnresultados = new javax.swing.JButton();
         pnl_resultados = new javax.swing.JPanel();
         txt_dificultad = new javax.swing.JLabel();
         txt_puntos = new javax.swing.JLabel();
@@ -125,6 +154,11 @@ public class Principal extends javax.swing.JFrame {
         btn_lila.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_2.png"))); // NOI18N
         btn_lila.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_1.png"))); // NOI18N
         btn_lila.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_3.png"))); // NOI18N
+        btn_lila.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_lilaMouseEntered(evt);
+            }
+        });
         btn_lila.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_lilaActionPerformed(evt);
@@ -134,6 +168,11 @@ public class Principal extends javax.swing.JFrame {
         btn_marron.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3d2601_2.png"))); // NOI18N
         btn_marron.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3d2601_1.png"))); // NOI18N
         btn_marron.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3d2601_3.png"))); // NOI18N
+        btn_marron.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_marronMouseEntered(evt);
+            }
+        });
         btn_marron.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_marronActionPerformed(evt);
@@ -143,6 +182,11 @@ public class Principal extends javax.swing.JFrame {
         btn_naranja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/e79e00_2.png"))); // NOI18N
         btn_naranja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/e79e00_1.png"))); // NOI18N
         btn_naranja.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/e79e00_3.png"))); // NOI18N
+        btn_naranja.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_naranjaMouseEntered(evt);
+            }
+        });
         btn_naranja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_naranjaActionPerformed(evt);
@@ -152,6 +196,11 @@ public class Principal extends javax.swing.JFrame {
         btn_verde.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_2.png"))); // NOI18N
         btn_verde.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_1.png"))); // NOI18N
         btn_verde.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_3.png"))); // NOI18N
+        btn_verde.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_verdeMouseEntered(evt);
+            }
+        });
         btn_verde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_verdeActionPerformed(evt);
@@ -161,6 +210,11 @@ public class Principal extends javax.swing.JFrame {
         btn_rojo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_2.png"))); // NOI18N
         btn_rojo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800.png"))); // NOI18N
         btn_rojo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_3.png"))); // NOI18N
+        btn_rojo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_rojoMouseEntered(evt);
+            }
+        });
         btn_rojo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_rojoActionPerformed(evt);
@@ -203,6 +257,11 @@ public class Principal extends javax.swing.JFrame {
         btn_clean.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/clean_2.png"))); // NOI18N
         btn_clean.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/clean_1.png"))); // NOI18N
         btn_clean.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/clean_3.png"))); // NOI18N
+        btn_clean.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_cleanMouseEntered(evt);
+            }
+        });
         btn_clean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cleanActionPerformed(evt);
@@ -212,6 +271,11 @@ public class Principal extends javax.swing.JFrame {
         btn_menos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/menos_2.png"))); // NOI18N
         btn_menos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/menos_1.png"))); // NOI18N
         btn_menos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/menos_3.png"))); // NOI18N
+        btn_menos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_menosMouseEntered(evt);
+            }
+        });
         btn_menos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_menosActionPerformed(evt);
@@ -221,6 +285,11 @@ public class Principal extends javax.swing.JFrame {
         btn_mas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas_2.png"))); // NOI18N
         btn_mas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas_1.png"))); // NOI18N
         btn_mas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas_3.png"))); // NOI18N
+        btn_mas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_masMouseEntered(evt);
+            }
+        });
         btn_mas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_masActionPerformed(evt);
@@ -228,6 +297,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_guia.setText("GUIA");
+        btn_guia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_guiaMouseEntered(evt);
+            }
+        });
         btn_guia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_guiaActionPerformed(evt);
@@ -324,6 +398,11 @@ public class Principal extends javax.swing.JFrame {
         btn_siguiente.setEnabled(false);
         btn_siguiente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/siguiente_1.png"))); // NOI18N
         btn_siguiente.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/siguiente_3.png"))); // NOI18N
+        btn_siguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_siguienteMouseEntered(evt);
+            }
+        });
         btn_siguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_siguienteActionPerformed(evt);
@@ -333,6 +412,11 @@ public class Principal extends javax.swing.JFrame {
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
         btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
         btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_salirMouseEntered(evt);
+            }
+        });
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salirActionPerformed(evt);
@@ -343,16 +427,14 @@ public class Principal extends javax.swing.JFrame {
         btn_pulsa.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btn_pulsa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_1.png"))); // NOI18N
         btn_pulsa.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_3.png"))); // NOI18N
+        btn_pulsa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_pulsaMouseEntered(evt);
+            }
+        });
         btn_pulsa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pulsaActionPerformed(evt);
-            }
-        });
-
-        btnresultados.setText("jButton1");
-        btnresultados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnresultadosActionPerformed(evt);
             }
         });
 
@@ -364,17 +446,14 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btn_pulsa)
-                        .addGap(42, 42, 42))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
                         .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btnresultados)
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
                         .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))))
+                        .addGap(90, 90, 90))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
+                        .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
         );
         pnl_botonesLayout.setVerticalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,9 +461,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnresultados)
+                .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_salir)
                 .addGap(19, 19, 19))
@@ -586,6 +663,10 @@ public class Principal extends javax.swing.JFrame {
         if (acierto) {
             btn_siguiente.setEnabled(true);
             btn_pulsa.setEnabled(false);
+            correct.play();
+            exito[2].play();
+        } else {
+            fail.play();
         }
     }//GEN-LAST:event_btn_pulsaActionPerformed
 
@@ -597,6 +678,9 @@ public class Principal extends javax.swing.JFrame {
         if (!aplicacion.getLetras_partida().isEmpty()) {
             siguienteLetra();
             btn_pulsa.setEnabled(true);
+        } else {
+            succes.play();
+            
         }
         btn_siguiente.setEnabled(false);
     }//GEN-LAST:event_btn_siguienteActionPerformed
@@ -620,11 +704,53 @@ public class Principal extends javax.swing.JFrame {
         wall.setSize(pnl_main.getSize());
     }//GEN-LAST:event_pnl_mainComponentResized
 
-    private void btnresultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresultadosActionPerformed
-        Resultados rst = new Resultados(this, true);
-        rst.setVisible(true);
-        rst.setstars(4);
-    }//GEN-LAST:event_btnresultadosActionPerformed
+    private void btn_rojoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rojoMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_rojoMouseEntered
+
+    private void btn_verdeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verdeMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_verdeMouseEntered
+
+    private void btn_naranjaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_naranjaMouseEntered
+      puntero.play();
+    }//GEN-LAST:event_btn_naranjaMouseEntered
+
+    private void btn_marronMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_marronMouseEntered
+      puntero.play();
+    }//GEN-LAST:event_btn_marronMouseEntered
+
+    private void btn_lilaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_lilaMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_lilaMouseEntered
+
+    private void btn_masMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_masMouseEntered
+      puntero.play();
+    }//GEN-LAST:event_btn_masMouseEntered
+
+    private void btn_menosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_menosMouseEntered
+      puntero.play();
+    }//GEN-LAST:event_btn_menosMouseEntered
+
+    private void btn_cleanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cleanMouseEntered
+     puntero.play();
+    }//GEN-LAST:event_btn_cleanMouseEntered
+
+    private void btn_guiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guiaMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_guiaMouseEntered
+
+    private void btn_siguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siguienteMouseEntered
+     puntero.play();
+    }//GEN-LAST:event_btn_siguienteMouseEntered
+
+    private void btn_pulsaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_pulsaMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_pulsaMouseEntered
+
+    private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_salirMouseEntered
 
     /**
      * @param args the command line arguments
@@ -675,7 +801,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_siguiente;
     private javax.swing.JButton btn_verde;
-    private javax.swing.JButton btnresultados;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
