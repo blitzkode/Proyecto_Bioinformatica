@@ -9,13 +9,13 @@ import Core.Controlador;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
+import java.applet.AudioClip;
 
 public class Start extends javax.swing.JFrame {
 
     Controlador aplicacion;
     
-     
+    AudioClip empezar, puntero, instrumental;
     ImageIcon img1;
     Icon icon;
     
@@ -23,6 +23,9 @@ public class Start extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
+        empezar = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Start.wav"));
+        puntero = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Rollover.wav"));
+        instrumental = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Background.mp3"));
         
         setOpaque();
         setWallpaper();
@@ -33,10 +36,13 @@ public class Start extends javax.swing.JFrame {
             public void run() {
                 Splash s = new Splash();
                 aplicacion = new Controlador();
+                
                 s.dispose();
                 setVisible(true);
+                
             }
         }).start();
+        
     }
 
     private void setOpaque(){
@@ -78,6 +84,7 @@ public class Start extends javax.swing.JFrame {
         txt_logo = new javax.swing.JLabel();
         btn_reto = new javax.swing.JButton();
         btn_practicar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -88,6 +95,11 @@ public class Start extends javax.swing.JFrame {
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
         btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
         btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_salirMouseEntered(evt);
+            }
+        });
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salirActionPerformed(evt);
@@ -98,6 +110,11 @@ public class Start extends javax.swing.JFrame {
         btn_reto.setToolTipText("Jugar");
         btn_reto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_1.png"))); // NOI18N
         btn_reto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_3.png"))); // NOI18N
+        btn_reto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_retoMouseEntered(evt);
+            }
+        });
         btn_reto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_retoActionPerformed(evt);
@@ -108,9 +125,21 @@ public class Start extends javax.swing.JFrame {
         btn_practicar.setToolTipText("Practicar");
         btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
         btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
+        btn_practicar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_practicarMouseEntered(evt);
+            }
+        });
         btn_practicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_practicarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -119,18 +148,20 @@ public class Start extends javax.swing.JFrame {
         pnl_fondoLayout.setHorizontalGroup(
             pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fondoLayout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
                         .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
-                        .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                        .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnl_fondoLayout.createSequentialGroup()
                                 .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(135, 135, 135)
                                 .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                            .addGroup(pnl_fondoLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
                                 .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(114, 114, 114)))
                         .addGap(256, 256, 256))))
@@ -144,9 +175,15 @@ public class Start extends javax.swing.JFrame {
                 .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btn_salir)
-                .addGap(28, 28, 28))
+                .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_fondoLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_salir)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(68, 68, 68))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -168,6 +205,9 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_retoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retoActionPerformed
+        
+        
+        empezar.play();
         setVisible(false);
         
         new Principal(aplicacion, this);
@@ -175,10 +215,27 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_retoActionPerformed
 
     private void btn_practicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_practicarActionPerformed
-       setVisible(false);
+        empezar.play();
+        setVisible(false);
         
         new Principal1(aplicacion, this);
     }//GEN-LAST:event_btn_practicarActionPerformed
+
+    private void btn_retoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_retoMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_retoMouseEntered
+
+    private void btn_practicarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_practicarMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_practicarMouseEntered
+
+    private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_salirMouseEntered
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      instrumental.play();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,6 +276,7 @@ public class Start extends javax.swing.JFrame {
     private javax.swing.JButton btn_practicar;
     private javax.swing.JButton btn_reto;
     private javax.swing.JButton btn_salir;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel pnl_fondo;
     private javax.swing.JLabel txt_logo;
     // End of variables declaration//GEN-END:variables
