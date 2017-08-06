@@ -30,25 +30,27 @@ public class ProcesarImagen {
         int V[] = getArray(img);
 
         //transformamos datos a adaline 
-        byte A[] = getAdaline(V,IMG_WIDTH);
+//        byte A[] = getAdaline(V,IMG_WIDTH);
 
         //obtenemos cordenadas para el corte
-        int x = getX(A);
-        int y = getY(A);
-        int w = getLimWidth(A) - x;
-        int h = getLimHeight(A) - y;
+        int x = getX(V,IMG_WIDTH);
+        int y = getY(V,IMG_WIDTH,IMG_HEIGHT);
+        int w = getLimWidth(V,IMG_WIDTH,IMG_HEIGHT) - x;
+        int h = getLimHeight(V,IMG_WIDTH,IMG_HEIGHT) - y;
+        
+//        System.out.println("X: "+ x+ " Y: "+ y + " W: "+w+" H: "+h);
 
-//        saveimg(img, "incial");
+        saveimg(img, "incial");
 
         img = getCorte(img, x, y, w, h);
 
-//        saveimg(img, "media");
+        saveimg(img, "media");
 
         //escalamos corte a 100 altura, manteniendo proporcion ancho
         img = Cambiar_Tamaño(img, (int) (IMG_HEIGHT * w) / h> IMG_WIDTH ? IMG_WIDTH : (int) (IMG_HEIGHT * w) / h, IMG_HEIGHT);
         
         
-//        saveimg(img, "final");
+        saveimg(img, "final");
 
         //obtenemos array imagen nueva
         int V2[] = getArray(img);
@@ -63,17 +65,19 @@ public class ProcesarImagen {
         
         int V[] = getArray(img);
 
-        byte A[] = getAdaline(V,IMG_WIDTH);
-        
-        int x = getX(A);
-        int y = getY(A);
-        int w = getLimWidth(A) - x;
-        int h = getLimHeight(A) - y;
+        int x = getX(V,img.getWidth());
+        int y = getY(V,img.getWidth(),img.getHeight());
+        int w = getLimWidth(V,img.getWidth(),img.getHeight()) - x;
+        int h = getLimHeight(V,img.getWidth(),img.getHeight()) - y;
         
         img = getCorte(img, x, y, w, h);
         
         return img;
         
+    }
+    
+    private static byte getByteValor(int R[], int i){
+        return R[i*3] > 180 ? (byte) -1 : 1;
     }
     
 
@@ -85,14 +89,14 @@ public class ProcesarImagen {
         }
     }
 
-    private static int getX(byte A[]) {
+    private static int getX(int A[], int width) {
         int lim = 0;
         boolean find = false;
 
-        while (!find && lim < IMG_WIDTH) {
+        while (!find && lim < width) {
 
-            for (int i = 0; i < IMG_WIDTH; i++) {
-                if (A[(i * IMG_WIDTH) + lim] == 1) {
+            for (int i = 0; i < width; i++) {
+                if (getByteValor(A, (i * width) + lim)==1) {
                     find = true;
                     break;
                 }
@@ -107,12 +111,12 @@ public class ProcesarImagen {
 
     }
 
-    private static int getY(byte A[]) {
+    private static int getY(int A[], int width, int height) {
         int lim = 0;
         boolean find = false;
-        while (!find && lim < IMG_HEIGHT) {
-            for (int i = 0; i < IMG_WIDTH; i++) {
-                if (A[i + (IMG_HEIGHT * lim)] == 1) {
+        while (!find && lim < height) {
+            for (int i = 0; i < width; i++) {
+                if (getByteValor(A,i + (height * lim)) == 1) {
                     find = true;
                     break;
                 }
@@ -126,14 +130,14 @@ public class ProcesarImagen {
 
     }
 
-    private static int getLimWidth(byte A[]) {
+    private static int getLimWidth(int A[], int width,int height) {
         int lim = 0;
         boolean find = false;
 
-        for (int j = IMG_WIDTH - 1; j >= 0 && !find; j--) {
-            for (int i = 0; i < IMG_HEIGHT; i++) {
+        for (int j = width - 1; j >= 0 && !find; j--) {
+            for (int i = 0; i < height; i++) {
 
-                if (A[i * IMG_WIDTH + j] == 1) {
+                if (getByteValor(A,i * width + j) == 1) {
                     find = true;
                     break;
                 }
@@ -144,19 +148,19 @@ public class ProcesarImagen {
             }
         }
 
-        lim = IMG_WIDTH - lim;
+        lim = width - lim;
         return lim;
 
     }
 
-    private static int getLimHeight(byte A[]) {
+    private static int getLimHeight(int A[], int width, int height) {
         int lim = 0;
 
         boolean find = false;
 
-        for (int i = IMG_HEIGHT - 1; i >= 0 && !find; i--) {
-            for (int j = IMG_WIDTH - 1; j >= 0; j--) {
-                if (A[i * IMG_WIDTH + j] == 1) {
+        for (int i = height - 1; i >= 0 && !find; i--) {
+            for (int j = width - 1; j >= 0; j--) {
+                if (getByteValor(A,i * width + j) == 1) {
                     find = true;
                     break;
                 }
@@ -168,7 +172,7 @@ public class ProcesarImagen {
 
         }
 
-        lim = IMG_HEIGHT - lim;
+        lim = height - lim;
 
         return lim;
 
@@ -209,7 +213,7 @@ public class ProcesarImagen {
     }
 
     private static byte[] getAdaline(int R[], int w) {
-        byte A[] = new byte[IMG_HEIGHT * IMG_WIDTH];
+        byte A[] = new byte[IMG_WIDTH*IMG_HEIGHT];
 
         
         int pta = (IMG_WIDTH - w) % 2 == 0 ? (IMG_WIDTH - w) / 2 : (IMG_WIDTH - w + 1) / 2;
