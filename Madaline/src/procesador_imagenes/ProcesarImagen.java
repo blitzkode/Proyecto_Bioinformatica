@@ -59,8 +59,25 @@ public class ProcesarImagen {
         return A2;
     }
     
+    public static BufferedImage getRecorteIMG(BufferedImage img){
+        
+        int V[] = getArray(img);
 
-    private static void saveimg(BufferedImage img, String name) {
+        byte A[] = getAdaline(V,IMG_WIDTH);
+        
+        int x = getX(A);
+        int y = getY(A);
+        int w = getLimWidth(A) - x;
+        int h = getLimHeight(A) - y;
+        
+        img = getCorte(img, x, y, w, h);
+        
+        return img;
+        
+    }
+    
+
+    public static void saveimg(BufferedImage img, String name) {
         try {
             ImageIO.write(img, "jpg", new File("C:\\Users\\Diego Baes\\Desktop\\" + name + ".jpg"));
         } catch (IOException ex) {

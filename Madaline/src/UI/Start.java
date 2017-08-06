@@ -242,7 +242,7 @@ public class Start extends javax.swing.JFrame {
         if (btn_sonido.isSelected()) {
             instrumental.stop();
         } else{ 
-            instrumental.play();
+            instrumental.loop();
         }
         
     }//GEN-LAST:event_btn_sonidoActionPerformed

@@ -19,6 +19,8 @@ public class Principal extends javax.swing.JFrame {
     javax.swing.JFrame padre;
     int modo_juego;
     
+    int n_apoyo=4,n_exito=4;
+    
     AudioClip correct, fail, succes,apoyo[], exito[];
 
     public Principal(Controlador aplicacion, javax.swing.JFrame padre) {
@@ -54,8 +56,8 @@ public class Principal extends javax.swing.JFrame {
         succes = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Succes.wav"));
         
         
-        apoyo = new AudioClip[4];
-        exito = new AudioClip[4];
+        apoyo = new AudioClip[n_apoyo];
+        exito = new AudioClip[n_exito];
         
         apoyo[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_1.wav"));
         exito[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_1.wav"));
@@ -702,9 +704,10 @@ public class Principal extends javax.swing.JFrame {
             btn_siguiente.setEnabled(true);
             btn_pulsa.setEnabled(false);
             correct.play();
-            exito[2].play();
+            exito[(int) (Math.random() * n_exito)].play();
         } else {
             fail.play();
+            apoyo[(int) (Math.random() * n_apoyo)].play();
         }
         if (aplicacion.juegoTerminado()) {
             btn_siguiente.setEnabled(false);

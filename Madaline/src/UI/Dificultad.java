@@ -36,7 +36,7 @@ public class Dificultad extends javax.swing.JDialog {
     
     private void setOpaque() {
 
-        for (JButton boton : new JButton[]{btn_facil,btn_normal,btn_dificil}) {
+        for (JButton boton : new JButton[]{btn_facil,btn_normal}) {
 
             boton.setOpaque(false);
             boton.setContentAreaFilled(false);
@@ -54,7 +54,6 @@ public class Dificultad extends javax.swing.JDialog {
         pnl_fondo = new javax.swing.JPanel();
         btn_facil = new javax.swing.JButton();
         btn_normal = new javax.swing.JButton();
-        btn_dificil = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -93,15 +92,6 @@ public class Dificultad extends javax.swing.JDialog {
             }
         });
 
-        btn_dificil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dificil_2.png"))); // NOI18N
-        btn_dificil.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dificil_1.png"))); // NOI18N
-        btn_dificil.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dificil_3.png"))); // NOI18N
-        btn_dificil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_dificilActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
         pnl_fondo.setLayout(pnl_fondoLayout);
         pnl_fondoLayout.setHorizontalGroup(
@@ -109,7 +99,6 @@ public class Dificultad extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
                 .addContainerGap(197, Short.MAX_VALUE)
                 .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_dificil, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_facil, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_normal, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(172, 172, 172))
@@ -121,9 +110,7 @@ public class Dificultad extends javax.swing.JDialog {
                 .addComponent(btn_facil, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_normal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_dificil, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(112, 112, 112))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,10 +138,6 @@ public class Dificultad extends javax.swing.JDialog {
         this.parent.modo_juego = 1;
         setVisible(false);
     }//GEN-LAST:event_btn_normalActionPerformed
-
-    private void btn_dificilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dificilActionPerformed
-        setVisible(false);
-    }//GEN-LAST:event_btn_dificilActionPerformed
 
     private void btn_facilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_facilMouseEntered
        puntero.play();
@@ -207,7 +190,6 @@ public class Dificultad extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_dificil;
     private javax.swing.JButton btn_facil;
     private javax.swing.JButton btn_normal;
     private javax.swing.JMenuItem jMenuItem1;
