@@ -23,9 +23,7 @@ public class Controlador {
     private int intentos;
     private ArrayList<String> letras_partida;
     private static final String[] alfabeto = {
-        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q",
-        "R","S","T","U","V","W","X","Y","Z","a","b","d","e","f","g","h","i",
-        "j","l","m","n","ñ","q","r","t"
+        "A","E","I","O","U","a","e","i"
     };
     
     /**
@@ -117,12 +115,8 @@ public class Controlador {
     
     private boolean esAmbiguo(String letra) {
         return (
-            letra.equalsIgnoreCase("C") || letra.equalsIgnoreCase("K") ||
-            letra.equalsIgnoreCase("O") || letra.equalsIgnoreCase("P") ||
-            letra.equalsIgnoreCase("S") || letra.equalsIgnoreCase("K") ||
-            letra.equalsIgnoreCase("U") || letra.equalsIgnoreCase("V") ||
-            letra.equalsIgnoreCase("W") || letra.equalsIgnoreCase("X") ||
-            letra.equalsIgnoreCase("Y") || letra.equalsIgnoreCase("Z")
+            letra.equalsIgnoreCase("O") ||
+            letra.equalsIgnoreCase("U")
         );
     }
     
