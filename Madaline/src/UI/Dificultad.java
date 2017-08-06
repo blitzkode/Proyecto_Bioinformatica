@@ -13,20 +13,13 @@ import javax.swing.JButton;
  * @author Diego Baes
  */
 public class Dificultad extends javax.swing.JDialog {
-
-    /**
-     * Creates new form Dificultad
-     * 
-     */ 
+    Principal parent;
     
-   
-     
     public Dificultad(java.awt.Frame parent, boolean modal) {
-
         super(parent, modal);
-
         initComponents();
         
+        this.parent = (Principal) parent;
         setWallpaper();
         setOpaque();
         setResizable(false);
@@ -137,10 +130,12 @@ public class Dificultad extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_facilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_facilActionPerformed
+        this.parent.modo_juego = 0;
         setVisible(false);
     }//GEN-LAST:event_btn_facilActionPerformed
 
     private void btn_normalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_normalActionPerformed
+        this.parent.modo_juego = 1;
         setVisible(false);
     }//GEN-LAST:event_btn_normalActionPerformed
 

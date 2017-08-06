@@ -55,7 +55,7 @@ public class Reconocedor {
         }
     }
     
-    public void entrenar(ArrayList<String> letras, byte[][][] entradas, byte[][] salidas) {
+    public void entrenar(byte[][][] entradas, byte[][] salidas) {
         int i = 0;
         for (Madaline madaline : mads) {
             madaline.entrenar(entradas[i], salidas[i]);

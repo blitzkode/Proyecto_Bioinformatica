@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import java.awt.Image;
@@ -15,20 +10,23 @@ import javax.swing.JLabel;
  * @author Diego Baes
  */
 public class Resultados extends javax.swing.JDialog {
-
+    java.awt.Frame parent;
     JLabel[] stars = new JLabel[5];
     ImageIcon starY, starG;
     Icon s_on, s_off;
 
-    public Resultados(java.awt.Frame parent, boolean modal) {
+    public Resultados(java.awt.Frame parent, boolean modal, int estrellas, int puntos, int intentos) {
         super(parent, modal);
         initComponents();
+        this.parent = parent;
         setResizable(false);
         setLocationRelativeTo(null);
         setwallpaper();
-         getStars();
-         setstars(4);
+        getStars();
         
+        txt_nivel.setText("" + puntos);
+        txt_intentosf.setText("INTENTOS FALLIDOS: " + intentos);
+        setstars(estrellas);
     }
 
     private void getStars() {
@@ -40,13 +38,8 @@ public class Resultados extends javax.swing.JDialog {
     }
 
     public void setstars(int ptr) {
-
         for (int i = 0; i < 5; i++) {
-            if (i < ptr) {
-                stars[i].setIcon(s_on);
-            } else {
-                stars[i].setIcon(s_off);
-            }
+            stars[i].setIcon( i < ptr ? s_on : s_off);
         }
     }
     
@@ -79,8 +72,8 @@ public class Resultados extends javax.swing.JDialog {
         txt_puntos = new javax.swing.JLabel();
         txt_intentosf = new javax.swing.JLabel();
         txt_nivel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnReiniciar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -143,9 +136,19 @@ public class Resultados extends javax.swing.JDialog {
         txt_nivel.setForeground(new java.awt.Color(255, 96, 5));
         txt_nivel.setText("27");
 
-        jButton1.setText("reintentar");
+        btnReiniciar.setText("reintentar");
+        btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReiniciarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("salir");
+        btnSalir.setText("salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_mainLayout = new javax.swing.GroupLayout(pnl_main);
         pnl_main.setLayout(pnl_mainLayout);
@@ -155,9 +158,9 @@ public class Resultados extends javax.swing.JDialog {
                 .addContainerGap(120, Short.MAX_VALUE)
                 .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_mainLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnReiniciar)
                         .addGap(32, 32, 32)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(pnl_stars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,8 +196,8 @@ public class Resultados extends javax.swing.JDialog {
                 .addComponent(pnl_stars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -212,51 +215,19 @@ public class Resultados extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
+        ((Principal) parent).reiniciarJuego();
+        setVisible(false);
+    }//GEN-LAST:event_btnReiniciarActionPerformed
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Resultados dialog = new Resultados(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        setVisible(false);
+        ((Principal) parent).salir();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnReiniciar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JPanel pnl_main;
     private javax.swing.JPanel pnl_stars;
     private javax.swing.JLabel star1;

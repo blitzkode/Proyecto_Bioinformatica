@@ -3,6 +3,9 @@ package UI;
 import Core.Controlador;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -12,10 +15,10 @@ public class Principal extends javax.swing.JFrame {
     Lienzo lienzo;
     PanelLetra panelLetra;
     javax.swing.JFrame padre;
+    int modo_juego;
 
     public Principal(Controlador aplicacion, javax.swing.JFrame padre) {
         initComponents();
-//        btnresultados.setVisible(false);
         setExtendedState(MAXIMIZED_BOTH);
         this.aplicacion = aplicacion;
         this.padre = padre;
@@ -30,14 +33,24 @@ public class Principal extends javax.swing.JFrame {
         setwhitepanel();
         setwallpaper();
         setOpaque();
-
+        cargarFondoLienzo();
+        
         new Dificultad(this, true).setVisible(true);
 
-        aplicacion.nuevoJuego(5);
-        siguienteLetra();
+        aplicacion.setModoReconocimiento(modo_juego);
+        reiniciarJuego();
 
     }
 
+    private void cargarFondoLienzo() {
+        try {
+            BufferedImage fondo = ImageIO.read(new File("src/Iconos/rejilla.jpg"));
+            lienzo.setFondo(fondo);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     private void setOpaque() {
 
         for (JButton boton : new JButton[]{btn_pulsa, btn_salir, btn_clean, btn_rojo,
@@ -54,6 +67,14 @@ public class Principal extends javax.swing.JFrame {
         panelLetra.dibujarLetra(aplicacion.getLetraActual());
         lienzo.limpiarContenido();
         lienzo.setLetra(aplicacion.getLetraActual());
+    }
+    
+    public void reiniciarJuego() {
+        txt_puntos.setText("PUNTOS: 0");
+        txt_intentosf.setText("INTENTOS FALLIDOS: 0");
+        btn_pulsa.setEnabled(true);
+        aplicacion.nuevoJuego();
+        siguienteLetra();
     }
 
     private void setwhitepanel() {
@@ -86,14 +107,14 @@ public class Principal extends javax.swing.JFrame {
         btn_clean = new javax.swing.JButton();
         btn_menos = new javax.swing.JButton();
         btn_mas = new javax.swing.JButton();
-        btn_guia = new javax.swing.JButton();
+        tbtGuia = new javax.swing.JToggleButton();
+        tbtCuadricula = new javax.swing.JToggleButton();
         pnl_ayuda = new javax.swing.JPanel();
         pnlContenedorLienzo = new javax.swing.JPanel();
         pnl_botones = new javax.swing.JPanel();
         btn_siguiente = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         btn_pulsa = new javax.swing.JButton();
-        btnresultados = new javax.swing.JButton();
         pnl_resultados = new javax.swing.JPanel();
         txt_dificultad = new javax.swing.JLabel();
         txt_puntos = new javax.swing.JLabel();
@@ -227,10 +248,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btn_guia.setText("GUIA");
-        btn_guia.addActionListener(new java.awt.event.ActionListener() {
+        tbtGuia.setText("GUIA");
+        tbtGuia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_guiaActionPerformed(evt);
+                tbtGuiaActionPerformed(evt);
+            }
+        });
+
+        tbtCuadricula.setText("CUAD");
+        tbtCuadricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtCuadriculaActionPerformed(evt);
             }
         });
 
@@ -244,7 +272,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btn_menos, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_mas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clean, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_guia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tbtGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_funcionesLayout.setVerticalGroup(
@@ -252,13 +281,15 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(pnl_funcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_mas)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addComponent(btn_menos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btn_clean)
                 .addGap(18, 18, 18)
-                .addComponent(btn_guia, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addComponent(tbtGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnl_opcionesLayout = new javax.swing.GroupLayout(pnl_opciones);
@@ -349,13 +380,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnresultados.setText("jButton1");
-        btnresultados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnresultadosActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
         pnl_botonesLayout.setHorizontalGroup(
@@ -370,9 +394,6 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btnresultados)
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
                         .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(90, 90, 90))))
         );
@@ -383,8 +404,6 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnresultados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_salir)
                 .addGap(19, 19, 19))
@@ -537,11 +556,14 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        padre.setVisible(true);
-        dispose();
-
+        salir();
     }//GEN-LAST:event_btn_salirActionPerformed
 
+    public void salir() {
+        padre.setVisible(true);
+        dispose();
+    }
+    
     private void btn_cleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cleanActionPerformed
         lienzo.limpiarContenido();
     }//GEN-LAST:event_btn_cleanActionPerformed
@@ -581,11 +603,18 @@ public class Principal extends javax.swing.JFrame {
     private void btn_pulsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pulsaActionPerformed
         BufferedImage imagen = lienzo.getImagen();
         boolean acierto = aplicacion.jugar(imagen);
-        txt_puntos.setText("PUNTOS: " + aplicacion.getPuntos());
-        txt_intentosf.setText("INTENTOS FALLIDOS: " + (aplicacion.getIntentos() - aplicacion.getPuntos()));
+        int puntos = aplicacion.getPuntos();
+        int intentos = aplicacion.getIntentos() - puntos;
+        txt_puntos.setText("PUNTOS: " + puntos);
+        txt_intentosf.setText("INTENTOS FALLIDOS: " + intentos);
         if (acierto) {
             btn_siguiente.setEnabled(true);
             btn_pulsa.setEnabled(false);
+        }
+        if (aplicacion.juegoTerminado()) {
+            btn_siguiente.setEnabled(false);
+            Resultados rst = new Resultados(this, true, aplicacion.getEstrellas(), puntos, intentos);
+            rst.setVisible(true);
         }
     }//GEN-LAST:event_btn_pulsaActionPerformed
 
@@ -594,16 +623,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_ayudaComponentResized
 
     private void btn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siguienteActionPerformed
-        if (!aplicacion.getLetras_partida().isEmpty()) {
-            siguienteLetra();
-            btn_pulsa.setEnabled(true);
-        }
+        siguienteLetra();
+        btn_pulsa.setEnabled(true);
         btn_siguiente.setEnabled(false);
     }//GEN-LAST:event_btn_siguienteActionPerformed
 
-    private void btn_guiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guiaActionPerformed
-        lienzo.dibujarLetra(true);
-    }//GEN-LAST:event_btn_guiaActionPerformed
     private void mitGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitGuardarActionPerformed
         lienzo.guardarImagen();
     }//GEN-LAST:event_mitGuardarActionPerformed
@@ -620,11 +644,13 @@ public class Principal extends javax.swing.JFrame {
         wall.setSize(pnl_main.getSize());
     }//GEN-LAST:event_pnl_mainComponentResized
 
-    private void btnresultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresultadosActionPerformed
-        Resultados rst = new Resultados(this, true);
-        rst.setVisible(true);
-        rst.setstars(4);
-    }//GEN-LAST:event_btnresultadosActionPerformed
+    private void tbtGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtGuiaActionPerformed
+        lienzo.dibujarLetra(tbtGuia.isSelected());
+    }//GEN-LAST:event_tbtGuiaActionPerformed
+
+    private void tbtCuadriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtCuadriculaActionPerformed
+        lienzo.activarFondo(tbtCuadricula.isSelected());
+    }//GEN-LAST:event_tbtCuadriculaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -664,7 +690,6 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_clean;
-    private javax.swing.JButton btn_guia;
     private javax.swing.JButton btn_lila;
     private javax.swing.JButton btn_marron;
     private javax.swing.JButton btn_mas;
@@ -675,7 +700,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_siguiente;
     private javax.swing.JButton btn_verde;
-    private javax.swing.JButton btnresultados;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -691,6 +715,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_main;
     private javax.swing.JPanel pnl_opciones;
     private javax.swing.JPanel pnl_resultados;
+    private javax.swing.JToggleButton tbtCuadricula;
+    private javax.swing.JToggleButton tbtGuia;
     private javax.swing.JLabel txt_dificultad;
     private javax.swing.JLabel txt_intentosf;
     private javax.swing.JLabel txt_nivel;
