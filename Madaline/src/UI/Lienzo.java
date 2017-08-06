@@ -27,9 +27,10 @@ public class Lienzo extends JPanel {
     private int grosor;
     private Point pincel;
     private BufferedImage imagen;
+    private BufferedImage fondo;
     private String letra_fondo;
     private int tamFuente;
-    private boolean dibujaLetra, captura;
+    private boolean dibujaLetra, dibujaFondo, captura;
     private String ultima_ubicacion = "img";
     
     public Lienzo() {
@@ -37,7 +38,7 @@ public class Lienzo extends JPanel {
         this.setBackground(Color.white);
         this.grosor = 14;
         this.letra_fondo = "";
-        this.tamFuente = 100;
+        this.tamFuente = 250;
         this.dibujaLetra = false;
         this.captura = false;
         
@@ -58,6 +59,15 @@ public class Lienzo extends JPanel {
     public void setImagen(BufferedImage imagen) {
         limpiarContenido();
         this.imagen = imagen;
+        repaint();
+    }
+    
+    public void setFondo(BufferedImage imagen) {
+        this.fondo = imagen;
+    }
+    
+    public void activarFondo(boolean activado) {
+        this.dibujaFondo = activado;
         repaint();
     }
     
@@ -121,9 +131,12 @@ public class Lienzo extends JPanel {
         Graphics2D draw = (Graphics2D) g;
         draw.setColor(Color.white);
         draw.fillRect(0, 0, this.getWidth(), this.getHeight());
+        if (fondo != null && dibujaFondo && !captura) {
+            draw.drawImage(fondo, 0, 0, this);
+        }
         if (dibujaLetra && !captura) {
             Composite anterior = draw.getComposite();
-            Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f);
+            Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .3f);
             draw.setComposite(c);
             draw.setColor(Color.BLACK);
             draw.setFont(new Font("Arial", Font.BOLD, tamFuente));
