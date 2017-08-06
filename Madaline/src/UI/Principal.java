@@ -697,7 +697,7 @@ public class Principal extends javax.swing.JFrame {
         BufferedImage imagen = lienzo.getImagen();
         boolean acierto = aplicacion.jugar(imagen);
         int puntos = aplicacion.getPuntos();
-        int intentos = aplicacion.getIntentos() - puntos;
+        int intentos = aplicacion.getIntentos();
         txt_puntos.setText("PUNTOS: " + puntos);
         txt_intentosf.setText("INTENTOS FALLIDOS: " + intentos);
         if (acierto) {
