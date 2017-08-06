@@ -94,6 +94,14 @@ public class Principal extends javax.swing.JFrame {
             boton.setBorderPainted(false);
         }
 
+        tbtCuadricula.setOpaque(false);
+        tbtCuadricula.setContentAreaFilled(false);
+        tbtCuadricula.setBorderPainted(false);
+
+        tbtGuia.setOpaque(false);
+        tbtGuia.setContentAreaFilled(false);
+        tbtGuia.setBorderPainted(false);
+
     }
 
     private void siguienteLetra() {
@@ -321,7 +329,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        tbtGuia.setText("GUIA");
+        tbtGuia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/help_2.png"))); // NOI18N
+        tbtGuia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/help_1.png"))); // NOI18N
+        tbtGuia.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/help_3.png"))); // NOI18N
         tbtGuia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 tbtGuiaMouseEntered(evt);
@@ -333,7 +343,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        tbtCuadricula.setText("CUAD");
+        tbtCuadricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/regilla_2.png"))); // NOI18N
+        tbtCuadricula.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/regilla_1.png"))); // NOI18N
+        tbtCuadricula.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/regilla_3.png"))); // NOI18N
         tbtCuadricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbtCuadriculaActionPerformed(evt);

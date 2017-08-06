@@ -70,8 +70,6 @@ public class Start extends javax.swing.JFrame {
         img1 = new ImageIcon(getClass().getResource("/Iconos/logo Scribe.png"));
         icon = new ImageIcon(img1.getImage().getScaledInstance(txt_logo.getWidth(), txt_logo.getHeight(), Image.SCALE_DEFAULT));
         txt_logo.setIcon(icon);
-        
-        
     }
     
     
