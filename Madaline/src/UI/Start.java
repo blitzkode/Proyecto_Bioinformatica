@@ -207,12 +207,10 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_retoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retoActionPerformed
-        
-        
         click.play();
         setVisible(false);
         
-        new Principal(aplicacion, this);
+        new Jugar(aplicacion, this);
        
     }//GEN-LAST:event_btn_retoActionPerformed
 
@@ -220,7 +218,7 @@ public class Start extends javax.swing.JFrame {
         click.play();
         setVisible(false);
         
-        new Principal1(aplicacion, this);
+        new Practicar(aplicacion, this);
     }//GEN-LAST:event_btn_practicarActionPerformed
 
     private void btn_retoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_retoMouseEntered

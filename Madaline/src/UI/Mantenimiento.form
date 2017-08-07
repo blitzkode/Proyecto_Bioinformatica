@@ -133,6 +133,7 @@
                   <KeyStroke key="Ctrl+P"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Guardar patr&#xf3;n"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitGuardarPatronActionPerformed"/>
@@ -152,6 +153,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="mitEntrManual">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Entrenamiento manual"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mitEntrManualActionPerformed"/>

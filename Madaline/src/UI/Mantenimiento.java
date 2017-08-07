@@ -22,6 +22,8 @@ public class Mantenimiento extends javax.swing.JFrame {
         pnlDibujo.add(lienzoDibujo);
         
         spGrosorStateChanged(new javax.swing.event.ChangeEvent(this));
+        mitVocales.setSelected(this.aplicacion.getModo() == 0);
+        mitNumeros.setSelected(this.aplicacion.getModo() == 1);
     }
 
     @SuppressWarnings("unchecked")
@@ -192,6 +194,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         mitGuardarPatron.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         mitGuardarPatron.setText("Guardar patrón");
+        mitGuardarPatron.setEnabled(false);
         mitGuardarPatron.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitGuardarPatronActionPerformed(evt);
@@ -209,6 +212,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         mitReconocer.add(mitEntrenamientoFast);
 
         mitEntrManual.setText("Entrenamiento manual");
+        mitEntrManual.setEnabled(false);
         mitEntrManual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mitEntrManualActionPerformed(evt);

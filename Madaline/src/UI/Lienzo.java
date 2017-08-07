@@ -111,7 +111,7 @@ public class Lienzo extends JPanel {
             return;
         }
         
-        BufferedImage imagen_archivo = getImagenRecortada();
+        BufferedImage imagen_archivo = getImagen();
         
         try {
             ImageIO.write(imagen_archivo, "jpg", archivo);
@@ -144,7 +144,7 @@ public class Lienzo extends JPanel {
             Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .3f);
             draw.setComposite(c);
             draw.setColor(Color.BLACK);
-            draw.setFont(new Font("Arial", Font.BOLD, tamFuente));
+            draw.setFont(new Font("Comic Sans MS", Font.BOLD, tamFuente));
             int x = (getWidth() - tamFuente) / 2;
             int y = (getHeight() + tamFuente) / 2;
             draw.drawString(letra_fondo, x, y);

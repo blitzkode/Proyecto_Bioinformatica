@@ -13,7 +13,7 @@ public class PanelLetra extends javax.swing.JPanel {
     public PanelLetra() {
         setBackground(Color.white);
         letra = "";
-        tamFuente = 50;
+        tamFuente = 80;
     }
     
     @Override
@@ -22,7 +22,7 @@ public class PanelLetra extends javax.swing.JPanel {
         Graphics2D g2 = (Graphics2D) g;
         
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Arial", Font.BOLD, tamFuente));
+        g2.setFont(new Font("Comic Sans MS", Font.BOLD, tamFuente));
         int x = (getWidth() - tamFuente) / 2;
         int y = (getHeight() + tamFuente) / 2;
         g2.drawString(letra, x, y);

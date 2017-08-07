@@ -22,6 +22,7 @@ public class Controlador {
     private String BD_DIGITOS = "xmlsrc/bd_digitos.xml"; // Ubicación de la BD
     private String BD_ACTUAL;
     private String RUTA_IMG = "img"; // Ubicación de las imagenes de entrenamiento
+    private int modo;
     
     private int puntaje_total;
     private int puntos_acumulados;
@@ -64,11 +65,13 @@ public class Controlador {
     public void setModoReconocimiento(int modo) {
         switch (modo) {
             case 0:
+                this.modo = 0;
                 this.reconocedor_actual = this.reconocedor_vocales;
                 this.BD_ACTUAL = this.BD_VOCALES;
                 this.caracteres_actual = vocales;
                 break;
             case 1:
+                this.modo = 1;
                 this.reconocedor_actual = this.reconocedor_digitos;
                 this.BD_ACTUAL = this.BD_DIGITOS;
                 this.caracteres_actual = digitos;
@@ -258,6 +261,10 @@ public class Controlador {
 
     public int getIntentos() {
         return intentos;
+    }
+
+    public int getModo() {
+        return modo;
     }
     
     class Patron {
