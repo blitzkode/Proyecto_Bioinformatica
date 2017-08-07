@@ -6,145 +6,222 @@
 package UI;
 
 import Core.Controlador;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import java.applet.AudioClip;
+import javax.swing.JButton;
 
-/**
- *
- * @author Diego Baes
- */
 public class Start extends javax.swing.JFrame {
 
     Controlador aplicacion;
     
-    /**
-     * Creates new form Start
-     */
+    public static AudioClip click, puntero, instrumental;
+    ImageIcon img1;
+    Icon icon;
+    
     public Start() {
         initComponents();
-        setResizable(false);
         setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
+        CargarSonidos();
+        pnl_objetos.setOpaque(false);
         setOpaque();
-        aplicacion = new Controlador();
+        setWallpaper();
+        cargarLogo();
         
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Splash s = new Splash();
+                aplicacion = new Controlador();
+                
+                s.dispose();
+                setVisible(true);
+                instrumental.loop();
+            }
+        }).start();
+        
+    }
+    
+     
+    private void CargarSonidos(){
+        click = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Click.wav"));
+        puntero = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Rollover.wav"));
+        instrumental = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Background.wav"));
     }
 
     private void setOpaque(){
         
-        btn_practicar.setOpaque(false);
-        btn_practicar.setContentAreaFilled(false);
-        btn_practicar.setBorderPainted(false);
+        for (JButton boton : new JButton[]{btn_practicar,btn_reto,btn_salir}) {
+
+            boton.setOpaque(false);
+            boton.setContentAreaFilled(false);
+            boton.setBorderPainted(false);
+        }
         
-        btn_reto.setOpaque(false);
-        btn_reto.setContentAreaFilled(false);
-        btn_reto.setBorderPainted(false);
+        btn_sonido.setOpaque(false);
+        btn_sonido.setContentAreaFilled(false);
+        btn_sonido.setBorderPainted(false);
         
-        btn_salir.setOpaque(false);
-        btn_salir.setContentAreaFilled(false);
-        btn_salir.setBorderPainted(false);
     }
+    
+    private void cargarLogo(){
+        img1 = new ImageIcon(getClass().getResource("/Iconos/logo Scribe.png"));
+        icon = new ImageIcon(img1.getImage().getScaledInstance(txt_logo.getWidth(), txt_logo.getHeight(), Image.SCALE_DEFAULT));
+        txt_logo.setIcon(icon);
+    }
+    
+    Wallpaper wall;
+    private void setWallpaper(){
+        wall = new Wallpaper("/Iconos/wall_start.jpg");
+        wall.setSize(pnl_fondo.getSize());
+        pnl_fondo.add(wall);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        logo = new javax.swing.JPanel();
+        pnl_fondo = new javax.swing.JPanel();
+        btn_salir = new javax.swing.JButton();
+        btn_sonido = new javax.swing.JToggleButton();
+        pnl_objetos = new javax.swing.JPanel();
         btn_practicar = new javax.swing.JButton();
         btn_reto = new javax.swing.JButton();
-        btn_salir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        txt_logo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(132, 236, 159));
-
-        logo.setBackground(new java.awt.Color(82, 82, 229));
-
-        javax.swing.GroupLayout logoLayout = new javax.swing.GroupLayout(logo);
-        logo.setLayout(logoLayout);
-        logoLayout.setHorizontalGroup(
-            logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 474, Short.MAX_VALUE)
-        );
-        logoLayout.setVerticalGroup(
-            logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 193, Short.MAX_VALUE)
-        );
-
-        btn_practicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_2.png"))); // NOI18N
-        btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
-        btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
-
-        btn_reto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_2.png"))); // NOI18N
-        btn_reto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_1.png"))); // NOI18N
-        btn_reto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_3.png"))); // NOI18N
-        btn_reto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_retoActionPerformed(evt);
+        pnl_fondo.setBackground(new java.awt.Color(24, 234, 63));
+        pnl_fondo.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnl_fondoComponentResized(evt);
             }
         });
 
-        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
-        btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
-        btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/x_1.png"))); // NOI18N
+        btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/x_2.png"))); // NOI18N
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_salirMouseEntered(evt);
+            }
+        });
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salirActionPerformed(evt);
             }
         });
 
-        jButton1.setText("entrenamiento");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_sonido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/sound_1.png"))); // NOI18N
+        btn_sonido.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/sound_2.png"))); // NOI18N
+        btn_sonido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_sonidoMouseEntered(evt);
+            }
+        });
+        btn_sonido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_sonidoActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(69, 69, 69)
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(301, 301, 301))))
+        btn_practicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_2.png"))); // NOI18N
+        btn_practicar.setToolTipText("Practicar");
+        btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
+        btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
+        btn_practicar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_practicarMouseEntered(evt);
+            }
+        });
+        btn_practicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_practicarActionPerformed(evt);
+            }
+        });
+
+        btn_reto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_2.png"))); // NOI18N
+        btn_reto.setToolTipText("Jugar");
+        btn_reto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_1.png"))); // NOI18N
+        btn_reto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_3.png"))); // NOI18N
+        btn_reto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_retoMouseEntered(evt);
+            }
+        });
+        btn_reto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_retoActionPerformed(evt);
+            }
+        });
+
+        txt_logo.setBackground(new java.awt.Color(3, 46, 178));
+
+        javax.swing.GroupLayout pnl_objetosLayout = new javax.swing.GroupLayout(pnl_objetos);
+        pnl_objetos.setLayout(pnl_objetosLayout);
+        pnl_objetosLayout.setHorizontalGroup(
+            pnl_objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_objetosLayout.createSequentialGroup()
+                .addGap(187, 187, 187)
+                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139)
+                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_objetosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_salir)
-                    .addComponent(jButton1))
-                .addContainerGap(28, Short.MAX_VALUE))
+        pnl_objetosLayout.setVerticalGroup(
+            pnl_objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_objetosLayout.createSequentialGroup()
+                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnl_objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_practicar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_reto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
+        pnl_fondo.setLayout(pnl_fondoLayout);
+        pnl_fondoLayout.setHorizontalGroup(
+            pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_sonido, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 17, Short.MAX_VALUE)
+                .addComponent(pnl_objetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+        pnl_fondoLayout.setVerticalGroup(
+            pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_fondoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_sonido, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_salir))
+                .addContainerGap(451, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnl_objetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnl_fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -155,16 +232,50 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_retoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retoActionPerformed
+        click.play();
         setVisible(false);
-        new Principal(aplicacion, this).setVisible(true);
         
+        new Jugar(aplicacion, this);
+       
     }//GEN-LAST:event_btn_retoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       setVisible(false);
-       new Mantenimiento(aplicacion, this).setVisible(true);
+    private void btn_practicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_practicarActionPerformed
+        click.play();
+        setVisible(false);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+        new Practicar(aplicacion, this);
+    }//GEN-LAST:event_btn_practicarActionPerformed
+
+    private void btn_retoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_retoMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_retoMouseEntered
+
+    private void btn_practicarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_practicarMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_practicarMouseEntered
+
+    private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
+       puntero.play();
+    }//GEN-LAST:event_btn_salirMouseEntered
+
+    private void btn_sonidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sonidoActionPerformed
+     
+        if (btn_sonido.isSelected()) {
+            instrumental.stop();
+        } else{ 
+            instrumental.loop();
+        }
+        
+    }//GEN-LAST:event_btn_sonidoActionPerformed
+
+    private void btn_sonidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_sonidoMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_sonidoMouseEntered
+
+    private void pnl_fondoComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_fondoComponentResized
+      wall.setSize(pnl_fondo.getSize());
+      pnl_objetos.setLocation((getWidth()-pnl_objetos.getWidth())/2,(getHeight()-pnl_objetos.getHeight())/2);
+    }//GEN-LAST:event_pnl_fondoComponentResized
 
     /**
      * @param args the command line arguments
@@ -196,7 +307,7 @@ public class Start extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Start().setVisible(true);
+                new Start();
             }
         });
     }
@@ -205,8 +316,9 @@ public class Start extends javax.swing.JFrame {
     private javax.swing.JButton btn_practicar;
     private javax.swing.JButton btn_reto;
     private javax.swing.JButton btn_salir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel logo;
+    private javax.swing.JToggleButton btn_sonido;
+    private javax.swing.JPanel pnl_fondo;
+    private javax.swing.JPanel pnl_objetos;
+    private javax.swing.JLabel txt_logo;
     // End of variables declaration//GEN-END:variables
 }

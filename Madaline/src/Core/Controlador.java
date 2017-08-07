@@ -15,18 +15,27 @@ import procesador_imagenes.ProcesarImagen;
  * @author fyetka
  */
 public class Controlador {
-    private Reconocedor reconocedor;
-    private String RUTA_BD = "xmlsrc/basededatos.xml"; // Ubicación de la BD
+    private Reconocedor reconocedor_vocales;
+    private Reconocedor reconocedor_digitos;
+    private Reconocedor reconocedor_actual;
+    private String BD_VOCALES = "xmlsrc/bd_vocales.xml"; // Ubicación de la BD
+    private String BD_DIGITOS = "xmlsrc/bd_digitos.xml"; // Ubicación de la BD
+    private String BD_ACTUAL;
     private String RUTA_IMG = "img"; // Ubicación de las imagenes de entrenamiento
+    private int modo;
     
-    private int puntos;
+    private int puntaje_total;
+    private int puntos_acumulados;
     private int intentos;
-    private ArrayList<String> letras_partida;
-    private static final String[] alfabeto = {
-        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q",
-        "R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i",
-        "j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"
+    private ArrayList<String> caracteres_partida;
+    private String[] caracteres_actual;
+    private static final String[] vocales = {
+        "A","E","I","O","U","a","e","i"
     };
+    private static final String[] digitos = {
+        "0","1","2","3","4","5","6","7","8","9"
+    };
+    private static final int PUNTAJE_MAXIMO = 10;
     
     /**
      * Constructor por defecto. Si no se encuentra el archivo XML con los pesos
@@ -34,39 +43,105 @@ public class Controlador {
      */
     public Controlador() {
         try {
-            this.reconocedor = ReconocedorDataAccess.leerBD(this.RUTA_BD);
+            this.reconocedor_vocales = ReconocedorDataAccess.leerBD(this.BD_VOCALES);
         } catch (JAXBException ex) {
-            this.reconocedor = new Reconocedor();
-            this.reconocedor.iniciarMadalinesDefault(alfabeto);
+            this.reconocedor_vocales = new Reconocedor();
+            this.reconocedor_vocales.iniciarMadalinesDefault(vocales);
+        }
+        try {
+            this.reconocedor_digitos = ReconocedorDataAccess.leerBD(this.BD_DIGITOS);
+        } catch (JAXBException ex) {
+            this.reconocedor_digitos = new Reconocedor();
+            this.reconocedor_digitos.iniciarMadalinesDefault(digitos);
+        }
+        // por defecto reconcer vocales
+        setModoReconocimiento(0);
+    }
+    
+    /**
+     * Establece el modo de reconocimiento de la aplicación.
+     * @param modo 0 (vocales), 1 (dígitos)
+     */
+    public void setModoReconocimiento(int modo) {
+        switch (modo) {
+            case 0:
+                this.modo = 0;
+                this.reconocedor_actual = this.reconocedor_vocales;
+                this.BD_ACTUAL = this.BD_VOCALES;
+                this.caracteres_actual = vocales;
+                break;
+            case 1:
+                this.modo = 1;
+                this.reconocedor_actual = this.reconocedor_digitos;
+                this.BD_ACTUAL = this.BD_DIGITOS;
+                this.caracteres_actual = digitos;
+                break;
         }
     }
     
-    public void nuevoJuego(int ejercicios) {
-        puntos = 0; intentos = 0;
-        letras_partida = new ArrayList<>();
+    public void nuevoJuego() {
+        puntaje_total = 0; puntos_acumulados = PUNTAJE_MAXIMO; intentos = 0;
+        caracteres_partida = new ArrayList<>();
         
-        for (int i = 0; i < ejercicios; i++) {
-            letras_partida.add( letraAleatoria() );
+        for (String caracter : caracteres_actual) {
+            caracteres_partida.add(caracterAleatorio());
         }
     }
     
     public boolean jugar(BufferedImage imagen) {
         boolean acierto;
         
-        String letra = letras_partida.get(0);
-        acierto = reconocerImagen(imagen).equals(letra);
-        intentos++;
+        String caracter = caracteres_partida.get(0);
+        acierto = comparar(imagen, caracter);
+        
         if (acierto) {
-            letras_partida.remove(0);
-            puntos++;
+            caracteres_partida.remove(0);
+            puntaje_total += puntos_acumulados;
+            
+            puntos_acumulados = PUNTAJE_MAXIMO;
+        }
+        else {
+            intentos++;
+            puntos_acumulados -= 2;
+            if (puntos_acumulados < 1) puntos_acumulados = 1;
         }
         return acierto;
     }
     
-    private String letraAleatoria() {
+    public boolean juegoTerminado() {
+        return caracteres_partida.isEmpty();
+    }
+    
+    public int getEstrellas() {
+        int max = PUNTAJE_MAXIMO * caracteres_actual.length;
+        int min = caracteres_actual.length;
+        if (puntaje_total >= max) {
+            return 5;
+        }
+        if (puntaje_total >= (2 *(max-min) / 3)) {
+            return 4;
+        }
+        if (puntaje_total >= ((max-min) / 3)) {
+            return 3;
+        }
+        return 1;
+    }
+    
+    private String caracterAleatorio() {
         Random r = new Random();
-        String letra = alfabeto[ r.nextInt(alfabeto.length) ];
-        return letra;
+        String car;
+        do {
+            car = caracteres_actual[r.nextInt(caracteres_actual.length)];
+        } while(caracteres_partida.contains(car));
+        return car;
+    }
+    
+    public boolean comparar(BufferedImage imagen, String caracter) {
+        String caracter_reconocido = reconocerImagen(imagen);
+        if (esAmbiguo(caracter) && caracter.equalsIgnoreCase(caracter_reconocido)) {
+            return true;
+        }
+        return caracter.equals(caracter_reconocido);
     }
     
     /**
@@ -77,7 +152,7 @@ public class Controlador {
      */
     public String reconocerImagen(BufferedImage imagen) {
         byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
-        String caracter = reconocedor.reconocerCaracter(patron);
+        String caracter = reconocedor_actual.reconocerCaracter(patron);
         return caracter;
     }
     
@@ -96,20 +171,34 @@ public class Controlador {
     
     private void entrenarCaracter(BufferedImage imagen, String caracter) {
         byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
-        reconocedor.entrenar(caracter, patron);        
+        reconocedor_actual.entrenar(caracter, patron);        
+    }
+    
+    public void entrenamientoManual(BufferedImage imagen, String caracter, byte validez) {
+        validez = (byte) (validez < 0 ? -1 : 1);
+        byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
+        reconocedor_actual.entrenar(caracter, patron, validez);
+        commit();
+    }
+    
+    private boolean esAmbiguo(String letra) {
+        return (
+            letra.equalsIgnoreCase("O") ||
+            letra.equalsIgnoreCase("U")
+        );
     }
     
     private void commit() {
         try {
-            ReconocedorDataAccess.escribirBD(reconocedor, RUTA_BD);
+            ReconocedorDataAccess.escribirBD(reconocedor_actual, BD_ACTUAL);
         } catch (JAXBException ex) {
             ex.printStackTrace();
         }
     }
     
-    public int entrenamientoPorLotes() throws JAXBException {
+    public int entrenamientoPorLotes() {
         int imagenes_entrenadas = 0;
-        for (String caracter : alfabeto) {
+        for (String caracter : vocales) {
             File directorio = new File(RUTA_IMG, caracter);
             if (directorio.exists()) {
                 String[] contenido = directorio.list();
@@ -127,28 +216,109 @@ public class Controlador {
         return imagenes_entrenadas;
     }
     
-    public void guardarImagen(BufferedImage imagen, File archivo) throws IOException {
-        ImageIO.write(imagen, "jpg", archivo);
+    public int entrenamiento() {
+        int imagenes = 0;
+        TablaEntrenamiento[] tablas = new TablaEntrenamiento[caracteres_actual.length];
+        for (int i=0; i < tablas.length; i++) {
+            tablas[i] = new TablaEntrenamiento();
+        }
+        
+        for (int i=0; i < tablas.length; i++) {
+            String caracter = caracteres_actual[i];
+            
+            File directorio = new File(RUTA_IMG, caracter);
+            if (directorio.exists()) {
+                String[] contenido = directorio.list();
+                for (String archivoImagen : contenido) {
+                    try {
+                        BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
+                        byte[] patron = ProcesarImagen.ProcesoImagen(imagen);
+                        
+                        for (int j = 0; j < tablas.length; j++) {
+                            tablas[j].addCaso(patron, (byte)(i == j ? 1 : -1));
+                        }
+                        
+                        imagenes++;
+                    } catch (IOException ex) {
+                    }
+                }
+            }
+        }
+        
+        byte[][][] entradas = new byte[tablas.length][][];
+        byte[][] salidas = new byte[tablas.length][];
+        for (int i = 0; i < tablas.length; i++) {
+            entradas[i] = tablas[i].getPatrones();
+            salidas[i] = tablas[i].getSalidas();
+        }
+        reconocedor_actual.entrenar(entradas, salidas);
+        commit();
+        return imagenes;
     }
 
     public int getPuntos() {
-        return puntos;
+        return puntaje_total;
     }
 
-    public ArrayList<String> getLetras_partida() {
-        return letras_partida;
+    public ArrayList<String> getCaracteres_partida() {
+        return caracteres_partida;
     }
 
     public String getLetraActual() {
-        return letras_partida.get(0);
+        return caracteres_partida.get(0);
     }
     
-    public static String[] getAlfabeto() {
-        return alfabeto;
-    }
 
     public int getIntentos() {
         return intentos;
+    }
+
+    public int getModo() {
+        return modo;
+    }
+    
+    class Patron {
+        byte[] patron;
+
+        public Patron(byte[] patron) {
+            this.patron = patron;
+        }
+    }
+    
+    class TablaEntrenamiento {
+        String letra;
+        ArrayList<Patron> patrones = new ArrayList<>();
+        ArrayList<Byte> salidas = new ArrayList<>();
+        
+        public TablaEntrenamiento() {
+            
+        }
+        
+        public TablaEntrenamiento(String letra) {
+            this.letra = letra;
+        }
+        
+        public void addCaso(byte[] patron, byte salida) {
+            patrones.add(new Patron(patron));
+            salidas.add(salida);
+        }
+                
+        public byte[][] getPatrones() {
+            byte[][] array_patrones = new byte[patrones.size()][];
+            for (int i = 0; i < array_patrones.length; i++) {
+                array_patrones[i] = patrones.get(i).patron;
+            }
+            return array_patrones;
+        }
+        
+        public byte[] getSalidas() {
+            byte[] array_salidas = new byte[salidas.size()];
+            for (int i = 0; i < array_salidas.length; i++) {
+                array_salidas[i] = salidas.get(i);
+            }
+            return array_salidas;
+        }
+
     }
     
 }

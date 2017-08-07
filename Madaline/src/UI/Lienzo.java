@@ -1,7 +1,10 @@
 package UI;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -11,18 +14,34 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Path2D;
 import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import procesador_imagenes.ProcesarImagen;
 
 public class Lienzo extends JPanel {
     private ArrayList<Linea> lineas = new ArrayList<>();
     private Color color;
     private int grosor;
     private Point pincel;
+    private BufferedImage imagen;
+    private BufferedImage fondo;
+    private String letra_fondo;
+    private int tamFuente;
+    private boolean dibujaLetra, dibujaFondo, captura;
+    private String ultima_ubicacion = "img";
     
     public Lienzo() {
         this.color = Color.BLACK;
         this.setBackground(Color.white);
-        this.grosor = 14;
+        this.grosor = 22;
+        this.letra_fondo = "";
+        this.tamFuente = 250;
+        this.dibujaLetra = false;
+        this.captura = false;
         
         EventHandler manejador = new EventHandler();
         this.addMouseListener(manejador);
@@ -30,10 +49,85 @@ public class Lienzo extends JPanel {
     }
 
     public BufferedImage getImagen() {
-        BufferedImage imagen = new BufferedImage(this.getWidth(),
+        BufferedImage imagen_dibujo = new BufferedImage(this.getWidth(),
                                 this.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-        this.paint(imagen.getGraphics());
-        return imagen;
+        captura = true;
+        this.paint(imagen_dibujo.getGraphics());
+        captura = false;
+        return imagen_dibujo;
+    }
+    
+    public BufferedImage getImagenRecortada() {
+        return ProcesarImagen.getRecorteIMG(getImagen());
+    }
+    
+    public void setImagen(BufferedImage imagen) {
+        limpiarContenido();
+        this.imagen = imagen;
+        repaint();
+    }
+    
+    public void setFondo(BufferedImage imagen) {
+        this.fondo = imagen;
+    }
+    
+    public void activarFondo(boolean activado) {
+        this.dibujaFondo = activado;
+        repaint();
+    }
+    
+    public void abrirImagen() {
+        JFileChooser selector = new JFileChooser(ultima_ubicacion);
+        selector.showOpenDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        ultima_ubicacion = archivo.getPath();
+        if ( !archivo.getName().matches("[a-zñA-ZÑ0-9_]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        try {
+            BufferedImage imagen_archivo = ImageIO.read(archivo);
+            setImagen(imagen_archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al abrir la imagen");
+        }
+    }
+    
+    public void guardarImagen() {
+        JFileChooser selector = new JFileChooser(ultima_ubicacion);
+        selector.showSaveDialog(this);
+        File archivo = selector.getSelectedFile();
+        
+        if (archivo == null) {
+            return;
+        }
+        ultima_ubicacion = archivo.getPath();
+        if ( !archivo.getName().matches("[a-zñA-ZÑ0-9_]*.jpg") ) {
+            JOptionPane.showMessageDialog(this, "El nombre de archivo "+ archivo.getName() +" no es válido");
+            return;
+        }
+        
+        BufferedImage imagen_archivo = getImagen();
+        
+        try {
+            ImageIO.write(imagen_archivo, "jpg", archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la imagen");
+        }
+    }
+    
+    public void setLetra(String letra) {
+        this.letra_fondo = letra;
+        repaint();
+    }
+    
+    public void dibujarLetra(boolean dibujar) {
+        this.dibujaLetra = dibujar;
+        repaint();
     }
     
     @Override
@@ -42,12 +136,35 @@ public class Lienzo extends JPanel {
         Graphics2D draw = (Graphics2D) g;
         draw.setColor(Color.white);
         draw.fillRect(0, 0, this.getWidth(), this.getHeight());
+        if (fondo != null && dibujaFondo && !captura) {
+            draw.drawImage(fondo, 0, 0, this);
+        }
+        if (dibujaLetra && !captura) {
+            Composite anterior = draw.getComposite();
+            Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .3f);
+            draw.setComposite(c);
+            draw.setColor(Color.BLACK);
+            draw.setFont(new Font("Comic Sans MS", Font.BOLD, tamFuente));
+            int x = (getWidth() - tamFuente) / 2;
+            int y = (getHeight() + tamFuente) / 2;
+            draw.drawString(letra_fondo, x, y);
+            draw.setComposite(anterior);
+        }
+        if (imagen != null) {
+            if (imagen.getHeight() < getHeight() && imagen.getWidth() < getWidth()) {
+                int x_centrado = (getWidth() - imagen.getWidth()) / 2;
+                int y_centrado = (getHeight()- imagen.getHeight()) / 2;
+                draw.drawImage(imagen, x_centrado, y_centrado, this);
+            }
+            else
+                draw.drawImage(imagen, 0, 0, this);
+        }
         for (Linea l : lineas) {
             draw.setStroke(new BasicStroke(l.grosor,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
             draw.setColor(l.color);
             draw.draw(l.shape);
         }
-        if (pincel != null) {
+        if (pincel != null && !captura) {
             draw.setStroke(new BasicStroke());
             draw.setColor(color);
             draw.fillOval(pincel.x - grosor/2, pincel.y - grosor/2, grosor, grosor);
@@ -56,6 +173,7 @@ public class Lienzo extends JPanel {
     
     public void limpiarContenido() {
         this.lineas = new ArrayList<>();
+        this.imagen = null;
         repaint();
     }
 

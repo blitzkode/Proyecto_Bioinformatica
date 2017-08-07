@@ -43,10 +43,32 @@ public class Reconocedor {
      * @param caracter Caracter a reconocer
      * @param patron Patrón asociado al caracter
      */
-    public void entrenar(String caracter, byte [] patron) {
+    public void entrenar(String caracter, byte[] patron) {
         for (Madaline madaline : mads) {
-            madaline.entrenar(patron,
-                    (byte) (madaline.getNom().equals(caracter) ? 1 : -1) );
+            if (madaline.getNom().equals(caracter)) {
+                madaline.entrenar(patron, (byte)1 );
+                break;
+            }
+            else {
+                madaline.entrenar(patron, (byte)-1 );
+            }
+        }
+    }
+    
+    public void entrenar(byte[][][] entradas, byte[][] salidas) {
+        int i = 0;
+        for (Madaline madaline : mads) {
+            madaline.entrenar(entradas[i], salidas[i]);
+            i++;
+        }
+    }
+    
+    public void entrenar(String caracter, byte [] patron, byte salida) {
+        for (Madaline madaline : mads) {
+            if (madaline.getNom().equals(caracter)) {
+                madaline.entrenar(patron, salida);
+                break;
+            }
         }
     }
 
