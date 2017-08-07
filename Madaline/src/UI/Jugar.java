@@ -25,12 +25,15 @@ public class Jugar extends Principal {
         setExtendedState(MAXIMIZED_BOTH);
         this.aplicacion = aplicacion;
         this.padre = padre;
-
+        
         lienzo = new Lienzo();
         pnlContenedorLienzo.add(lienzo);
         panelLetra = new PanelLetra();
         pnl_ayuda.add(panelLetra);
-
+        
+        jLabel4.setVisible(false);
+        txt_dificultad.setVisible(false);
+        txt_nivel.setVisible(false);
         setVisible(true);
         
         setwhitepanel();

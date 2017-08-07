@@ -113,8 +113,18 @@ public class Controlador {
     }
     
     public int getEstrellas() {
-        //TODO
-        return 3;
+        int max = PUNTAJE_MAXIMO * caracteres_actual.length;
+        int min = caracteres_actual.length;
+        if (puntaje_total >= max) {
+            return 5;
+        }
+        if (puntaje_total >= (2 *(max-min) / 3)) {
+            return 4;
+        }
+        if (puntaje_total >= ((max-min) / 3)) {
+            return 3;
+        }
+        return 1;
     }
     
     private String caracterAleatorio() {
