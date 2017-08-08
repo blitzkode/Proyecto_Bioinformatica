@@ -1,6 +1,7 @@
 package procesador_imagenes;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class ProcesarImagen {
 
@@ -41,8 +43,14 @@ public class ProcesarImagen {
 //        System.out.println("X: "+ x+ " Y: "+ y + " W: "+w+" H: "+h);
 
 //        saveimg(img, "incial");
-
+        
+        if (x+w==0) {
+            return getAdalineLimpio();
+        
+        } 
+        
         img = getCorte(img, x, y, w, h);
+        
 
 //        saveimg(img, "media");
 
@@ -59,6 +67,17 @@ public class ProcesarImagen {
         byte A2[] = getAdaline(V2,img.getWidth());
                 
         return A2;
+    }
+   
+    private static byte[] getAdalineLimpio(){
+        
+        byte A[]= new byte[IMG_HEIGHT*IMG_WIDTH];
+        
+        for (int i = 0; i < A.length; i++) {
+            A[i]=-1;
+        }
+        
+        return A;
     }
     
     public static BufferedImage getRecorteIMG(BufferedImage img){

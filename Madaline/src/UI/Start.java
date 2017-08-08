@@ -24,6 +24,7 @@ public class Start extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
+       
         CargarSonidos();
         pnl_objetos.setOpaque(false);
         setOpaque();
