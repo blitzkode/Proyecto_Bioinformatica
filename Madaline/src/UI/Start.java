@@ -92,8 +92,14 @@ public class Start extends javax.swing.JFrame {
         txt_logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setExtendedState(6);
         setUndecorated(true);
         setResizable(false);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
         pnl_fondo.setBackground(new java.awt.Color(24, 234, 63));
         pnl_fondo.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -274,9 +280,18 @@ public class Start extends javax.swing.JFrame {
 
     private void pnl_fondoComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_fondoComponentResized
       wall.setSize(pnl_fondo.getSize());
-      pnl_objetos.setLocation((getWidth()-pnl_objetos.getWidth())/2,(getHeight()-pnl_objetos.getHeight())/2);
+      pnl_objetos.setLocation( (getWidth()-pnl_objetos.getWidth())/2,
+              (getHeight()-pnl_objetos.getHeight())/2);
     }//GEN-LAST:event_pnl_fondoComponentResized
 
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        wall.setSize(pnl_fondo.getSize());
+        pnl_objetos.setLocation( (getWidth()-pnl_objetos.getWidth())/2,
+                (getHeight()-pnl_objetos.getHeight())/2);
+    }//GEN-LAST:event_formComponentResized
+
+    
+    
     /**
      * @param args the command line arguments
      */
