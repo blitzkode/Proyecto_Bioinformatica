@@ -55,9 +55,9 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_sonido" min="-2" pref="46" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" pref="17" max="32767" attributes="0"/>
-                  <Component id="pnl_objetos" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="pnl_objetos" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_salir" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
@@ -73,11 +73,7 @@
                   </Group>
                   <EmptySpace pref="451" max="32767" attributes="0"/>
               </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="pnl_objetos" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              </Group>
+              <Component id="pnl_objetos" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -115,79 +111,15 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-                      <Component id="btn_reto" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
-                      <Component id="btn_practicar" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="txt_logo" min="-2" pref="689" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace min="0" pref="737" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="txt_logo" min="-2" pref="339" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btn_practicar" alignment="1" min="-2" pref="90" max="-2" attributes="0"/>
-                          <Component id="btn_reto" alignment="1" min="-2" pref="90" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace min="0" pref="512" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="btn_practicar">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/practicar_2.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Practicar"/>
-                <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/practicar_1.png"/>
-                </Property>
-                <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/practicar_3.png"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_practicarMouseEntered"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_practicarActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btn_reto">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/jugar_2.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Jugar"/>
-                <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/jugar_1.png"/>
-                </Property>
-                <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/jugar_3.png"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_retoMouseEntered"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_retoActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="txt_logo">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="b2" green="2e" red="3" type="rgb"/>
-                </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
         </Container>
       </SubComponents>
     </Container>

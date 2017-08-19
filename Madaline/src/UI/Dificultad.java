@@ -148,7 +148,7 @@ public class Dificultad extends javax.swing.JDialog {
     private void btn_facilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_facilActionPerformed
         click.play();
         this.parent.modo_juego = 0;
-        setVisible(false);
+        setVisible(false);        
     }//GEN-LAST:event_btn_facilActionPerformed
 
     private void btn_normalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_normalActionPerformed

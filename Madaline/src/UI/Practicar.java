@@ -20,6 +20,7 @@ public class Practicar extends Principal {
     AudioClip correct, fail, succes,apoyo[], exito[];
 
     public Practicar(Controlador aplicacion, javax.swing.JFrame padre) {
+        
         super(aplicacion, padre);
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -53,17 +54,14 @@ public class Practicar extends Principal {
         apoyo = new AudioClip[n_apoyo];
         exito = new AudioClip[n_exito];
         
-        apoyo[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_1.wav"));
-        exito[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_1.wav"));
+        for (int i = 0; i < n_apoyo; i++) {
+            apoyo[i]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_"+(i+1)+".wav"));
+        }
         
-        apoyo[1]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_2.wav"));
-        exito[1]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_2.wav"));
+        for (int i = 0; i < n_exito; i++) {
+            apoyo[i]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_"+(i+1)+".wav"));
+        }
         
-        apoyo[2]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_3.wav"));
-        exito[2]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_3.wav"));
-        
-        apoyo[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_4.wav"));
-        exito[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_4.wav"));
     }
     
 
@@ -138,6 +136,7 @@ public class Practicar extends Principal {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(132, 236, 159));
+        setUndecorated(true);
 
         pnl_main.setBackground(new java.awt.Color(255, 102, 102));
         pnl_main.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
