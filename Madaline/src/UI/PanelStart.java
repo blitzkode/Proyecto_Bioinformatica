@@ -15,7 +15,7 @@ public class PanelStart extends javax.swing.JPanel {
     Controlador aplicacion;
     Start start;
     
-    ImageIcon img1;
+
     Icon icon;
    
     public PanelStart(Controlador aplicacion, Start start) {
@@ -29,7 +29,7 @@ public class PanelStart extends javax.swing.JPanel {
     
     private void cargarLogo(){
         txt_logo.setSize(689, 329);
-        img1 = new ImageIcon(getClass().getResource("/Iconos/logo Scribe.png"));
+        ImageIcon img1 = new ImageIcon(getClass().getResource("/Iconos/logo Scribe.png"));
         
         icon = new ImageIcon(img1.getImage().getScaledInstance(txt_logo.getWidth(), txt_logo.getHeight(), Image.SCALE_DEFAULT));
         txt_logo.setIcon(icon);

@@ -10,12 +10,23 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import static UI.Start.puntero;
 import java.applet.AudioClip;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.Timer;
 
 public class Jugar extends Principal {
     Lienzo lienzo;
     PanelLetra panelLetra;   
+    Icon tutor_reposo,tutor_feliz[], tutor_animo[];
+     
+    int t_feliz=1;
+    int t_animo= 1;
     
-    int n_apoyo=4,n_exito=4;
+    int n_apoyo = 4;
+    int n_exito = 4;
     
     AudioClip correct, fail, succes,apoyo[], exito[];
 
@@ -40,8 +51,9 @@ public class Jugar extends Principal {
         setwallpaper();
         setOpaque();
         CargarSonidos();
-
         cargarFondoLienzo();
+        CargarTutor();
+        setTutorReposo();
         
         new Dificultad(this, true).setVisible(true);
 
@@ -50,26 +62,67 @@ public class Jugar extends Principal {
 
     }
     
+   
+    
+    
+    
+    private void CargarTutor() {
+        ImageIcon image = new ImageIcon(getClass().getResource("/Iconos/tutor_reposo.gif"));
+        tutor_reposo = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
+        
+        tutor_feliz = new Icon[t_feliz];
+        tutor_animo = new Icon[t_animo];
+
+        for (int i = 0; i < t_feliz; i++) {
+            image = new ImageIcon(getClass().getResource("/Iconos/tutor_feliz" + (i + 1) + ".gif"));
+            tutor_feliz[i] = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
+        }
+
+        for (int i = 0; i < t_animo; i++) {
+            image = new ImageIcon(getClass().getResource("/Iconos/tutor_animo" + (i + 1) + ".gif"));
+            tutor_animo[i] = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
+        }
+        
+    }
+    
+    private void setTutorReposo(){
+        txt_tutor.setIcon(tutor_reposo);
+    }
+    
+    private void setTutorFeliz(){
+        txt_tutor.setIcon(tutor_feliz[0]);
+        timer.start();
+    }
+    
+    private void setTutorAnimo(){
+        txt_tutor.setIcon(tutor_animo[0]);
+        timer.start();
+    }
+    
+    Timer timer = new Timer(2000, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            setTutorReposo();
+            timer.stop();
+        }
+    });
+    
+    
     private void CargarSonidos(){
         correct = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Correct.wav"));
         fail = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Fail.wav"));
         succes = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Succes.wav"));
         
-        
+               
         apoyo = new AudioClip[n_apoyo];
         exito = new AudioClip[n_exito];
         
-        apoyo[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_1.wav"));
-        exito[0]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_1.wav"));
+        for (int i = 0; i < n_apoyo; i++) {
+            apoyo[i]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_"+(i+1)+".wav"));
+        }
         
-        apoyo[1]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_2.wav"));
-        exito[1]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_2.wav"));
-        
-        apoyo[2]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_3.wav"));
-        exito[2]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_3.wav"));
-        
-        apoyo[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_4.wav"));
-        exito[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_4.wav"));
+        for (int i = 0; i < n_exito; i++) {
+            exito[i]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_"+(i+1)+".wav"));
+        }
             
         
     }
@@ -120,7 +173,7 @@ public class Jugar extends Principal {
 
     private void setwhitepanel() {
 
-        for (JPanel panel : new JPanel[]{pnl_opciones, pnl_botones, pnl_resultados,pnl_funciones,pnl_colores}) {
+        for (JPanel panel : new JPanel[]{pnl_opciones, pnl_botones, pnl_resultados,pnl_funciones,pnl_colores,pnl_tutor}) {
 
             panel.setOpaque(false);
         }
@@ -150,12 +203,14 @@ public class Jugar extends Principal {
         btn_mas = new javax.swing.JButton();
         tbtGuia = new javax.swing.JToggleButton();
         tbtCuadricula = new javax.swing.JToggleButton();
+        btn_salir = new javax.swing.JButton();
         pnl_ayuda = new javax.swing.JPanel();
         pnlContenedorLienzo = new javax.swing.JPanel();
         pnl_botones = new javax.swing.JPanel();
         btn_siguiente = new javax.swing.JButton();
-        btn_salir = new javax.swing.JButton();
         btn_pulsa = new javax.swing.JButton();
+        pnl_tutor = new javax.swing.JPanel();
+        txt_tutor = new javax.swing.JLabel();
         pnl_resultados = new javax.swing.JPanel();
         txt_dificultad = new javax.swing.JLabel();
         txt_puntos = new javax.swing.JLabel();
@@ -379,8 +434,22 @@ public class Jugar extends Principal {
                 .addComponent(tbtGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
+        btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
+        btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_salirMouseEntered(evt);
+            }
+        });
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_opcionesLayout = new javax.swing.GroupLayout(pnl_opciones);
         pnl_opciones.setLayout(pnl_opcionesLayout);
@@ -392,6 +461,10 @@ public class Jugar extends Principal {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnl_funciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
+            .addGroup(pnl_opcionesLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_opcionesLayout.setVerticalGroup(
             pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,7 +473,9 @@ public class Jugar extends Principal {
                 .addGroup(pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_colores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnl_funciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_salir)
+                .addGap(23, 23, 23))
         );
 
         pnl_ayuda.setBackground(new java.awt.Color(255, 255, 255));
@@ -456,20 +531,6 @@ public class Jugar extends Principal {
             }
         });
 
-        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
-        btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
-        btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
-        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_salirMouseEntered(evt);
-            }
-        });
-        btn_salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_salirActionPerformed(evt);
-            }
-        });
-
         btn_pulsa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_2.png"))); // NOI18N
         btn_pulsa.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btn_pulsa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_1.png"))); // NOI18N
@@ -485,6 +546,27 @@ public class Jugar extends Principal {
             }
         });
 
+        pnl_tutor.setBackground(new java.awt.Color(69, 225, 109));
+
+        txt_tutor.setBackground(new java.awt.Color(255, 51, 0));
+
+        javax.swing.GroupLayout pnl_tutorLayout = new javax.swing.GroupLayout(pnl_tutor);
+        pnl_tutor.setLayout(pnl_tutorLayout);
+        pnl_tutorLayout.setHorizontalGroup(
+            pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_tutorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
+        );
+        pnl_tutorLayout.setVerticalGroup(
+            pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_tutorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
         pnl_botonesLayout.setHorizontalGroup(
@@ -496,11 +578,9 @@ public class Jugar extends Principal {
                         .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
                         .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53))))
+            .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnl_botonesLayout.setVerticalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -509,9 +589,8 @@ public class Jugar extends Principal {
                 .addComponent(btn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_salir)
-                .addGap(19, 19, 19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnl_resultados.setBackground(new java.awt.Color(132, 236, 159));
@@ -712,9 +791,11 @@ public class Jugar extends Principal {
             btn_pulsa.setEnabled(false);
             correct.play();
             exito[(int) (Math.random() * n_exito)].play();
+            setTutorFeliz();
         } else {
             fail.play();
             apoyo[(int) (Math.random() * n_apoyo)].play();
+            setTutorAnimo();
         }
         if (aplicacion.juegoTerminado()) {
             btn_siguiente.setEnabled(false);
@@ -872,12 +953,14 @@ public class Jugar extends Principal {
     private javax.swing.JPanel pnl_main;
     private javax.swing.JPanel pnl_opciones;
     private javax.swing.JPanel pnl_resultados;
+    private javax.swing.JPanel pnl_tutor;
     private javax.swing.JToggleButton tbtCuadricula;
     private javax.swing.JToggleButton tbtGuia;
     private javax.swing.JLabel txt_dificultad;
     private javax.swing.JLabel txt_intentosf;
     private javax.swing.JLabel txt_nivel;
     private javax.swing.JLabel txt_puntos;
+    private javax.swing.JLabel txt_tutor;
     // End of variables declaration//GEN-END:variables
 
 }

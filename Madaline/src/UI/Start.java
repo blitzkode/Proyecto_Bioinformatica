@@ -2,8 +2,11 @@ package UI;
 
 import Core.Controlador;
 import java.applet.AudioClip;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.Timer;
 
@@ -13,6 +16,12 @@ public class Start extends javax.swing.JFrame {
 
     PanelSaludo pnl_saludo;
     Wallpaper wall;
+    
+    Icon tutor_reposo,tutor_feliz[], tutor_animo[];
+     
+    int t_feliz=1;
+    int t_animo=1;
+    
     public static AudioClip click, puntero, instrumental, bienvenida;
 
     public Start() {
@@ -86,8 +95,8 @@ public class Start extends javax.swing.JFrame {
         instrumental.loop();
         
     }
-    
-    
+   
+     
     private void CargarSaludo() {
         bienvenida.play();
         pnl_saludo = new PanelSaludo();

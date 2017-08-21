@@ -10,17 +10,29 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import static UI.Start.puntero;
 import java.applet.AudioClip;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.Timer;
 
 public class Practicar extends Principal {
+
     Lienzo lienzo;
     PanelLetra panelLetra;
     
-    int n_apoyo=4,n_exito=4;
+    int t_feliz=1;
+    int t_animo=1;
     
-    AudioClip correct, fail, succes,apoyo[], exito[];
+    Icon tutor_feliz[],tutor_animo[],tutor_reposo;
+    int n_apoyo = 4, n_exito = 4;
+    
+    AudioClip correct, fail, succes, apoyo[], exito[], numeros[], nada;
+    AudioClip ltr_a,ltr_e,ltr_i,ltr_o,ltr_u;
 
     public Practicar(Controlador aplicacion, javax.swing.JFrame padre) {
-        
+
         super(aplicacion, padre);
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -31,39 +43,91 @@ public class Practicar extends Principal {
         pnl_ayuda.add(panelLetra);
 
         setVisible(true);
-        
+
         setwhitepanel();
         setwallpaper();
         setOpaque();
         CargarSonidos();
-
+        CargarTutor();
+        setTutorReposo();
         cargarFondoLienzo();
-        
+
         new Dificultad(this, true).setVisible(true);
 
         aplicacion.setModoReconocimiento(modo_juego);
 
     }
     
-    private void CargarSonidos(){
-        correct = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Correct.wav"));
-        fail = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Fail.wav"));
-        succes = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Succes.wav"));
+    private void CargarTutor() {
+        ImageIcon image = new ImageIcon(getClass().getResource("/Iconos/tutor_reposo.gif"));
+        tutor_reposo = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
         
-        
-        apoyo = new AudioClip[n_apoyo];
-        exito = new AudioClip[n_exito];
-        
-        for (int i = 0; i < n_apoyo; i++) {
-            apoyo[i]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_"+(i+1)+".wav"));
+        tutor_feliz = new Icon[t_feliz];
+        tutor_animo = new Icon[t_animo];
+
+        for (int i = 0; i < t_feliz; i++) {
+            image = new ImageIcon(getClass().getResource("/Iconos/tutor_feliz" + (i + 1) + ".gif"));
+            tutor_feliz[i] = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
         }
-        
-        for (int i = 0; i < n_exito; i++) {
-            apoyo[i]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_"+(i+1)+".wav"));
+
+        for (int i = 0; i < t_animo; i++) {
+            image = new ImageIcon(getClass().getResource("/Iconos/tutor_animo" + (i + 1) + ".gif"));
+            tutor_animo[i] = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
         }
         
     }
     
+    
+    private void setTutorReposo(){
+        txt_tutor.setIcon(tutor_reposo);
+    }
+    
+    private void setTutorFeliz(){
+        txt_tutor.setIcon(tutor_feliz[0]);
+        timer.start();
+    }
+    
+    private void setTutorAnimo(){
+        txt_tutor.setIcon(tutor_animo[0]);
+        timer.start();
+    }
+    
+    Timer timer = new Timer(2000, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            setTutorReposo();
+            timer.stop();
+        }
+    });
+
+    private void CargarSonidos() {
+        correct = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Correct.wav"));
+        fail = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Fail.wav"));
+        succes = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Succes.wav"));
+        nada = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/nada.wav"));
+        
+        ltr_a = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/letra_a.wav"));
+        ltr_e = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/letra_e.wav"));
+        ltr_i = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/letra_i.wav"));
+        ltr_o = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/letra_o.wav"));
+        ltr_u = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/letra_u.wav"));
+
+        apoyo = new AudioClip[n_apoyo];
+        exito = new AudioClip[n_exito];
+
+        for (int i = 0; i < n_apoyo; i++) {
+            apoyo[i] = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/apoyo_" + (i + 1) + ".wav"));
+        }
+
+        for (int i = 0; i < n_exito; i++) {
+            apoyo[i] = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_" + (i + 1) + ".wav"));
+        }
+        
+        numeros = new AudioClip[10];
+        for (int i = 0; i < 10; i++) {
+            numeros[i] = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/numero_" + i + ".wav"));
+        }
+
+    }
 
     private void cargarFondoLienzo() {
         try {
@@ -73,7 +137,53 @@ public class Practicar extends Principal {
             ex.printStackTrace();
         }
     }
-    
+
+    private void PlayReconocido(String a) {
+        boolean vacio = false;
+        if (isNumero(a)) {
+            
+            numeros[Integer.parseInt(a)].play();
+        } else {
+            switch (a.toLowerCase()) {
+                case "a":
+                    ltr_a.play();
+                    break;
+                case "e":
+                    ltr_e.play();
+                    break;
+                case "i":
+                    ltr_i.play();
+                    break;
+                case "o":
+                    ltr_o.play();
+                    break;
+                case "u":
+                    ltr_u.play();
+                    break;
+                default:
+                    nada.play();
+                    vacio = true;
+                    break;
+            }
+        }
+        
+        if (vacio) {
+            setTutorAnimo();
+        } else {
+            setTutorFeliz();
+        }
+
+    }
+
+    private boolean isNumero(String cadena){
+	try {
+		Integer.parseInt(cadena);
+		return true;
+	} catch (NumberFormatException nfe){
+		return false;
+	}
+}
+
     private void setOpaque() {
 
         for (JButton boton : new JButton[]{btn_pulsa, btn_salir, btn_clean, btn_rojo,
@@ -88,17 +198,18 @@ public class Practicar extends Principal {
         tbtCuadricula.setContentAreaFilled(false);
         tbtCuadricula.setBorderPainted(false);
     }
-    
+
     private void setwhitepanel() {
 
-        for (JPanel panel : new JPanel[]{pnl_opciones, pnl_botones, pnl_resultados,pnl_funciones,pnl_colores}) {
+        for (JPanel panel : new JPanel[]{pnl_opciones, pnl_botones, pnl_resultados, pnl_funciones, pnl_colores}) {
 
             panel.setOpaque(false);
         }
     }
     Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg");
+
     private void setwallpaper() {
-        
+
         wall.setSize(pnl_main.getSize());
         pnl_main.add(wall);
     }
@@ -120,11 +231,13 @@ public class Practicar extends Principal {
         btn_menos = new javax.swing.JButton();
         btn_mas = new javax.swing.JButton();
         tbtCuadricula = new javax.swing.JToggleButton();
+        btn_salir = new javax.swing.JButton();
         pnl_ayuda = new javax.swing.JPanel();
         pnlContenedorLienzo = new javax.swing.JPanel();
         pnl_botones = new javax.swing.JPanel();
-        btn_salir = new javax.swing.JButton();
         btn_pulsa = new javax.swing.JButton();
+        pnl_tutor = new javax.swing.JPanel();
+        txt_tutor = new javax.swing.JLabel();
         pnl_resultados = new javax.swing.JPanel();
         txt_modolibre = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -328,8 +441,22 @@ public class Practicar extends Principal {
                 .addComponent(btn_clean)
                 .addGap(18, 18, 18)
                 .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
+        btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
+        btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_salirMouseEntered(evt);
+            }
+        });
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_opcionesLayout = new javax.swing.GroupLayout(pnl_opciones);
         pnl_opciones.setLayout(pnl_opcionesLayout);
@@ -337,19 +464,26 @@ public class Practicar extends Principal {
             pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_opcionesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnl_colores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnl_funciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGroup(pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_opcionesLayout.createSequentialGroup()
+                        .addComponent(pnl_colores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnl_funciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_opcionesLayout.createSequentialGroup()
+                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
         );
         pnl_opcionesLayout.setVerticalGroup(
             pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_opcionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_colores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnl_funciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnl_colores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_funciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(btn_salir)
+                .addGap(19, 19, 19))
         );
 
         pnl_ayuda.setBackground(new java.awt.Color(255, 255, 255));
@@ -390,20 +524,6 @@ public class Practicar extends Principal {
 
         pnl_botones.setBackground(new java.awt.Color(132, 236, 159));
 
-        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_2.png"))); // NOI18N
-        btn_salir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_1.png"))); // NOI18N
-        btn_salir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir_3.png"))); // NOI18N
-        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_salirMouseEntered(evt);
-            }
-        });
-        btn_salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_salirActionPerformed(evt);
-            }
-        });
-
         btn_pulsa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_2.png"))); // NOI18N
         btn_pulsa.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btn_pulsa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pulsa_1.png"))); // NOI18N
@@ -419,28 +539,39 @@ public class Practicar extends Principal {
             }
         });
 
+        pnl_tutor.setBackground(new java.awt.Color(41, 185, 79));
+
+        javax.swing.GroupLayout pnl_tutorLayout = new javax.swing.GroupLayout(pnl_tutor);
+        pnl_tutor.setLayout(pnl_tutorLayout);
+        pnl_tutorLayout.setHorizontalGroup(
+            pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_tutorLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(txt_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+        pnl_tutorLayout.setVerticalGroup(
+            pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
         pnl_botonesLayout.setHorizontalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_botonesLayout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
-                .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                        .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
+            .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnl_botonesLayout.setVerticalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_botonesLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addContainerGap()
                 .addComponent(btn_pulsa, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_salir)
-                .addGap(19, 19, 19))
+                .addGap(38, 38, 38)
+                .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnl_resultados.setBackground(new java.awt.Color(132, 236, 159));
@@ -554,7 +685,7 @@ public class Practicar extends Principal {
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         salir();
     }//GEN-LAST:event_btn_salirActionPerformed
-    
+
     private void btn_cleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cleanActionPerformed
         lienzo.limpiarContenido();
     }//GEN-LAST:event_btn_cleanActionPerformed
@@ -594,6 +725,7 @@ public class Practicar extends Principal {
     private void btn_pulsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pulsaActionPerformed
         BufferedImage imagen = lienzo.getImagen();
         String caracter = aplicacion.reconocerImagen(imagen);
+        PlayReconocido(caracter);
         panelLetra.dibujarLetra(caracter);
     }//GEN-LAST:event_btn_pulsaActionPerformed
 
@@ -625,43 +757,43 @@ public class Practicar extends Principal {
     }//GEN-LAST:event_btn_rojoMouseEntered
 
     private void btn_verdeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verdeMouseEntered
-       puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_verdeMouseEntered
 
     private void btn_naranjaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_naranjaMouseEntered
-      puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_naranjaMouseEntered
 
     private void btn_marronMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_marronMouseEntered
-      puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_marronMouseEntered
 
     private void btn_lilaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_lilaMouseEntered
-       puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_lilaMouseEntered
 
     private void btn_masMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_masMouseEntered
-      puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_masMouseEntered
 
     private void btn_menosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_menosMouseEntered
-      puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_menosMouseEntered
 
     private void btn_cleanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cleanMouseEntered
-     puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_cleanMouseEntered
 
     private void btn_guiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guiaMouseEntered
-       puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_guiaMouseEntered
 
     private void btn_pulsaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_pulsaMouseEntered
-       puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_pulsaMouseEntered
 
     private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
-       puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_salirMouseEntered
 
     /**
@@ -725,8 +857,10 @@ public class Practicar extends Principal {
     private javax.swing.JPanel pnl_main;
     private javax.swing.JPanel pnl_opciones;
     private javax.swing.JPanel pnl_resultados;
+    private javax.swing.JPanel pnl_tutor;
     private javax.swing.JToggleButton tbtCuadricula;
     private javax.swing.JLabel txt_modolibre;
+    private javax.swing.JLabel txt_tutor;
     // End of variables declaration//GEN-END:variables
 
 }
