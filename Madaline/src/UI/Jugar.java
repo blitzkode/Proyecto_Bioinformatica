@@ -121,8 +121,9 @@ public class Jugar extends Principal {
     
     private void setOpaque() {
 
-        for (JButton boton : new JButton[]{btn_pulsa, btn_salir, btn_clean, btn_rojo,
-            btn_verde, btn_lila, btn_marron, btn_mas, btn_menos, btn_naranja, btn_siguiente}) {
+        for (JButton boton : new JButton[]{btn_pulsa, btn_salir, btn_clean, btn_rojo, btn_negro,
+            btn_verde, btn_lila, btn_marron, btn_mas, btn_menos, btn_naranja, btn_siguiente,
+            btn_deshacer }) {
 
             boton.setOpaque(false);
             boton.setContentAreaFilled(false);
@@ -174,17 +175,19 @@ public class Jugar extends Principal {
         pnl_main = new javax.swing.JPanel();
         pnl_opciones = new javax.swing.JPanel();
         pnl_colores = new javax.swing.JPanel();
+        btn_rojo = new javax.swing.JButton();
         btn_lila = new javax.swing.JButton();
         btn_marron = new javax.swing.JButton();
         btn_naranja = new javax.swing.JButton();
+        btn_negro = new javax.swing.JButton();
         btn_verde = new javax.swing.JButton();
-        btn_rojo = new javax.swing.JButton();
         pnl_funciones = new javax.swing.JPanel();
         btn_clean = new javax.swing.JButton();
         btn_menos = new javax.swing.JButton();
         btn_mas = new javax.swing.JButton();
         tbtGuia = new javax.swing.JToggleButton();
         tbtCuadricula = new javax.swing.JToggleButton();
+        btn_deshacer = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         pnl_ayuda = new javax.swing.JPanel();
         pnlContenedorLienzo = new javax.swing.JPanel();
@@ -221,6 +224,20 @@ public class Jugar extends Principal {
         pnl_opciones.setBackground(new java.awt.Color(132, 236, 159));
 
         pnl_colores.setBackground(new java.awt.Color(132, 236, 159));
+
+        btn_rojo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_2.png"))); // NOI18N
+        btn_rojo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800.png"))); // NOI18N
+        btn_rojo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_3.png"))); // NOI18N
+        btn_rojo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_rojoMouseEntered(evt);
+            }
+        });
+        btn_rojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_rojoActionPerformed(evt);
+            }
+        });
 
         btn_lila.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_2.png"))); // NOI18N
         btn_lila.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/7d028c_1.png"))); // NOI18N
@@ -264,6 +281,20 @@ public class Jugar extends Principal {
             }
         });
 
+        btn_negro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_2.png"))); // NOI18N
+        btn_negro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800.png"))); // NOI18N
+        btn_negro.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_3.png"))); // NOI18N
+        btn_negro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_negroMouseEntered(evt);
+            }
+        });
+        btn_negro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_negroActionPerformed(evt);
+            }
+        });
+
         btn_verde.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_2.png"))); // NOI18N
         btn_verde.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_1.png"))); // NOI18N
         btn_verde.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/63b82a_3.png"))); // NOI18N
@@ -278,40 +309,28 @@ public class Jugar extends Principal {
             }
         });
 
-        btn_rojo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_2.png"))); // NOI18N
-        btn_rojo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800.png"))); // NOI18N
-        btn_rojo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ff1800_3.png"))); // NOI18N
-        btn_rojo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_rojoMouseEntered(evt);
-            }
-        });
-        btn_rojo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_rojoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnl_coloresLayout = new javax.swing.GroupLayout(pnl_colores);
         pnl_colores.setLayout(pnl_coloresLayout);
         pnl_coloresLayout.setHorizontalGroup(
             pnl_coloresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_coloresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_coloresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_rojo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnl_coloresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btn_lila, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btn_marron, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btn_naranja, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btn_verde, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnl_coloresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_lila, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btn_marron, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btn_naranja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btn_verde, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_negro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_rojo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_coloresLayout.setVerticalGroup(
             pnl_coloresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_coloresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_rojo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_negro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_rojo)
                 .addGap(18, 18, 18)
                 .addComponent(btn_verde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -390,6 +409,20 @@ public class Jugar extends Principal {
             }
         });
 
+        btn_deshacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/menos_2.png"))); // NOI18N
+        btn_deshacer.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/menos_1.png"))); // NOI18N
+        btn_deshacer.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/menos_3.png"))); // NOI18N
+        btn_deshacer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_deshacerMouseEntered(evt);
+            }
+        });
+        btn_deshacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deshacerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_funcionesLayout = new javax.swing.GroupLayout(pnl_funciones);
         pnl_funciones.setLayout(pnl_funcionesLayout);
         pnl_funcionesLayout.setHorizontalGroup(
@@ -401,7 +434,8 @@ public class Jugar extends Principal {
                     .addComponent(btn_mas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clean, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tbtGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btn_deshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_funcionesLayout.setVerticalGroup(
@@ -411,6 +445,8 @@ public class Jugar extends Principal {
                 .addComponent(btn_mas)
                 .addGap(18, 18, 18)
                 .addComponent(btn_menos)
+                .addGap(18, 18, 18)
+                .addComponent(btn_deshacer)
                 .addGap(18, 18, 18)
                 .addComponent(btn_clean)
                 .addGap(18, 18, 18)
@@ -546,7 +582,7 @@ public class Jugar extends Principal {
             pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_tutorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -884,13 +920,31 @@ public class Jugar extends Principal {
         super.entrenar();
     }//GEN-LAST:event_mitEntrenarActionPerformed
 
+    private void btn_negroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_negroMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_negroMouseEntered
+
+    private void btn_negroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_negroActionPerformed
+        lienzo.setColor(Color.black);
+    }//GEN-LAST:event_btn_negroActionPerformed
+
+    private void btn_deshacerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_deshacerMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_deshacerMouseEntered
+
+    private void btn_deshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deshacerActionPerformed
+        lienzo.deshacerTrazo();
+    }//GEN-LAST:event_btn_deshacerActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_clean;
+    private javax.swing.JButton btn_deshacer;
     private javax.swing.JButton btn_lila;
     private javax.swing.JButton btn_marron;
     private javax.swing.JButton btn_mas;
     private javax.swing.JButton btn_menos;
     private javax.swing.JButton btn_naranja;
+    private javax.swing.JButton btn_negro;
     private javax.swing.JButton btn_pulsa;
     private javax.swing.JButton btn_rojo;
     private javax.swing.JButton btn_salir;
