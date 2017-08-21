@@ -299,5 +299,9 @@ public class Controlador {
         }
 
     }
+
+    public String[] getCaracteres_actual() {
+        return caracteres_actual;
+    }
     
 }

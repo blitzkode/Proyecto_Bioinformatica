@@ -63,6 +63,7 @@ public class Resultados extends javax.swing.JDialog {
         wall.setSize(pnl_main.getSize());
         pnl_main.add(wall);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

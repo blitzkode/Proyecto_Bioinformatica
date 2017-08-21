@@ -1,84 +1,119 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import Core.Controlador;
+import java.applet.AudioClip;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import java.applet.AudioClip;
 import javax.swing.JButton;
+import javax.swing.Timer;
 
 public class Start extends javax.swing.JFrame {
 
     Controlador aplicacion;
+
+    PanelSaludo pnl_saludo;
+    Wallpaper wall;
     
-    public static AudioClip click, puntero, instrumental;
-    ImageIcon img1;
-    Icon icon;
+    Icon tutor_reposo,tutor_feliz[], tutor_animo[];
+     
+    int t_feliz=1;
+    int t_animo=1;
     
+    public static AudioClip click, puntero, instrumental, bienvenida;
+
     public Start() {
         initComponents();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
+
         CargarSonidos();
         pnl_objetos.setOpaque(false);
         setOpaque();
         setWallpaper();
-        cargarLogo();
-        
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Splash s = new Splash();
                 aplicacion = new Controlador();
-                
+
                 s.dispose();
                 setVisible(true);
-                instrumental.loop();
+                
+                CargarSaludo();
+                timer.start();
+                
             }
         }).start();
-        
+
     }
-    
-     
-    private void CargarSonidos(){
+
+    private void CargarSonidos() {
         click = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Click.wav"));
         puntero = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Rollover.wav"));
         instrumental = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Background.wav"));
+        bienvenida = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/tutor_bienvenida.wav"));
     }
 
-    private void setOpaque(){
-        
-        for (JButton boton : new JButton[]{btn_practicar,btn_reto,btn_salir}) {
+    private void setOpaque() {
+
+        for (JButton boton : new JButton[]{btn_salir}) {
 
             boton.setOpaque(false);
             boton.setContentAreaFilled(false);
             boton.setBorderPainted(false);
         }
-        
+
         btn_sonido.setOpaque(false);
         btn_sonido.setContentAreaFilled(false);
         btn_sonido.setBorderPainted(false);
+
+    }
+
+    Timer timer = new Timer(8000, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            CargarBotones();
+            timer.stop();
+        }
+    });
+    
+    
+    
+    
+    private void CargarBotones() {
+        
+        pnl_saludo.setVisible(false);
+        PanelStart pnl_start = new PanelStart(aplicacion, this);
+        pnl_start.setSize(724, 464);
+        pnl_start.setLocation((getWidth() - pnl_start.getWidth()) / 2,
+                (getHeight() - pnl_start.getHeight()) / 2);
+        pnl_objetos.add(pnl_start);
+        pnl_objetos.repaint();
+        instrumental.loop();
         
     }
-    
-    private void cargarLogo(){
-        img1 = new ImageIcon(getClass().getResource("/Iconos/logo Scribe.png"));
-        icon = new ImageIcon(img1.getImage().getScaledInstance(txt_logo.getWidth(), txt_logo.getHeight(), Image.SCALE_DEFAULT));
-        txt_logo.setIcon(icon);
+   
+     
+    private void CargarSaludo() {
+        bienvenida.play();
+        pnl_saludo = new PanelSaludo();
+        pnl_saludo.setSize(724, 464);
+        pnl_saludo.setLocation((getWidth() - pnl_saludo.getWidth()) / 2,
+                (getHeight() - pnl_saludo.getHeight()) / 2);
+        pnl_objetos.add(pnl_saludo);
+        pnl_objetos.repaint();
+
     }
-    
-    Wallpaper wall;
-    private void setWallpaper(){
+
+    private void setWallpaper() {
         wall = new Wallpaper("/Iconos/wall_start.jpg");
         wall.setSize(pnl_fondo.getSize());
         pnl_fondo.add(wall);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,13 +122,16 @@ public class Start extends javax.swing.JFrame {
         btn_salir = new javax.swing.JButton();
         btn_sonido = new javax.swing.JToggleButton();
         pnl_objetos = new javax.swing.JPanel();
-        btn_practicar = new javax.swing.JButton();
-        btn_reto = new javax.swing.JButton();
-        txt_logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setExtendedState(6);
         setUndecorated(true);
         setResizable(false);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
         pnl_fondo.setBackground(new java.awt.Color(24, 234, 63));
         pnl_fondo.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -128,62 +166,15 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
-        btn_practicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_2.png"))); // NOI18N
-        btn_practicar.setToolTipText("Practicar");
-        btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
-        btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
-        btn_practicar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_practicarMouseEntered(evt);
-            }
-        });
-        btn_practicar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_practicarActionPerformed(evt);
-            }
-        });
-
-        btn_reto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_2.png"))); // NOI18N
-        btn_reto.setToolTipText("Jugar");
-        btn_reto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_1.png"))); // NOI18N
-        btn_reto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_3.png"))); // NOI18N
-        btn_reto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_retoMouseEntered(evt);
-            }
-        });
-        btn_reto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_retoActionPerformed(evt);
-            }
-        });
-
-        txt_logo.setBackground(new java.awt.Color(3, 46, 178));
-
         javax.swing.GroupLayout pnl_objetosLayout = new javax.swing.GroupLayout(pnl_objetos);
         pnl_objetos.setLayout(pnl_objetosLayout);
         pnl_objetosLayout.setHorizontalGroup(
             pnl_objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_objetosLayout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139)
-                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_objetosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 737, Short.MAX_VALUE)
         );
         pnl_objetosLayout.setVerticalGroup(
             pnl_objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_objetosLayout.createSequentialGroup()
-                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnl_objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_practicar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_reto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+            .addGap(0, 512, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
@@ -193,9 +184,9 @@ public class Start extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_sonido, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 17, Short.MAX_VALUE)
-                .addComponent(pnl_objetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_objetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -207,10 +198,7 @@ public class Start extends javax.swing.JFrame {
                     .addComponent(btn_sonido, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_salir))
                 .addContainerGap(451, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnl_objetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+            .addComponent(pnl_objetos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,41 +219,18 @@ public class Start extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    private void btn_retoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retoActionPerformed
-        click.play();
-        setVisible(false);
-        
-        new Jugar(aplicacion, this);
-       
-    }//GEN-LAST:event_btn_retoActionPerformed
-
-    private void btn_practicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_practicarActionPerformed
-        click.play();
-        setVisible(false);
-        
-        new Practicar(aplicacion, this);
-    }//GEN-LAST:event_btn_practicarActionPerformed
-
-    private void btn_retoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_retoMouseEntered
-        puntero.play();
-    }//GEN-LAST:event_btn_retoMouseEntered
-
-    private void btn_practicarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_practicarMouseEntered
-        puntero.play();
-    }//GEN-LAST:event_btn_practicarMouseEntered
-
     private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
-       puntero.play();
+        puntero.play();
     }//GEN-LAST:event_btn_salirMouseEntered
 
     private void btn_sonidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sonidoActionPerformed
-     
+
         if (btn_sonido.isSelected()) {
             instrumental.stop();
-        } else{ 
+        } else {
             instrumental.loop();
         }
-        
+
     }//GEN-LAST:event_btn_sonidoActionPerformed
 
     private void btn_sonidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_sonidoMouseEntered
@@ -273,9 +238,16 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_sonidoMouseEntered
 
     private void pnl_fondoComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_fondoComponentResized
-      wall.setSize(pnl_fondo.getSize());
-      pnl_objetos.setLocation((getWidth()-pnl_objetos.getWidth())/2,(getHeight()-pnl_objetos.getHeight())/2);
+        wall.setSize(pnl_fondo.getSize());
+        pnl_objetos.setLocation((getWidth() - pnl_objetos.getWidth()) / 2,
+                (getHeight() - pnl_objetos.getHeight()) / 2);
     }//GEN-LAST:event_pnl_fondoComponentResized
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        wall.setSize(pnl_fondo.getSize());
+        pnl_objetos.setLocation((getWidth() - pnl_objetos.getWidth()) / 2,
+                (getHeight() - pnl_objetos.getHeight()) / 2);
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
@@ -313,12 +285,9 @@ public class Start extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_practicar;
-    private javax.swing.JButton btn_reto;
     private javax.swing.JButton btn_salir;
     private javax.swing.JToggleButton btn_sonido;
     private javax.swing.JPanel pnl_fondo;
     private javax.swing.JPanel pnl_objetos;
-    private javax.swing.JLabel txt_logo;
     // End of variables declaration//GEN-END:variables
 }

@@ -41,8 +41,14 @@ public class ProcesarImagen {
 //        System.out.println("X: "+ x+ " Y: "+ y + " W: "+w+" H: "+h);
 
 //        saveimg(img, "incial");
-
+        
+        if (x+w==0) {
+            return getAdalineLimpio();
+        
+        } 
+        
         img = getCorte(img, x, y, w, h);
+        
 
 //        saveimg(img, "media");
 
@@ -59,6 +65,17 @@ public class ProcesarImagen {
         byte A2[] = getAdaline(V2,img.getWidth());
                 
         return A2;
+    }
+   
+    private static byte[] getAdalineLimpio(){
+        
+        byte A[]= new byte[IMG_HEIGHT*IMG_WIDTH];
+        
+        for (int i = 0; i < A.length; i++) {
+            A[i]=-1;
+        }
+        
+        return A;
     }
     
     public static BufferedImage getRecorteIMG(BufferedImage img){

@@ -25,14 +25,18 @@ public class Principal extends javax.swing.JFrame {
     }
     
     protected void entrenar() {
+        String caracter = aplicacion.getLetraActual();
+        entrenar(caracter);
+    }
+    
+    protected void entrenar(String caracter) {
         try {
-            String actual = aplicacion.getLetraActual();
-            File directorio = new File(aplicacion.RUTA_IMG, actual);
-            boolean mayus = actual.equals(actual.toUpperCase()) && 
-                            !actual.matches("[0-9]");
+            File directorio = new File(aplicacion.RUTA_IMG, caracter);
+            boolean mayus = caracter.equals(caracter.toUpperCase()) && 
+                            !caracter.matches("[0-9]");
             
             String nombre = String.format("%s%s_%d.jpg",
-                                            actual,
+                                            caracter,
                                             mayus ? "M" : "",
                                             directorio.list().length+1);
             File archivo = new File(directorio, nombre);
