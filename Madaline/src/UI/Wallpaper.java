@@ -8,13 +8,16 @@ package UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class Wallpaper extends JPanel{
     
     String nombre;
-    ImageIcon imagen;
+    
     
     public Wallpaper (String nombre){
         this.nombre = nombre;
@@ -26,11 +29,21 @@ public class Wallpaper extends JPanel{
         
         super.paintComponent(g);
         Dimension tam=getSize();
-        imagen=new ImageIcon(getClass().getResource(nombre));
+        
+        ImageIcon imagen=new ImageIcon(getClass().getResource(nombre));
+        
+        
         g.drawImage(imagen.getImage(), 0, 0, tam.width,tam.height,null);
         setOpaque(false);
        
-        
+        timer.start();
     }
+    
+     Timer timer = new Timer(10, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            repaint();
+            
+        }
+    });
     
 }

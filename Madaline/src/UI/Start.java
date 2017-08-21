@@ -2,11 +2,9 @@ package UI;
 
 import Core.Controlador;
 import java.applet.AudioClip;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.Timer;
 
@@ -31,9 +29,10 @@ public class Start extends javax.swing.JFrame {
 
         CargarSonidos();
         pnl_objetos.setOpaque(false);
-        setOpaque();
+       
         setWallpaper();
-
+        setOpaque();
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -42,6 +41,8 @@ public class Start extends javax.swing.JFrame {
 
                 s.dispose();
                 setVisible(true);
+                pnl_objetos.repaint();
+                 
                 
                 CargarSaludo();
                 timer.start();
@@ -73,7 +74,7 @@ public class Start extends javax.swing.JFrame {
 
     }
 
-    Timer timer = new Timer(8000, new ActionListener() {
+    Timer timer = new Timer(500, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             CargarBotones();
             timer.stop();
@@ -109,9 +110,15 @@ public class Start extends javax.swing.JFrame {
     }
 
     private void setWallpaper() {
-        wall = new Wallpaper("/Iconos/wall_start.jpg");
+        wall = new Wallpaper("/Iconos/wallpaper_start.gif");
         wall.setSize(pnl_fondo.getSize());
         pnl_fondo.add(wall);
+    }
+    
+    private void CentrarPnlObjetos(){
+        wall.setSize(pnl_fondo.getSize());
+        pnl_objetos.setLocation((getWidth() - pnl_objetos.getWidth()) / 2,
+                (getHeight() - pnl_objetos.getHeight()) / 2);
     }
 
     @SuppressWarnings("unchecked")
@@ -238,15 +245,11 @@ public class Start extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_sonidoMouseEntered
 
     private void pnl_fondoComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_fondoComponentResized
-        wall.setSize(pnl_fondo.getSize());
-        pnl_objetos.setLocation((getWidth() - pnl_objetos.getWidth()) / 2,
-                (getHeight() - pnl_objetos.getHeight()) / 2);
+        CentrarPnlObjetos();
     }//GEN-LAST:event_pnl_fondoComponentResized
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        wall.setSize(pnl_fondo.getSize());
-        pnl_objetos.setLocation((getWidth() - pnl_objetos.getWidth()) / 2,
-                (getHeight() - pnl_objetos.getHeight()) / 2);
+        CentrarPnlObjetos();
     }//GEN-LAST:event_formComponentResized
 
     /**
