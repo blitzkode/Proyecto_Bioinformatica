@@ -3,7 +3,6 @@ package UI;
 import javax.swing.JButton;
 import static UI.Start.click;
 import static UI.Start.puntero;
-import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
