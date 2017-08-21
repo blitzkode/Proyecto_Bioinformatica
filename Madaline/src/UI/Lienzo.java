@@ -120,6 +120,11 @@ public class Lienzo extends JPanel {
         }
     }
     
+    public void guardarImagen(File archivo) throws IOException {
+        BufferedImage img = this.getImagen();
+        ImageIO.write(img, "jpg", archivo);
+    }
+    
     public void setLetra(String letra) {
         this.letra_fondo = letra;
         repaint();

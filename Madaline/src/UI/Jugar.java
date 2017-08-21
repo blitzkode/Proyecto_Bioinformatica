@@ -3,16 +3,13 @@ package UI;
 import Core.Controlador;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import static UI.Start.puntero;
 import java.applet.AudioClip;
 
 public class Jugar extends Principal {
-    Lienzo lienzo;
+    
     PanelLetra panelLetra;   
     
     int n_apoyo=4,n_exito=4;
@@ -26,7 +23,6 @@ public class Jugar extends Principal {
         this.aplicacion = aplicacion;
         this.padre = padre;
         
-        lienzo = new Lienzo();
         pnlContenedorLienzo.add(lienzo);
         panelLetra = new PanelLetra();
         pnl_ayuda.add(panelLetra);
@@ -72,16 +68,6 @@ public class Jugar extends Principal {
         exito[3]=java.applet.Applet.newAudioClip(getClass().getResource("/Audio/exito_4.wav"));
             
         
-    }
-    
-
-    private void cargarFondoLienzo() {
-        try {
-            BufferedImage fondo = ImageIO.read(new File("src/Iconos/rejilla.jpg"));
-            lienzo.setFondo(fondo);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
     
     private void setOpaque() {
@@ -166,7 +152,9 @@ public class Jugar extends Principal {
         jMenu1 = new javax.swing.JMenu();
         mitAbrir = new javax.swing.JMenuItem();
         mitGuardar = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mitMantenimiento = new javax.swing.JMenuItem();
+        mitEntrenar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -629,6 +617,7 @@ public class Jugar extends Principal {
             }
         });
         jMenu1.add(mitGuardar);
+        jMenu1.add(jSeparator1);
 
         mitMantenimiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
         mitMantenimiento.setText("Mantenimiento");
@@ -638,6 +627,15 @@ public class Jugar extends Principal {
             }
         });
         jMenu1.add(mitMantenimiento);
+
+        mitEntrenar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        mitEntrenar.setText("Entrenar");
+        mitEntrenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitEntrenarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitEntrenar);
 
         jMenuBar1.add(jMenu1);
 
@@ -809,41 +807,9 @@ public class Jugar extends Principal {
         puntero.play();
     }//GEN-LAST:event_tbtGuiaMouseEntered
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                //new Principal(new Controlador()).setVisible(true);
-//            }
-//        });
-//    }
+    private void mitEntrenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitEntrenarActionPerformed
+        super.entrenar();
+    }//GEN-LAST:event_mitEntrenarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_clean;
@@ -861,7 +827,9 @@ public class Jugar extends Principal {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem mitAbrir;
+    private javax.swing.JMenuItem mitEntrenar;
     private javax.swing.JMenuItem mitGuardar;
     private javax.swing.JMenuItem mitMantenimiento;
     private javax.swing.JPanel pnlContenedorLienzo;

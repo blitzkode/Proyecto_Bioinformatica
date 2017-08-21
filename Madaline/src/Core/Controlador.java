@@ -21,7 +21,7 @@ public class Controlador {
     private String BD_VOCALES = "xmlsrc/bd_vocales.xml"; // Ubicación de la BD
     private String BD_DIGITOS = "xmlsrc/bd_digitos.xml"; // Ubicación de la BD
     private String BD_ACTUAL;
-    private String RUTA_IMG = "img"; // Ubicación de las imagenes de entrenamiento
+    public static final String RUTA_IMG = "img"; // Ubicación de las imagenes de entrenamiento
     private int modo;
     
     private int puntaje_total;
@@ -188,34 +188,14 @@ public class Controlador {
         );
     }
     
-    private void commit() {
+    public void commit() {
         try {
             ReconocedorDataAccess.escribirBD(reconocedor_actual, BD_ACTUAL);
         } catch (JAXBException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public int entrenamientoPorLotes() {
-        int imagenes_entrenadas = 0;
-        for (String caracter : vocales) {
-            File directorio = new File(RUTA_IMG, caracter);
-            if (directorio.exists()) {
-                String[] contenido = directorio.list();
-                for (String archivoImagen : contenido) {
-                    try {
-                        BufferedImage imagen = ImageIO.read(new File(directorio, archivoImagen));
-                        entrenarCaracter(imagen, caracter);
-                        imagenes_entrenadas++;
-                    } catch (IOException ex) {
-                    }
-                }
-            }
-        }
-        commit();
-        return imagenes_entrenadas;
-    }
-    
+        
     public int entrenamiento() {
         int imagenes = 0;
         TablaEntrenamiento[] tablas = new TablaEntrenamiento[caracteres_actual.length];
@@ -252,7 +232,6 @@ public class Controlador {
             salidas[i] = tablas[i].getSalidas();
         }
         reconocedor_actual.entrenar(entradas, salidas);
-        commit();
         return imagenes;
     }
 

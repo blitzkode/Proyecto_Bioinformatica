@@ -333,6 +333,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             new Thread(() -> {
                 pbProgreso.setIndeterminate(true);
                 int imagenes_entrenadas = aplicacion.entrenamiento();
+                aplicacion.commit();
                 pbProgreso.setIndeterminate(false);
                 JOptionPane.showMessageDialog(null,
                         String.format("Se %s %d %s en total.",
