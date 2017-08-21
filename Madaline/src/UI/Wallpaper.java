@@ -35,8 +35,12 @@ public class Wallpaper extends JPanel{
         
         g.drawImage(imagen.getImage(), 0, 0, tam.width,tam.height,null);
         setOpaque(false);
+       String ext = nombre.substring(nombre.length()-3);
        
-        timer.start();
+        if (ext.equals("gif")) {
+            timer.start();
+        }
+        
     }
     
      Timer timer = new Timer(10, new ActionListener() {

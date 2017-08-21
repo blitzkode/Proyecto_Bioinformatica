@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import javax.swing.JButton;
 import static UI.Start.click;
 import static UI.Start.puntero;
+import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Diego Baes
- */
+
 public class Dificultad extends javax.swing.JDialog {
     Principal parent;
     ImageIcon img1;
@@ -28,6 +21,7 @@ public class Dificultad extends javax.swing.JDialog {
         this.parent = (Principal) parent;
         setWallpaper();
         setOpaque();
+        
         setResizable(false);
         setLocationRelativeTo(null);
         

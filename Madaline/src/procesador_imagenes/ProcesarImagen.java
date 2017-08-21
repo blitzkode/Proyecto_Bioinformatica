@@ -29,35 +29,22 @@ public class ProcesarImagen {
         //obtenemos array imagen original
         int V[] = getArray(img);
 
-        //transformamos datos a adaline 
-//        byte A[] = getAdaline(V,IMG_WIDTH);
-
         //obtenemos cordenadas para el corte
         int x = getX(V,IMG_WIDTH);
         int y = getY(V,IMG_WIDTH,IMG_HEIGHT);
         int w = getLimWidth(V,IMG_WIDTH,IMG_HEIGHT) - x;
         int h = getLimHeight(V,IMG_WIDTH,IMG_HEIGHT) - y;
-        
-//        System.out.println("X: "+ x+ " Y: "+ y + " W: "+w+" H: "+h);
 
-//        saveimg(img, "incial");
-        
+
         if (x+w==0) {
             return getAdalineLimpio();
-        
         } 
         
         img = getCorte(img, x, y, w, h);
-        
-
-//        saveimg(img, "media");
-
+      
         //escalamos corte a 100 altura, manteniendo proporcion ancho
         img = Cambiar_Tamaño(img, (int) (IMG_HEIGHT * w) / h> IMG_WIDTH ? IMG_WIDTH : (int) (IMG_HEIGHT * w) / h, IMG_HEIGHT);
         
-        
-//        saveimg(img, "final");
-
         //obtenemos array imagen nueva
         int V2[] = getArray(img);
 
