@@ -42,7 +42,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                   <Component id="pnl_botones" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="158" max="32767" attributes="0"/>
               </Group>
@@ -67,6 +67,11 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="pnl_botones">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="91" green="b0" red="25" type="rgb"/>
+            </Property>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -80,7 +85,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="328" pref="328" max="-2" attributes="0"/>
-                      <Component id="btn_practicar1" min="-2" pref="96" max="-2" attributes="0"/>
+                      <Component id="btn_practicar" min="-2" pref="96" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -92,7 +97,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="btn_facil" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_normal" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_practicar1" min="-2" pref="121" max="-2" attributes="0"/>
+                          <Component id="btn_practicar" min="-2" pref="121" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -136,7 +141,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_normalActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_practicar1">
+            <Component class="javax.swing.JButton" name="btn_practicar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PRACTICAR"/>
               </Properties>

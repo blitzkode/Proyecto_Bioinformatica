@@ -48,7 +48,7 @@ public class ElegirJuego extends javax.swing.JFrame {
         pnl_botones = new javax.swing.JPanel();
         btn_facil = new javax.swing.JButton();
         btn_normal = new javax.swing.JButton();
-        btn_practicar1 = new javax.swing.JButton();
+        btn_practicar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,6 +57,8 @@ public class ElegirJuego extends javax.swing.JFrame {
                 formComponentResized(evt);
             }
         });
+
+        pnl_botones.setBackground(new java.awt.Color(37, 176, 145));
 
         btn_facil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_2.png"))); // NOI18N
         btn_facil.setAlignmentY(0.0F);
@@ -88,7 +90,7 @@ public class ElegirJuego extends javax.swing.JFrame {
             }
         });
 
-        btn_practicar1.setText("PRACTICAR");
+        btn_practicar.setText("PRACTICAR");
 
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
@@ -102,7 +104,7 @@ public class ElegirJuego extends javax.swing.JFrame {
                 .addGap(156, 156, 156))
             .addGroup(pnl_botonesLayout.createSequentialGroup()
                 .addGap(328, 328, 328)
-                .addComponent(btn_practicar1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_botonesLayout.setVerticalGroup(
@@ -112,7 +114,7 @@ public class ElegirJuego extends javax.swing.JFrame {
                 .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_facil)
                     .addComponent(btn_normal)
-                    .addComponent(btn_practicar1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -128,7 +130,7 @@ public class ElegirJuego extends javax.swing.JFrame {
         pnl_fondoLayout.setHorizontalGroup(
             pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fondoLayout.createSequentialGroup()
-                .addGap(108, 108, 108)
+                .addGap(79, 79, 79)
                 .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(158, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
@@ -194,7 +196,7 @@ public class ElegirJuego extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_facil;
     private javax.swing.JButton btn_normal;
-    private javax.swing.JButton btn_practicar1;
+    private javax.swing.JButton btn_practicar;
     private javax.swing.JButton btn_volver;
     private javax.swing.JPanel pnl_botones;
     private javax.swing.JPanel pnl_fondo;
