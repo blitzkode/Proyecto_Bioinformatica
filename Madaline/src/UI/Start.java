@@ -60,7 +60,7 @@ public class Start extends javax.swing.JFrame {
 
     private void setOpaque() {
 
-        for (JButton boton : new JButton[]{btn_salir}) {
+        for (JButton boton : new JButton[]{btn_salir,btn_practicar,btn_reto,btn_acerca}) {
 
             boton.setOpaque(false);
             boton.setContentAreaFilled(false);
@@ -108,7 +108,7 @@ public class Start extends javax.swing.JFrame {
         pnl_botones = new javax.swing.JPanel();
         btn_reto = new javax.swing.JButton();
         btn_practicar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_acerca = new javax.swing.JButton();
         pnl_tutor = new javax.swing.JPanel();
         txt_tutor = new javax.swing.JLabel();
         pnl_control = new javax.swing.JPanel();
@@ -125,7 +125,7 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
-        pnl_fondo.setBackground(new java.awt.Color(24, 234, 63));
+        pnl_fondo.setBackground(new java.awt.Color(39, 168, 243));
         pnl_fondo.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 pnl_fondoComponentResized(evt);
@@ -134,8 +134,13 @@ public class Start extends javax.swing.JFrame {
 
         btn_reto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_2.png"))); // NOI18N
         btn_reto.setToolTipText("Jugar");
+        btn_reto.setAlignmentY(0.0F);
+        btn_reto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_reto.setMargin(new java.awt.Insets(-3, -6, -12, -2));
         btn_reto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_1.png"))); // NOI18N
         btn_reto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/jugar_3.png"))); // NOI18N
+        btn_reto.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btn_reto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_reto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_retoMouseEntered(evt);
@@ -147,10 +152,14 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
-        btn_practicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_2.png"))); // NOI18N
+        btn_practicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ajustes_2.png"))); // NOI18N
         btn_practicar.setToolTipText("Practicar");
-        btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_1.png"))); // NOI18N
-        btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/practicar_3.png"))); // NOI18N
+        btn_practicar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_practicar.setMargin(new java.awt.Insets(-3, -9, -12, 0));
+        btn_practicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ajustes_1.png"))); // NOI18N
+        btn_practicar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ajustes_3.png"))); // NOI18N
+        btn_practicar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btn_practicar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_practicar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_practicarMouseEntered(evt);
@@ -162,29 +171,36 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("ajustes");
+        btn_acerca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/acerca_2.png"))); // NOI18N
+        btn_acerca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_acerca.setMargin(new java.awt.Insets(0, -10, 0, 0));
+        btn_acerca.setName(""); // NOI18N
+        btn_acerca.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/acerca_3.png"))); // NOI18N
+        btn_acerca.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/acerca_1.png"))); // NOI18N
+        btn_acerca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_acercaMouseEntered(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
         pnl_botones.setLayout(pnl_botonesLayout);
         pnl_botonesLayout.setHorizontalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(pnl_botonesLayout.createSequentialGroup()
-                .addGap(0, 24, Short.MAX_VALUE)
-                .addGroup(pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(btn_acerca, javax.swing.GroupLayout.PREFERRED_SIZE, 203, Short.MAX_VALUE)
         );
         pnl_botonesLayout.setVerticalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_botonesLayout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addComponent(btn_reto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addComponent(btn_practicar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(54, 54, 54)
+                .addComponent(btn_reto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_practicar)
+                .addGap(18, 18, 18)
+                .addComponent(btn_acerca, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         txt_tutor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -195,7 +211,7 @@ public class Start extends javax.swing.JFrame {
             pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_tutorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_tutorLayout.setVerticalGroup(
@@ -244,11 +260,11 @@ public class Start extends javax.swing.JFrame {
         );
         pnl_controlLayout.setVerticalGroup(
             pnl_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_controlLayout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+            .addGroup(pnl_controlLayout.createSequentialGroup()
                 .addGroup(pnl_controlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_sonido, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_salir)))
+                    .addComponent(btn_salir)
+                    .addComponent(btn_sonido))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
@@ -259,20 +275,21 @@ public class Start extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         pnl_fondoLayout.setVerticalGroup(
             pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fondoLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_fondoLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnl_fondoLayout.createSequentialGroup()
                         .addComponent(pnl_control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnl_botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(pnl_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addComponent(pnl_botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(24, 24, 24))
         );
 
@@ -357,6 +374,10 @@ public class Start extends javax.swing.JFrame {
         new Practicar(aplicacion, this);
     }//GEN-LAST:event_btn_practicarActionPerformed
 
+    private void btn_acercaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_acercaMouseEntered
+        puntero.play();
+    }//GEN-LAST:event_btn_acercaMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -393,11 +414,11 @@ public class Start extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_acerca;
     private javax.swing.JButton btn_practicar;
     private javax.swing.JButton btn_reto;
     private javax.swing.JButton btn_salir;
     private javax.swing.JToggleButton btn_sonido;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel pnl_botones;
     private javax.swing.JPanel pnl_control;
     private javax.swing.JPanel pnl_fondo;
