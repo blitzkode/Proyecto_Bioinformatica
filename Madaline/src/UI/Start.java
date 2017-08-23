@@ -3,6 +3,7 @@ package UI;
 import Core.Controlador;
 import java.applet.AudioClip;
 import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +20,13 @@ public class Start extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
-
+        
+        // Maximizar ventana en linux
+        Toolkit tk = Toolkit.getDefaultToolkit();  
+        int xSize = ((int) tk.getScreenSize().getWidth());  
+        int ySize = ((int) tk.getScreenSize().getHeight());  
+        setSize(xSize,ySize);
+        //
         CargarSonidos();
 
         setWallpaper();
@@ -82,16 +89,16 @@ public class Start extends javax.swing.JFrame {
     }
 
     private void setWallpaper() {
-        wall = new Wallpaper("/Iconos/wallpaper_start.gif");
-        wall.setSize(pnl_wallpaper.getSize());
-        pnl_wallpaper.add(wall);
+        wall = new Wallpaper("/Iconos/wallpaper_start.gif", pnl_wallpaper);
+//        wall.setSize(pnl_wallpaper.getSize());
+//        pnl_wallpaper.add(wall);
     }
     
      private void setfondo() {
-        fondo = new Wallpaper("/Iconos/fondo_logo.png");
+        fondo = new Wallpaper("/Iconos/fondo_logo.png", pnl_fondo);
 //        fondo.setSize(pnl_fondo.getSize());
-        fondo.setSize(pnl_fondo.getSize());
-        pnl_fondo.add(fondo);
+//        fondo.setSize(pnl_fondo.getSize());
+//        pnl_fondo.add(fondo);
     }
 
     private void AjustarWallpaper() {

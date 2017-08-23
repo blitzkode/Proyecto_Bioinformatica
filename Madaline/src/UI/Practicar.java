@@ -194,9 +194,9 @@ public class Practicar extends Principal {
             panel.setOpaque(false);
         }
     }
-    Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg");
 
     private void setwallpaper() {
+    Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
 
         wall.setSize(pnl_main.getSize());
         pnl_main.add(wall);
@@ -781,7 +781,7 @@ public class Practicar extends Principal {
     }//GEN-LAST:event_mitAbrirActionPerformed
 
     private void pnl_mainComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_mainComponentResized
-        wall.setSize(pnl_main.getSize());
+        //wall.setSize(pnl_main.getSize());
     }//GEN-LAST:event_pnl_mainComponentResized
 
     private void tbtCuadriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtCuadriculaActionPerformed

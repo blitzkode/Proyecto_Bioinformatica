@@ -27,7 +27,7 @@ public class Dificultad extends javax.swing.JDialog {
     }   
 
     private void setWallpaper(){
-        Wallpaper wall = new Wallpaper("/Iconos/wall_dificultad.jpg");
+        Wallpaper wall = new Wallpaper("/Iconos/wall_dificultad.jpg", pnl_fondo);
         wall.setSize(pnl_fondo.getSize());
         pnl_fondo.add(wall);
     }

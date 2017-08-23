@@ -59,9 +59,9 @@ public class Resultados extends javax.swing.JDialog {
     Wallpaper wall;
     private void setwallpaper() {
         pnl_stars.setOpaque(false);
-        wall = new Wallpaper("/Iconos/wall_resultados.jpg");
-        wall.setSize(pnl_main.getSize());
-        pnl_main.add(wall);
+        wall = new Wallpaper("/Iconos/wall_resultados.jpg", pnl_main);
+//        wall.setSize(pnl_main.getSize());
+//        pnl_main.add(wall);
     }
     
 
@@ -254,7 +254,7 @@ public class Resultados extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void pnl_mainComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_mainComponentResized
-        wall.setSize(pnl_main.getSize());
+//        wall.setSize(pnl_main.getSize());
     }//GEN-LAST:event_pnl_mainComponentResized
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

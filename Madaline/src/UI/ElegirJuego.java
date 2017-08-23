@@ -5,6 +5,7 @@ import Core.Controlador;
 import javax.swing.JButton;
 import static UI.Start.click;
 import static UI.Start.puntero;
+import java.awt.Toolkit;
 
 
 public class ElegirJuego extends javax.swing.JFrame {
@@ -14,7 +15,12 @@ public class ElegirJuego extends javax.swing.JFrame {
     public ElegirJuego(javax.swing.JFrame padre, Controlador aplicacion) {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        
+        // Maximizar ventana en linux
+        Toolkit tk = Toolkit.getDefaultToolkit();  
+        int xSize = ((int) tk.getScreenSize().getWidth());  
+        int ySize = ((int) tk.getScreenSize().getHeight());  
+        setSize(xSize,ySize);
+        //
         this.padre = padre;
         this.aplicacion = aplicacion;
         
@@ -24,9 +30,9 @@ public class ElegirJuego extends javax.swing.JFrame {
     }
     
      private void setWallpaper(){
-        Wallpaper wall = new Wallpaper("/Iconos/wall_dificultad.jpg");
-        wall.setSize(pnl_fondo.getSize());
-        pnl_fondo.add(wall);
+        Wallpaper wall = new Wallpaper("/Iconos/wall_dificultad.jpg", pnl_fondo);
+//        wall.setSize(pnl_fondo.getSize());
+//        pnl_fondo.add(wall);
     }
     
     private void setOpaque() {
