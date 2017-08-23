@@ -19,14 +19,8 @@ public class Start extends javax.swing.JFrame {
     public Start() {
         initComponents();
         setLocationRelativeTo(null);
-        setExtendedState(MAXIMIZED_BOTH);
+        maximizar();
         
-        // Maximizar ventana en linux
-        Toolkit tk = Toolkit.getDefaultToolkit();  
-        int xSize = ((int) tk.getScreenSize().getWidth());  
-        int ySize = ((int) tk.getScreenSize().getHeight());  
-        setSize(xSize,ySize);
-        //
         CargarSonidos();
 
         setWallpaper();
@@ -49,7 +43,19 @@ public class Start extends javax.swing.JFrame {
 
     }
    
-
+    private void maximizar() {
+        if (System.getProperty("os.name").equals("Linux")) { 
+            // Maximizar ventana en linux
+            Toolkit tk = Toolkit.getDefaultToolkit();  
+            int xSize = ((int) tk.getScreenSize().getWidth());  
+            int ySize = ((int) tk.getScreenSize().getHeight());  
+            setSize(xSize,ySize);            
+        }
+        else {
+            setExtendedState(MAXIMIZED_BOTH);
+        }
+    }
+    
     private void cargarTutor() {
         ImageIcon img1 = new ImageIcon(getClass().getResource("/Iconos/tutor_saludo.gif"));
 
