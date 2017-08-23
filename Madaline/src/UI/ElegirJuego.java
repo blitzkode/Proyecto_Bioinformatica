@@ -7,46 +7,44 @@ import static UI.Start.puntero;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 
-
 public class ElegirJuego extends javax.swing.JFrame {
 
     Controlador aplicacion;
     javax.swing.JFrame padre;
-    Wallpaper wall;
+    Wallpaper wall, texto_jugar;
 
     public ElegirJuego(javax.swing.JFrame padre, Controlador aplicacion) {
         initComponents();
-        //setExtendedState(MAXIMIZED_BOTH);
+        setExtendedState(MAXIMIZED_BOTH);
         // Maximizar ventana en linux
-        Toolkit tk = Toolkit.getDefaultToolkit();  
-        int xSize = ((int) tk.getScreenSize().getWidth());  
-        int ySize = ((int) tk.getScreenSize().getHeight());  
-        setSize(xSize,ySize);
+//        Toolkit tk = Toolkit.getDefaultToolkit();  
+//        int xSize = ((int) tk.getScreenSize().getWidth());  
+//        int ySize = ((int) tk.getScreenSize().getHeight());  
+//        setSize(xSize,ySize);
         //
+        pnl_botones.setLocation((pnl_texto.getWidth() - pnl_botones.getWidth()) / 2,
+                (pnl_texto.getHeight() - pnl_botones.getHeight()) / 2);
         this.padre = padre;
         this.aplicacion = aplicacion;
-
+        
         setOpaque();
         setWallpaper();
         setwhitepanel();
-       
 
     }
-    
-     private void setWallpaper(){
-         wall = new Wallpaper("/Iconos/wall_dificultad.jpg", pnl_fondo);
-//        wall.setSize(pnl_fondo.getSize());
-//        pnl_fondo.add(wall);
+
+    private void setWallpaper() {
+        wall = new Wallpaper("/Iconos/wallpaper_elegir.gif", pnl_fondo);
+        texto_jugar = new Wallpaper("/Iconos/texto_juegos.png", pnl_texto, true);
     }
 
     private void setwhitepanel() {
 
-        for (JPanel panel : new JPanel[]{pnl_botones}) {
+        for (JPanel panel : new JPanel[]{pnl_botones,pnl_texto}) {
 
             panel.setOpaque(false);
         }
     }
-
 
     private void setOpaque() {
 
@@ -84,13 +82,20 @@ public class ElegirJuego extends javax.swing.JFrame {
             }
         });
 
+        pnl_texto.setBackground(new java.awt.Color(26, 26, 206));
+
         pnl_botones.setBackground(new java.awt.Color(37, 176, 145));
+        pnl_botones.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnl_botonesComponentResized(evt);
+            }
+        });
 
         btn_facil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_2.png"))); // NOI18N
         btn_facil.setAlignmentY(0.0F);
         btn_facil.setAutoscrolls(true);
         btn_facil.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_1.png"))); // NOI18N
-        btn_facil.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_3.png"))); // NOI18N
+        btn_facil.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_1.png"))); // NOI18N
         btn_facil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_facilMouseEntered(evt);
@@ -104,7 +109,7 @@ public class ElegirJuego extends javax.swing.JFrame {
 
         btn_normal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_2.png"))); // NOI18N
         btn_normal.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_1.png"))); // NOI18N
-        btn_normal.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_3.png"))); // NOI18N
+        btn_normal.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_1.png"))); // NOI18N
         btn_normal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_normalMouseEntered(evt);
@@ -121,11 +126,10 @@ public class ElegirJuego extends javax.swing.JFrame {
         pnl_botonesLayout.setHorizontalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_botonesLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(btn_facil, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                .addComponent(btn_normal, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(3, 3, 3)
+                .addComponent(btn_facil, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addComponent(btn_normal, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnl_botonesLayout.setVerticalGroup(
             pnl_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,60 +141,57 @@ public class ElegirJuego extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_volver.setText("volver al futuro");
-        btn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_volverActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnl_textoLayout = new javax.swing.GroupLayout(pnl_texto);
         pnl_texto.setLayout(pnl_textoLayout);
         pnl_textoLayout.setHorizontalGroup(
             pnl_textoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_textoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_textoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_textoLayout.createSequentialGroup()
-                        .addGap(357, 357, 357)
-                        .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_textoLayout.createSequentialGroup()
-                        .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)))
+                .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_textoLayout.setVerticalGroup(
             pnl_textoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_textoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(124, Short.MAX_VALUE)
                 .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(35, 35, 35))
         );
+
+        btn_volver.setText("volver al futuro");
+        btn_volver.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_volverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_fondoLayout = new javax.swing.GroupLayout(pnl_fondo);
         pnl_fondo.setLayout(pnl_fondoLayout);
         pnl_fondoLayout.setHorizontalGroup(
-            pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
-                .addComponent(pnl_texto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145))
+            pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(pnl_texto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(pnl_fondoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnl_fondoLayout.setVerticalGroup(
             pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
-                .addComponent(pnl_texto, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+            .addGroup(pnl_fondoLayout.createSequentialGroup()
+                .addComponent(pnl_texto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnl_fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,6 +212,8 @@ public class ElegirJuego extends javax.swing.JFrame {
         super.setVisible(b); //To change body of generated methods, choose Tools | Templates.
         pnl_texto.setLocation((pnl_fondo.getWidth() - pnl_texto.getWidth()) / 2,
                 (pnl_fondo.getHeight() - pnl_texto.getHeight()) / 2);
+        pnl_botones.setLocation((pnl_texto.getWidth() - pnl_botones.getWidth()) / 2,
+                (pnl_texto.getHeight() - pnl_botones.getHeight()) / 2);
     }
 
     private void btn_facilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_facilMouseEntered
@@ -239,8 +242,15 @@ public class ElegirJuego extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_volverActionPerformed
 
     private void pnl_fondoComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_fondoComponentResized
-        //wall.setSize(pnl_fondo.getSize());
+        pnl_botones.setLocation((pnl_texto.getWidth() - pnl_botones.getWidth()) / 2,
+                (pnl_texto.getHeight() - pnl_botones.getHeight()) / 2);
+        pnl_texto.setLocation((pnl_fondo.getWidth() - pnl_texto.getWidth()) / 2,
+                (pnl_fondo.getHeight() - pnl_texto.getHeight()) / 2);
     }//GEN-LAST:event_pnl_fondoComponentResized
+
+    private void pnl_botonesComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_botonesComponentResized
+
+    }//GEN-LAST:event_pnl_botonesComponentResized
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_facil;

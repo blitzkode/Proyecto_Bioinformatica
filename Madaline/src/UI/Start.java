@@ -21,11 +21,11 @@ public class Start extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
         
-        // Maximizar ventana en linux
-        Toolkit tk = Toolkit.getDefaultToolkit();  
-        int xSize = ((int) tk.getScreenSize().getWidth());  
-        int ySize = ((int) tk.getScreenSize().getHeight());  
-        setSize(xSize,ySize);
+//        // Maximizar ventana en linux
+//        Toolkit tk = Toolkit.getDefaultToolkit();  
+//        int xSize = ((int) tk.getScreenSize().getWidth());  
+//        int ySize = ((int) tk.getScreenSize().getHeight());  
+//        setSize(xSize,ySize);
         //
         CargarSonidos();
 
@@ -90,15 +90,12 @@ public class Start extends javax.swing.JFrame {
 
     private void setWallpaper() {
         wall = new Wallpaper("/Iconos/wallpaper_start.gif", pnl_wallpaper);
-//        wall.setSize(pnl_wallpaper.getSize());
-//        pnl_wallpaper.add(wall);
+
     }
     
      private void setfondo() {
         fondo = new Wallpaper("/Iconos/fondo_logo.png", pnl_fondo);
-//        fondo.setSize(pnl_fondo.getSize());
-//        fondo.setSize(pnl_fondo.getSize());
-//        pnl_fondo.add(fondo);
+
     }
 
     private void AjustarWallpaper() {

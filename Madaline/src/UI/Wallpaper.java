@@ -20,7 +20,7 @@ public class Wallpaper extends JPanel{
     JPanel container;
     String nombre;
     
-    
+    boolean cuadrado=false;
     public Wallpaper (String nombre, JPanel contenedor){
         this.nombre = nombre;
         this.setBackground(Color.white);
@@ -43,23 +43,31 @@ public class Wallpaper extends JPanel{
         });
     }
     
+    public Wallpaper (String nombre, JPanel contenedor, boolean cuadrado){
+        this(nombre, contenedor);
+        this.cuadrado=cuadrado;
+        
+    }
+    
+       
     @Override
     public void paintComponent (Graphics g){
         
         super.paintComponent(g);
         Dimension tam=getSize();
-        
-        ImageIcon imagen=new ImageIcon(getClass().getResource(nombre));
-        
-        
-        g.drawImage(imagen.getImage(), 0, 0, tam.width,tam.height,null);
-        setOpaque(false);
-       String ext = nombre.substring(nombre.length()-3);
        
+        ImageIcon imagen = new ImageIcon(getClass().getResource(nombre));
+
+        g.drawImage(imagen.getImage(), 0, 0, cuadrado ? tam.height : tam.width, tam.height, null);
+       
+
+        setOpaque(false);
+        String ext = nombre.substring(nombre.length() - 3);
+
         if (ext.equals("gif")) {
             timer.start();
         }
-        
+
     }
     
      Timer timer = new Timer(10, new ActionListener() {
