@@ -15,15 +15,8 @@ public class ElegirJuego extends javax.swing.JFrame {
 
     public ElegirJuego(javax.swing.JFrame padre, Controlador aplicacion) {
         initComponents();
-        setExtendedState(MAXIMIZED_BOTH);
-        // Maximizar ventana en linux
-//        Toolkit tk = Toolkit.getDefaultToolkit();  
-//        int xSize = ((int) tk.getScreenSize().getWidth());  
-//        int ySize = ((int) tk.getScreenSize().getHeight());  
-//        setSize(xSize,ySize);
-        //
-        pnl_botones.setLocation((pnl_texto.getWidth() - pnl_botones.getWidth()) / 2,
-                (pnl_texto.getHeight() - pnl_botones.getHeight()) / 2);
+        maximizar();
+        
         this.padre = padre;
         this.aplicacion = aplicacion;
         
@@ -31,6 +24,19 @@ public class ElegirJuego extends javax.swing.JFrame {
         setWallpaper();
         setwhitepanel();
 
+    }
+    
+    private void maximizar() {
+        if (System.getProperty("os.name").equals("Linux")) { 
+            // Maximizar ventana en linux
+            Toolkit tk = Toolkit.getDefaultToolkit();  
+            int xSize = ((int) tk.getScreenSize().getWidth());  
+            int ySize = ((int) tk.getScreenSize().getHeight());  
+            setSize(xSize,ySize);            
+        }
+        else {
+            setExtendedState(MAXIMIZED_BOTH);
+        }
     }
 
     private void setWallpaper() {
