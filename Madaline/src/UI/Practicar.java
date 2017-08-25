@@ -47,12 +47,17 @@ public class Practicar extends Principal {
         CargarTutor();
         setTutorReposo();
         cargarFondoLienzo();
-
+        
+        pnl_trans.setBackground(new Color(255,255,255,50));
+        
         new Dificultad(this, true).setVisible(true);
 
         aplicacion.setModoReconocimiento(modo_juego);
 
     }
+
+  
+
     
     private void CargarTutor() {
         ImageIcon image = new ImageIcon(getClass().getResource("/Iconos/tutor_reposo.gif"));
@@ -94,7 +99,13 @@ public class Practicar extends Principal {
             timer.stop();
         }
     });
-
+    
+    Timer timer2 = new Timer(500, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+       
+           
+        }
+    });
     private void CargarSonidos() {
         correct = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Correct.wav"));
         fail = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/Fail.wav"));
@@ -196,8 +207,7 @@ public class Practicar extends Principal {
     }
 
     private void setwallpaper() {
-    Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
-
+        Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
         wall.setSize(pnl_main.getSize());
         pnl_main.add(wall);
     }
@@ -207,6 +217,7 @@ public class Practicar extends Principal {
     private void initComponents() {
 
         pnl_main = new javax.swing.JPanel();
+        pnl_trans = new javax.swing.JPanel();
         pnl_opciones = new javax.swing.JPanel();
         pnl_colores = new javax.swing.JPanel();
         btn_lila = new javax.swing.JButton();
@@ -221,6 +232,7 @@ public class Practicar extends Principal {
         btn_mas = new javax.swing.JButton();
         tbtCuadricula = new javax.swing.JToggleButton();
         btn_deshacer = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         pnl_ayuda = new javax.swing.JPanel();
         pnlContenedorLienzo = new javax.swing.JPanel();
@@ -442,6 +454,13 @@ public class Practicar extends Principal {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_funcionesLayout = new javax.swing.GroupLayout(pnl_funciones);
         pnl_funciones.setLayout(pnl_funcionesLayout);
         pnl_funcionesLayout.setHorizontalGroup(
@@ -455,6 +474,9 @@ public class Practicar extends Principal {
                     .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btn_deshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnl_funcionesLayout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnl_funcionesLayout.setVerticalGroup(
             pnl_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,6 +491,8 @@ public class Practicar extends Principal {
                 .addComponent(btn_clean)
                 .addGap(18, 18, 18)
                 .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -509,7 +533,7 @@ public class Practicar extends Principal {
                 .addGroup(pnl_opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnl_colores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnl_funciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(btn_salir)
                 .addGap(19, 19, 19))
         );
@@ -525,11 +549,11 @@ public class Practicar extends Principal {
         pnl_ayuda.setLayout(pnl_ayudaLayout);
         pnl_ayudaLayout.setHorizontalGroup(
             pnl_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 136, Short.MAX_VALUE)
+            .addGap(0, 264, Short.MAX_VALUE)
         );
         pnl_ayudaLayout.setVerticalGroup(
             pnl_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 143, Short.MAX_VALUE)
         );
 
         pnlContenedorLienzo.setBackground(new java.awt.Color(255, 255, 255));
@@ -580,7 +604,7 @@ public class Practicar extends Principal {
         );
         pnl_tutorLayout.setVerticalGroup(
             pnl_tutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+            .addComponent(txt_tutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnl_botonesLayout = new javax.swing.GroupLayout(pnl_botones);
@@ -622,43 +646,54 @@ public class Practicar extends Principal {
             .addGroup(pnl_resultadosLayout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(txt_modolibre)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnl_transLayout = new javax.swing.GroupLayout(pnl_trans);
+        pnl_trans.setLayout(pnl_transLayout);
+        pnl_transLayout.setHorizontalGroup(
+            pnl_transLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_transLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(pnl_opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_transLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_transLayout.createSequentialGroup()
+                        .addComponent(pnlContenedorLienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_transLayout.createSequentialGroup()
+                        .addComponent(pnl_ayuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnl_resultados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17))
+        );
+        pnl_transLayout.setVerticalGroup(
+            pnl_transLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_transLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnl_transLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_transLayout.createSequentialGroup()
+                        .addGroup(pnl_transLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnl_resultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnl_ayuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnl_transLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlContenedorLienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnl_botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pnl_opciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout pnl_mainLayout = new javax.swing.GroupLayout(pnl_main);
         pnl_main.setLayout(pnl_mainLayout);
         pnl_mainLayout.setHorizontalGroup(
             pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_mainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnl_opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_mainLayout.createSequentialGroup()
-                        .addComponent(pnlContenedorLienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnl_mainLayout.createSequentialGroup()
-                        .addComponent(pnl_ayuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnl_resultados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+            .addComponent(pnl_trans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnl_mainLayout.setVerticalGroup(
             pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_mainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_mainLayout.createSequentialGroup()
-                        .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnl_resultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnl_ayuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnl_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlContenedorLienzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnl_botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(pnl_opciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(pnl_trans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Opciones");
@@ -844,6 +879,7 @@ public class Practicar extends Principal {
 
     private void btn_negroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_negroMouseEntered
         puntero.play();
+        
     }//GEN-LAST:event_btn_negroMouseEntered
 
     private void btn_negroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_negroActionPerformed
@@ -858,6 +894,10 @@ public class Practicar extends Principal {
         lienzo.deshacerTrazo();
     }//GEN-LAST:event_btn_deshacerActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_clean;
     private javax.swing.JButton btn_deshacer;
@@ -871,6 +911,7 @@ public class Practicar extends Principal {
     private javax.swing.JButton btn_rojo;
     private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_verde;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -886,6 +927,7 @@ public class Practicar extends Principal {
     private javax.swing.JPanel pnl_main;
     private javax.swing.JPanel pnl_opciones;
     private javax.swing.JPanel pnl_resultados;
+    private javax.swing.JPanel pnl_trans;
     private javax.swing.JPanel pnl_tutor;
     private javax.swing.JToggleButton tbtCuadricula;
     private javax.swing.JLabel txt_modolibre;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import java.awt.Color;
@@ -16,12 +11,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Wallpaper extends JPanel{
+public class Wallpaper extends JPanel {
+
     JPanel container;
     String nombre;
-    
-    boolean cuadrado=false;
-    public Wallpaper (String nombre, JPanel contenedor){
+
+    boolean cuadrado = false;
+
+    public Wallpaper(String nombre, JPanel contenedor) {
         this.nombre = nombre;
         this.setBackground(Color.white);
         this.container = contenedor;
@@ -33,33 +30,34 @@ public class Wallpaper extends JPanel{
             }
 
             @Override
-            public void componentMoved(ComponentEvent e) {}
+            public void componentMoved(ComponentEvent e) {
+            }
 
             @Override
-            public void componentShown(ComponentEvent e) {}
+            public void componentShown(ComponentEvent e) {
+            }
 
             @Override
-            public void componentHidden(ComponentEvent e) {}
+            public void componentHidden(ComponentEvent e) {
+            }
         });
     }
-    
-    public Wallpaper (String nombre, JPanel contenedor, boolean cuadrado){
+
+    public Wallpaper(String nombre, JPanel contenedor, boolean cuadrado) {
         this(nombre, contenedor);
-        this.cuadrado=cuadrado;
-        
+        this.cuadrado = cuadrado;
+
     }
-    
-       
+
     @Override
-    public void paintComponent (Graphics g){
-        
+    public void paintComponent(Graphics g) {
+
         super.paintComponent(g);
-        Dimension tam=getSize();
-       
+        Dimension tam = getSize();
+
         ImageIcon imagen = new ImageIcon(getClass().getResource(nombre));
 
         g.drawImage(imagen.getImage(), 0, 0, cuadrado ? tam.height : tam.width, tam.height, null);
-       
 
         setOpaque(false);
         String ext = nombre.substring(nombre.length() - 3);
@@ -69,12 +67,12 @@ public class Wallpaper extends JPanel{
         }
 
     }
-    
-     Timer timer = new Timer(10, new ActionListener() {
+
+    Timer timer = new Timer(10, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             repaint();
-            
+
         }
     });
-    
+
 }

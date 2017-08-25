@@ -29,6 +29,7 @@ public class Resultados extends javax.swing.JDialog {
         txt_nivel.setText("" + puntos);
         txt_intentosf.setText("INTENTOS FALLIDOS: " + intentos);
         setstars(estrellas);
+        
     }
 
     private void getStars() {

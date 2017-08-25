@@ -16,7 +16,7 @@ public class Dificultad extends javax.swing.JDialog {
     public Dificultad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cargarLogo();
+        
         this.parent = (Principal) parent;
         setWallpaper();
         setOpaque();
@@ -43,11 +43,7 @@ public class Dificultad extends javax.swing.JDialog {
 
     }
     
-    private void cargarLogo(){
-        img1 = new ImageIcon(getClass().getResource("/Iconos/logo Scribe.png"));
-        icon = new ImageIcon(img1.getImage().getScaledInstance(txt_logo.getWidth(), txt_logo.getHeight(), Image.SCALE_DEFAULT));
-        txt_logo.setIcon(icon);
-    }
+  
     
     
     @SuppressWarnings("unchecked")
@@ -58,7 +54,6 @@ public class Dificultad extends javax.swing.JDialog {
         pnl_fondo = new javax.swing.JPanel();
         btn_facil = new javax.swing.JButton();
         btn_normal = new javax.swing.JButton();
-        txt_logo = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -67,11 +62,11 @@ public class Dificultad extends javax.swing.JDialog {
 
         pnl_fondo.setBackground(new java.awt.Color(134, 234, 31));
 
-        btn_facil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_2.png"))); // NOI18N
+        btn_facil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/letras_2.png"))); // NOI18N
         btn_facil.setAlignmentY(0.0F);
         btn_facil.setAutoscrolls(true);
-        btn_facil.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_1.png"))); // NOI18N
-        btn_facil.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/facil_3.png"))); // NOI18N
+        btn_facil.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/letras_1.png"))); // NOI18N
+        btn_facil.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/letras_1.png"))); // NOI18N
         btn_facil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_facilMouseEntered(evt);
@@ -83,9 +78,9 @@ public class Dificultad extends javax.swing.JDialog {
             }
         });
 
-        btn_normal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_2.png"))); // NOI18N
-        btn_normal.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_1.png"))); // NOI18N
-        btn_normal.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/normal_3.png"))); // NOI18N
+        btn_normal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/numero_2.png"))); // NOI18N
+        btn_normal.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/numero_1.png"))); // NOI18N
+        btn_normal.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/numero_1.png"))); // NOI18N
         btn_normal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_normalMouseEntered(evt);
@@ -102,26 +97,20 @@ public class Dificultad extends javax.swing.JDialog {
         pnl_fondoLayout.setHorizontalGroup(
             pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fondoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_facil, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(btn_normal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
-                .addContainerGap(128, Short.MAX_VALUE)
-                .addComponent(txt_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91))
+                .addContainerGap(173, Short.MAX_VALUE)
+                .addComponent(btn_facil, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(105, 105, 105)
+                .addComponent(btn_normal, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
         pnl_fondoLayout.setVerticalGroup(
             pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fondoLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(txt_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(pnl_fondoLayout.createSequentialGroup()
+                .addGap(138, 138, 138)
                 .addGroup(pnl_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_facil)
                     .addComponent(btn_normal))
-                .addGap(50, 50, 50))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,6 +152,5 @@ public class Dificultad extends javax.swing.JDialog {
     private javax.swing.JButton btn_normal;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel pnl_fondo;
-    private javax.swing.JLabel txt_logo;
     // End of variables declaration//GEN-END:variables
 }

@@ -52,30 +52,23 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btn_facil" min="-2" pref="79" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                  <Component id="btn_normal" min="-2" pref="79" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="128" max="32767" attributes="0"/>
-                  <Component id="txt_logo" min="-2" pref="345" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                  <EmptySpace pref="173" max="32767" attributes="0"/>
+                  <Component id="btn_facil" min="-2" pref="160" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                  <Component id="btn_normal" min="-2" pref="157" max="-2" attributes="0"/>
+                  <EmptySpace pref="203" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="txt_logo" pref="170" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="btn_facil" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_normal" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace pref="162" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -84,15 +77,15 @@
         <Component class="javax.swing.JButton" name="btn_facil">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Iconos/facil_2.png"/>
+              <Image iconType="3" name="/Iconos/letras_2.png"/>
             </Property>
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="autoscrolls" type="boolean" value="true"/>
             <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Iconos/facil_1.png"/>
+              <Image iconType="3" name="/Iconos/letras_1.png"/>
             </Property>
             <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Iconos/facil_3.png"/>
+              <Image iconType="3" name="/Iconos/letras_1.png"/>
             </Property>
           </Properties>
           <Events>
@@ -103,21 +96,19 @@
         <Component class="javax.swing.JButton" name="btn_normal">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Iconos/normal_2.png"/>
+              <Image iconType="3" name="/Iconos/numero_2.png"/>
             </Property>
             <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Iconos/normal_1.png"/>
+              <Image iconType="3" name="/Iconos/numero_1.png"/>
             </Property>
             <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Iconos/normal_3.png"/>
+              <Image iconType="3" name="/Iconos/numero_1.png"/>
             </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_normalMouseEntered"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_normalActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="txt_logo">
         </Component>
       </SubComponents>
     </Container>
