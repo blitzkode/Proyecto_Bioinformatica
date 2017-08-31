@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -46,7 +44,6 @@ public class Wallpaper extends JPanel {
         });
         
         setImagen(nombre);
-        this.trans = new Color(238,167,25,0);
     }
 
     public Wallpaper(String nombre, JPanel contenedor, boolean cuadrado) {
@@ -64,13 +61,15 @@ public class Wallpaper extends JPanel {
                     cuadrado ? tam.height : tam.width,
                     tam.height, null);
 
-        g.setColor(trans);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        if (trans != null) {
+            g.setColor(trans);
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
         
         setOpaque(false);
         String ext = nombre.substring(nombre.length() - 3);
 
-        if (ext.equals("gif")) {
+        if (ext.equals("gif") && !timer.isRunning() ) {
             timer.start();
         }
 
@@ -81,12 +80,14 @@ public class Wallpaper extends JPanel {
      * este método dentro de un hilo.
      * @param nuevo Ruta de la nueva imagen de fondo
      * @param t1 Duración del cambio de opacidad en milisegundos
-     * @param color_sig Color del nuevo wallpaper
+     * @param color1 Primer color de la transición
+     * @param color2 Segundo color de la transición
      */
-    public void transicion(String nuevo, int t1, Color color_sig) {
+    public void transicion(String nuevo, int t1, Color color1, Color color2) {
         int inc = 5, // incremento de la opacidad
             delay = (int) (t1 / (255 / inc));
         
+        trans = color1;
         for (int alfa = 0; alfa < 256; alfa += inc) {
             cambiarAlfaTrans(alfa);
             try {
@@ -96,11 +97,11 @@ public class Wallpaper extends JPanel {
         
         setImagen(nuevo);
         
-        while ( !trans.equals(color_sig) ) {
+        while ( !trans.equals(color2) ) {
             int inc_r, inc_g, inc_b;
-            inc_r = incrementoColor(trans.getRed(), color_sig.getRed());
-            inc_g = incrementoColor(trans.getGreen(), color_sig.getGreen());
-            inc_b = incrementoColor(trans.getBlue(), color_sig.getBlue());
+            inc_r = incrementoColor(trans.getRed(), color2.getRed());
+            inc_g = incrementoColor(trans.getGreen(), color2.getGreen());
+            inc_b = incrementoColor(trans.getBlue(), color2.getBlue());
             trans = new Color(
                     trans.getRed() + inc_r,
                     trans.getGreen() + inc_g, 

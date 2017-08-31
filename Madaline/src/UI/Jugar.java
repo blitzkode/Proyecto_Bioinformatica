@@ -170,7 +170,7 @@ public class Jugar extends Principal {
     }
     
     private void cambiarWallpaper(){
-        wall.transicion(null, WIDTH, Color.orange);
+        wall.transicion(null, WIDTH, new Color(238,167,25,0), Color.orange);
     }
 
     @SuppressWarnings("unchecked")

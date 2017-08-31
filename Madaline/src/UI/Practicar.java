@@ -884,7 +884,8 @@ public class Practicar extends Principal {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                wall.transicion("/Iconos/wallcolor_7.gif", 500, new Color(238,66,160));
+                wall.transicion("/Iconos/wallcolor_7.gif", 500, 
+                        new Color(238,167,25,0), new Color(238,66,160));
             }
         }).start();
     }//GEN-LAST:event_jButton1ActionPerformed
