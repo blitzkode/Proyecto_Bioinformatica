@@ -46,7 +46,7 @@ public class Wallpaper extends JPanel {
         });
         
         setImagen(nombre);
-        this.trans = new Color(255,0,0,0);
+        this.trans = new Color(238,167,25,0);
     }
 
     public Wallpaper(String nombre, JPanel contenedor, boolean cuadrado) {

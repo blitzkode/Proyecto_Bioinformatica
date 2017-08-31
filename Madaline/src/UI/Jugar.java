@@ -161,11 +161,16 @@ public class Jugar extends Principal {
             panel.setOpaque(false);
         }
     }
+    
+    
+    
+    Wallpaper wall;
     private void setwallpaper() {
-    Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
-        
-//        wall.setSize(pnl_main.getSize());
-//        pnl_main.add(wall);
+        wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
+    }
+    
+    private void cambiarWallpaper(){
+        wall.transicion(null, WIDTH, Color.orange);
     }
 
     @SuppressWarnings("unchecked")
