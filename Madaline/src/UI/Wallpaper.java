@@ -7,20 +7,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Wallpaper extends JPanel {
-
+    ImageIcon imagen;
     JPanel container;
     String nombre;
+    Color trans;
 
     boolean cuadrado = false;
 
     public Wallpaper(String nombre, JPanel contenedor) {
-        this.nombre = nombre;
         this.setBackground(Color.white);
+        
         this.container = contenedor;
         this.container.add(this);
         this.container.addComponentListener(new ComponentListener() {
@@ -41,6 +44,9 @@ public class Wallpaper extends JPanel {
             public void componentHidden(ComponentEvent e) {
             }
         });
+        
+        setImagen(nombre);
+        this.trans = new Color(255,0,0,0);
     }
 
     public Wallpaper(String nombre, JPanel contenedor, boolean cuadrado) {
@@ -51,14 +57,16 @@ public class Wallpaper extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         Dimension tam = getSize();
 
-        ImageIcon imagen = new ImageIcon(getClass().getResource(nombre));
+        g.drawImage(imagen.getImage(), 0, 0,
+                    cuadrado ? tam.height : tam.width,
+                    tam.height, null);
 
-        g.drawImage(imagen.getImage(), 0, 0, cuadrado ? tam.height : tam.width, tam.height, null);
-
+        g.setColor(trans);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        
         setOpaque(false);
         String ext = nombre.substring(nombre.length() - 3);
 
@@ -66,6 +74,66 @@ public class Wallpaper extends JPanel {
             timer.start();
         }
 
+    }
+    
+    /**
+     * Cambia la imagen de fondo con una transición suave. Se debe llamar a
+     * este método dentro de un hilo.
+     * @param nuevo Ruta de la nueva imagen de fondo
+     * @param t1 Duración del cambio de opacidad en milisegundos
+     * @param color_sig Color del nuevo wallpaper
+     */
+    public void transicion(String nuevo, int t1, Color color_sig) {
+        int inc = 5, // incremento de la opacidad
+            delay = (int) (t1 / (255 / inc));
+        
+        for (int alfa = 0; alfa < 256; alfa += inc) {
+            cambiarAlfaTrans(alfa);
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException ex) {}
+        }
+        
+        setImagen(nuevo);
+        
+        while ( !trans.equals(color_sig) ) {
+            int inc_r, inc_g, inc_b;
+            inc_r = incrementoColor(trans.getRed(), color_sig.getRed());
+            inc_g = incrementoColor(trans.getGreen(), color_sig.getGreen());
+            inc_b = incrementoColor(trans.getBlue(), color_sig.getBlue());
+            trans = new Color(
+                    trans.getRed() + inc_r,
+                    trans.getGreen() + inc_g, 
+                    trans.getBlue() + inc_b
+            );
+            repaint();
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException ex) {}
+        }
+        
+        for (int alfa = 255; alfa >= 0; alfa -= inc) {
+            cambiarAlfaTrans(alfa);
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException ex) {}
+        }
+    }
+    
+    private int incrementoColor(int color_a, int color_b) {
+        int inc = 5;
+        int dif = color_b - color_a;
+        return Math.abs(dif) < inc ? dif : (dif / Math.abs(dif)) * inc;
+    }
+    
+    private void cambiarAlfaTrans(int alfa) {
+        trans = new Color(
+                    trans.getRed(),
+                    trans.getGreen(), 
+                    trans.getBlue(),
+                    alfa
+            );
+        repaint();
     }
 
     Timer timer = new Timer(10, new ActionListener() {
@@ -75,4 +143,8 @@ public class Wallpaper extends JPanel {
         }
     });
 
+    public void setImagen(String nombre) {
+        this.imagen = new ImageIcon(getClass().getResource(nombre));
+        this.nombre = nombre;
+    }
 }

@@ -18,6 +18,7 @@ import javax.swing.Timer;
 
 public class Practicar extends Principal {
     PanelLetra panelLetra;
+    Wallpaper wall;
     
     int t_feliz=1;
     int t_animo=1;
@@ -47,18 +48,13 @@ public class Practicar extends Principal {
         CargarTutor();
         setTutorReposo();
         cargarFondoLienzo();
-        
-        pnl_trans.setBackground(new Color(255,255,255,50));
-        
+        pnl_trans.setBackground(new Color(255,255,255,0));
         new Dificultad(this, true).setVisible(true);
 
         aplicacion.setModoReconocimiento(modo_juego);
 
     }
-
   
-
-    
     private void CargarTutor() {
         ImageIcon image = new ImageIcon(getClass().getResource("/Iconos/tutor_reposo.gif"));
         tutor_reposo = new ImageIcon(image.getImage().getScaledInstance(txt_tutor.getWidth(), txt_tutor.getHeight(), Image.SCALE_DEFAULT));
@@ -207,7 +203,7 @@ public class Practicar extends Principal {
     }
 
     private void setwallpaper() {
-        Wallpaper wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
+        wall = new Wallpaper("/Iconos/wall_principal.jpg", pnl_main);
         wall.setSize(pnl_main.getSize());
         pnl_main.add(wall);
     }
@@ -418,6 +414,9 @@ public class Practicar extends Principal {
         });
 
         btn_mas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas_2.png"))); // NOI18N
+        btn_mas.setBorderPainted(false);
+        btn_mas.setContentAreaFilled(false);
+        btn_mas.setOpaque(false);
         btn_mas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas_1.png"))); // NOI18N
         btn_mas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas_3.png"))); // NOI18N
         btn_mas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -895,7 +894,12 @@ public class Practicar extends Principal {
     }//GEN-LAST:event_btn_deshacerActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                wall.transicion("/Iconos/wall_dificultad.jpg", 500, new Color(0,255,0));
+            }
+        }).start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
