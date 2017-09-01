@@ -164,7 +164,7 @@ public class ElegirJuego extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
         );
 
-        btn_volver.setText("volver al futuro");
+        btn_volver.setText("Atras");
         btn_volver.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

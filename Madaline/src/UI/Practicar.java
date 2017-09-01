@@ -18,7 +18,9 @@ import javax.swing.Timer;
 
 public class Practicar extends Principal {
     PanelLetra panelLetra;
-    Wallpaper wall;
+    
+    
+    AnimatedWallpaper wall;
     
     int t_feliz=1;
     int t_animo=1;
@@ -28,7 +30,7 @@ public class Practicar extends Principal {
     
     AudioClip correct, fail, succes, apoyo[], exito[], numeros[], nada;
     AudioClip ltr_a,ltr_e,ltr_i,ltr_o,ltr_u;
-
+    
     public Practicar(Controlador aplicacion, javax.swing.JFrame padre) {
 
         super(aplicacion, padre);
@@ -41,13 +43,14 @@ public class Practicar extends Principal {
 
         setVisible(true);
 
-        setwhitepanel();
-        setwallpaper();
-        setOpaque();
+        SetOpacidadPaneles();
+        
+        SetOpacidadBotones();
         CargarSonidos();
         CargarTutor();
         setTutorReposo();
         cargarFondoLienzo();
+        wall=new AnimatedWallpaper(pnl_main);
         
         new Dificultad(this, true).setVisible(true);
 
@@ -73,6 +76,7 @@ public class Practicar extends Principal {
         }
         
     }
+    
     
     
     private void setTutorReposo(){
@@ -169,16 +173,16 @@ public class Practicar extends Principal {
 
     }
 
-    private boolean isNumero(String cadena){
-	try {
-		Integer.parseInt(cadena);
-		return true;
-	} catch (NumberFormatException nfe){
-		return false;
-	}
-}
+    private boolean isNumero(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 
-    private void setOpaque() {
+    private void SetOpacidadBotones() {
 
         for (JButton boton : new JButton[]{btn_pulsa, btn_salir, btn_clean, btn_rojo,
             btn_verde, btn_lila, btn_marron, btn_mas, btn_menos, btn_naranja, btn_negro, 
@@ -194,18 +198,12 @@ public class Practicar extends Principal {
         tbtCuadricula.setBorderPainted(false);
     }
 
-    private void setwhitepanel() {
+    private void SetOpacidadPaneles() {
 
-        for (JPanel panel : new JPanel[]{pnl_opciones, pnl_botones, pnl_resultados, pnl_funciones, pnl_colores}) {
+        for (JPanel panel : new JPanel[]{pnl_opciones, pnl_botones, pnl_resultados, pnl_funciones, pnl_colores,pnl_tutor}) {
 
             panel.setOpaque(false);
         }
-    }
-
-    private void setwallpaper() {
-        wall = new Wallpaper("/Iconos/wallcolor_4.gif", pnl_main);
-        wall.setSize(pnl_main.getSize());
-        pnl_main.add(wall);
     }
 
     @SuppressWarnings("unchecked")
@@ -227,7 +225,6 @@ public class Practicar extends Principal {
         btn_mas = new javax.swing.JButton();
         tbtCuadricula = new javax.swing.JToggleButton();
         btn_deshacer = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         pnl_ayuda = new javax.swing.JPanel();
         pnlContenedorLienzo = new javax.swing.JPanel();
@@ -451,13 +448,6 @@ public class Practicar extends Principal {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnl_funcionesLayout = new javax.swing.GroupLayout(pnl_funciones);
         pnl_funciones.setLayout(pnl_funcionesLayout);
         pnl_funcionesLayout.setHorizontalGroup(
@@ -471,9 +461,6 @@ public class Practicar extends Principal {
                     .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btn_deshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnl_funcionesLayout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnl_funcionesLayout.setVerticalGroup(
             pnl_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -488,8 +475,6 @@ public class Practicar extends Principal {
                 .addComponent(btn_clean)
                 .addGap(18, 18, 18)
                 .addComponent(tbtCuadricula, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -783,6 +768,7 @@ public class Practicar extends Principal {
         String caracter = aplicacion.reconocerImagen(imagen);
         PlayReconocido(caracter);
         panelLetra.dibujarLetra(caracter);
+        wall.CambiarWallpaper();
     }//GEN-LAST:event_btn_pulsaActionPerformed
 
     private void pnl_ayudaComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnl_ayudaComponentResized
@@ -880,16 +866,6 @@ public class Practicar extends Principal {
         lienzo.deshacerTrazo();
     }//GEN-LAST:event_btn_deshacerActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                wall.transicion("/Iconos/wallcolor_7.gif", 500, 
-                        new Color(238,167,25,0), new Color(238,66,160));
-            }
-        }).start();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_clean;
     private javax.swing.JButton btn_deshacer;
@@ -903,7 +879,6 @@ public class Practicar extends Principal {
     private javax.swing.JButton btn_rojo;
     private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_verde;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;

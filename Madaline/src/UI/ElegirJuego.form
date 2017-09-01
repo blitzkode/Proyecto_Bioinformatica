@@ -173,7 +173,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="btn_volver">
           <Properties>
-            <Property name="text" type="java.lang.String" value="volver al futuro"/>
+            <Property name="text" type="java.lang.String" value="Atras"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
           <Events>
