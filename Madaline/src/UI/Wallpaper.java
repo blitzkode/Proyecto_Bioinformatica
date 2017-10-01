@@ -3,13 +3,11 @@ package UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class Wallpaper extends JPanel {
     ImageIcon imagen;
@@ -55,11 +53,12 @@ public class Wallpaper extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
         Dimension tam = getSize();
 
         g.drawImage(imagen.getImage(), 0, 0,
                     cuadrado ? tam.height : tam.width,
-                    tam.height, null);
+                    tam.height, this);
 
         if (trans != null) {
             g.setColor(trans);
@@ -68,10 +67,6 @@ public class Wallpaper extends JPanel {
         
         setOpaque(false);
         String ext = nombre.substring(nombre.length() - 3);
-
-        if (ext.equals("gif") && !timer.isRunning() ) {
-            timer.start();
-        }
 
     }
     
@@ -137,15 +132,9 @@ public class Wallpaper extends JPanel {
         repaint();
     }
 
-    Timer timer = new Timer(10, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            repaint();
-
-        }
-    });
-
     public void setImagen(String nombre) {
         this.imagen = new ImageIcon(getClass().getResource(nombre));
         this.nombre = nombre;
     }
+
 }
